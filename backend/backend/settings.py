@@ -41,11 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 ]
 
-INSTALLED_APPS += ['account',
-    'apis',
-    'contents',
-    'rest_framework',
-    'product'
+INSTALLED_APPS += [
+    'account',
     ]
 # REST_FRAMEWORK = {
 #     "DEFAULT_AUTHENTICATION_CLASSES": ("knox.auth.TokenAuthentication",),
