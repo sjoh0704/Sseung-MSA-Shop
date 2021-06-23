@@ -25,7 +25,9 @@ SECRET_KEY = 'django-insecure-bulu&@$1d)9f3ip@^c#rv$0y!2^@sd82(37$4)3$ood#@^o_7y
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
+
+
 
 
 # Application definition
@@ -38,6 +40,16 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 ]
+
+INSTALLED_APPS += ['account',
+    'apis',
+    'contents',
+    'rest_framework',
+    'product'
+    ]
+# REST_FRAMEWORK = {
+#     "DEFAULT_AUTHENTICATION_CLASSES": ("knox.auth.TokenAuthentication",),
+# }
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
