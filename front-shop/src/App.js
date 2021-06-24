@@ -1,10 +1,10 @@
 import logo from './logo.svg';
 import './App.css';
-import LoginContainer from './containers/LoginContainer';
+import Login from './components/Login';
 function App() {
   return (
    <div>
-     <LoginContainer></LoginContainer>
+    <Login></Login>
    </div>
   );
 }

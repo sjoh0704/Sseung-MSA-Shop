@@ -27,6 +27,7 @@ export const loginAction = (userData) => {
 
 
   const initialState = {
+    id: null,
     user: {},
     isLoggedIn: false
   };
