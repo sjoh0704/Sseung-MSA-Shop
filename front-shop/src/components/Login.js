@@ -7,7 +7,7 @@ import * as config from '../config'
 
 
 async function getUsers(){
-    const response = await axios.get(config.DESTINATION_LOCAL_URL + '/apis/v1/user/1')
+    const response = await axios.get('/apis/v1/user/1')
     return response.data;
 }
 
