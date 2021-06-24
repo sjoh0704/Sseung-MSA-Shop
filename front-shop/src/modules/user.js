@@ -1,33 +1,26 @@
+import axios from 'axios'
 const LOGIN_USER = 'LOGIN_USER'; 
 const LOGOUT_USER = 'LOGOUT_USER';
 const SET_USER = 'SET_USER';
 
-export const loginAction = (userData) => {
+export const loginAction = (requestData) => {
     return {
       type: LOGIN_USER,
-      userData,
-      isLoggedIn: true
+      payload: requestData,
     };
   };
   
   export const logoutAction = () => {
+
     return {
       type: LOGOUT_USER,
-      userData: {},
-      isLoggedIn: false
+      payload: {}
     };
   };
-
-  export const setUserAction = (userData) => {
-    return {
-      type: SET_USER,
-      userData
-    };
-  };
-
 
   const initialState = {
-    user: {},
+    id: null,
+    payload: null,
     isLoggedIn: false
   };
   
@@ -36,21 +29,15 @@ export const loginAction = (userData) => {
       case (LOGIN_USER):
         return ({
           ...state,
-          user: action.userData,
-          isLoggedIn: action.isLoggedIn
+          payload: action.payload,
+          isLoggedIn: true
         });
       case (LOGOUT_USER):
         return ({
           ...state,
-          user: action.userData,
-          isLoggedIn: action.isLoggedIn
+          payload: action.payload,
+          isLoggedIn: false
         });
-        case (SET_USER):
-            return ({
-                ...state,
-                user: action.userData,
-                
-            });
       default:
         return state
     }

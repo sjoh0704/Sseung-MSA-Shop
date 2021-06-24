@@ -1,48 +1,64 @@
-import React, {useEffect, useState} from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import {setUserAction, loginAction} from '../modules/user'
+import React, {useState} from 'react'
+import {useDispatch } from 'react-redux'
+import {loginAction} from '../modules/user'
+import axios from 'axios'
+
+
 function Login(){
+    const dispatch = useDispatch();
     const [userData, setUserData] = useState({
-        username: null,
-        password: null
+        username: "",
+        password: ""
     })
     const {username, password} = userData;
-    const dispatch = useDispatch();
-    const loginUser = (userData) => dispatch(loginAction(userData));
-    const setUser = (userData) => dispatch(setUserAction(userData));
 
-    const onChange = (e) => {
+    const onChangeHandler = (e) => {
         const {name, value} = e.target;
         setUserData({
             ...userData,
             [name]: value
         })
-        setUser(userData);
-        console.log(userData);
+
     };
-    const onReset = () => {
+    const onClickHandler = (e)=>{
+        e.preventDefault();
+        let body = {
+            username: username,
+            password: password
+        };
+        axios.post('/apis/v1/user/login', body)
+        .then(response => {
+            // props.history.push('/')
+            console.log("로그인 성공")
+            dispatch(loginAction(response.data.payload))
+            alert("로그인 성공")
+        }).catch(e =>{
+            alert("로그인 실패")
+            console.log("로그인 실패")
+        })
+
         setUserData({
             username: "",
             password: ""
         })
     }
-    // const {userData} = useSelector(state => ({
-    //     userData: state.user.userData
-    // }))
+    
 
-
-
-
-    return (<div>
-        <p>아이디</p>
-        <input name='username' value={username} onChange={onChange} placeholder="아이디를 입력해주세요"></input>
-        <p>비밀번호</p>
-        <input name='password' value={password} onChange={onChange} placeholder="비밀번호를 입력해주세요"></input>
-        <br/>
-        <button onClick={()=> {
-            loginUser(userData);
-            onReset()
-        }}>로그인</button>
+    return (<div style ={{
+        display : 'flex', justifyContent : 'center', alignItems: 'center',
+        width : '100%', height : '100vh'
+    }}>
+        <form style ={{display : 'flex', flexDirection:'column'}}
+            onSubmit={onClickHandler}>
+            <label>username</label>
+            <input name = "username" value = {username} onChange={onChangeHandler}/>
+            <label>Password</label>
+            <input name = "password" value = {password} onChange={onChangeHandler}/>
+            <br/>
+            <button type = 'submit'>
+                Login
+            </button>
+        </form>
     </div>);
 }
 

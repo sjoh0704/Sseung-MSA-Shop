@@ -1,10 +1,12 @@
 import logo from './logo.svg';
 import './App.css';
-import LoginContainer from './containers/LoginContainer';
+import Login from './components/Login';
+import Logout from './components/Logout';
 function App() {
   return (
    <div>
-     <LoginContainer></LoginContainer>
+    {/* <Login></Login> */}
+    <Logout></Logout>
    </div>
   );
 }
