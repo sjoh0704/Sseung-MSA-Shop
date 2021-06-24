@@ -6,7 +6,7 @@ from django.views import View
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.models import User
-from django.db import IntegrityError
+from django.db import IntegrityError, reset_queries
 from django.core.validators import validate_email, ValidationError
 from django.contrib.auth import login, authenticate, logout
 class BaseView(View):
@@ -26,14 +26,16 @@ class UserLoginView(BaseView):
         return super(UserLoginView, self).dispatch(request, *args, **kargs)
 
     def post(self, request):
-  
-        username = request.POST.get('username', '')
-     
+        data = json.loads(request.body)
+        print(data)
+        username = data['username']
+        print(username)
+    
         if username is None:
        
             return self.response(message="아이디를 입력해주세요", status=400)
 
-        password = request.POST.get('password', '')
+        password = data['password']
         if password is None:
             return self.response(message="비밀번호를 입력해주세요", status=400)
       
