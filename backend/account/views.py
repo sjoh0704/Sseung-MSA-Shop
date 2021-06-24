@@ -13,7 +13,7 @@ class BaseView(View):
     @staticmethod
     def response(data={}, message ="", status=200):
         results = {
-            'data': data,
+            'payload': data,
             'message':message,
         }
 
@@ -27,15 +27,13 @@ class UserLoginView(BaseView):
 
     def post(self, request):
         data = json.loads(request.body)
-        print(data)
-        username = data['username']
-        print(username)
-    
+        # data = request.POST
+        username = data.get('username')
+   
         if username is None:
-       
             return self.response(message="아이디를 입력해주세요", status=400)
 
-        password = data['password']
+        password = data.get('password')
         if password is None:
             return self.response(message="비밀번호를 입력해주세요", status=400)
       
@@ -47,8 +45,11 @@ class UserLoginView(BaseView):
             # return JsonResponse({'data':{}, 'message': "입력정보를 확인해주세요"}, status=400)
   
         login(request, user)
+        print(user)
         data = {
-            'user_id': user.id
+            'user_id': user.id,
+            'username': user.username,
+            "useremail": user.email
         }
         return self.response(data=data, message="login success")   
 
@@ -97,7 +98,7 @@ class UserAPIView(BaseView):
             return self.response(message="존재하는 아이디입니다.", status=400)
         
         data = {
-            "user_id": user.id
+            "userid": user.id
         }
         return self.response(data = data, message="create user success", status=200)
 
