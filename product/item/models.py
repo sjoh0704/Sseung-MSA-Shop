@@ -11,15 +11,16 @@ class Category(models.Model):
 
 class Product(models.Model):
     seller_id = IntegerField()
-    name = models.CharField(max_length=255)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='product_category')
+    name = models.CharField(max_length=255)
     # image = ImageField(upload_to='photos')
     price = models.IntegerField()
     quantity = models.IntegerField(default=0)
     description = models.TextField()
-    pub_date = models.DateTimeField(auto_now_add = True)
-    hit = models.IntegerField(default=0)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
 
     def __str__(self):
-        return '{} {}'.format(self.name, self.pub_date)
+        return '판매자 id: {} /상품명: {} /상품 등록일: {}'.format(self.seller_id ,self.name, self.created_at)
 
