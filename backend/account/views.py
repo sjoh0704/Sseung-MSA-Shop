@@ -78,13 +78,13 @@ class UserAPIView(BaseView):
             data = json.loads(request.body)
         except:
             data = request.POST
-        username = request.POST.get('username', '')
+        username = data.get('username', '')
         if not username:
             return self.response(message="아이디를 입력해주세요", status=400)
-        password = request.POST.get('password', '')
+        password = data.get('password', '')
         if not password:
             return self.response(message="패스워드를 입력해주세요", status=400)
-        email = request.POST.get('email', '')
+        email = data.get('email', '')
         if not email:
             return self.response(message="email을 입력해주세요", status=400)
         try:
