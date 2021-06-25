@@ -26,8 +26,10 @@ class UserLoginView(BaseView):
         return super(UserLoginView, self).dispatch(request, *args, **kargs)
 
     def post(self, request):
-        data = json.loads(request.body)
-        # data = request.POST
+        try:
+            data = json.loads(request.body)
+        except:
+            data = request.POST
         username = data.get('username')
    
         if username is None:
@@ -72,6 +74,10 @@ class UserAPIView(BaseView):
 
 
     def post(self, request):
+        try:
+            data = json.loads(request.body)
+        except:
+            data = request.POST
         username = request.POST.get('username', '')
         if not username:
             return self.response(message="아이디를 입력해주세요", status=400)
@@ -98,7 +104,9 @@ class UserAPIView(BaseView):
             return self.response(message="존재하는 아이디입니다.", status=400)
         
         data = {
-            "userid": user.id
+            'user_id': user.id,
+            'username': user.username,
+            "useremail": user.email
         }
         return self.response(data = data, message="create user success", status=200)
 
