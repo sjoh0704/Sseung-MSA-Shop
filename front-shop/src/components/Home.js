@@ -8,75 +8,100 @@ import {Button, Container, Row,Col, Card} from 'react-bootstrap'
 
 // import NonLoggedPost from "./NonLoggedPost";
 
+
+
+const DisplayProducts = ({products}) =>{
+    products = products.map(product => {
+        return (
+            
+                <Col xs>
+                    <Card style={{ width: '18rem' }}>
+                    <Card.Img variant="top" src="holder.js/100px180" />
+                    <Card.Body>
+                        <Card.Title>{product.name}</Card.Title>
+                        <Card.Text>
+                        {product.description}
+                        </Card.Text>
+                        <Button variant="primary">사러가기</Button>
+                        <Button variant="primary">장바구니</Button>
+                    </Card.Body>
+                    </Card>
+                </Col>
+            
+                )
+
+    })
+    return (
+        
+        <Row>
+            {products}
+                {/* <Row>
+                    <Col xs>First, but unordered</Col>
+                    <Col xs={{ order: 12 }}>Second, but last</Col>
+                    <Col xs={{ order: 1 }}>Third, but second</Col>
+                </Row>
+                <Row>
+                    <Col xs>First, but unordered</Col>
+                    <Col xs={{ order: 12 }}>Second, but last</Col>
+                    <Col xs={{ order: 1 }}>Third, but second</Col>
+                </Row>
+                <Row>
+                    <Col xs>First, but unordered</Col>
+                    <Col xs={{ order: 12 }}>Second, but last</Col>
+                    <Col xs={{ order: 1 }}>Third, but second</Col>
+                </Row> */}
+        </Row>
+    )
+};
+
 export default function Home(props){
 
     const[userId,setUserID]= useState(0)
     const[products,Setproducts]= useState([])
 
     const fetchProducts= async ()=>{
-        await axios.get('http://localhost:8080/getallproducts').then(res=> {
-            Setproducts(res.data);
+        await axios.get('/apis/v1/product').then(res=> {
+            console.log(res.data);
+            let product_list = res.data.map(data=> {
+                return data.fields
+            })
+            
+            console.log(product_list)
+            Setproducts(product_list);
         })
     }
+
     useEffect(()=>{
         fetchProducts();
-    },[userId])
+    },[])
 
-    const filterproducts=(catname)=>{
-        axios.post('http://localhost:8080/filterbycat',{"category":catname}).then(res=>{
-            Setproducts(res.data)
-        })
-    }
 
-    const searchproducts=(products1)=>{
-        Setproducts(products1)
-    }
+
+    // const filterproducts=(catname)=>{
+    //     axios.post('http://localhost:8080/filterbycat',{"category":catname}).then(res=>{
+    //         Setproducts(res.data)
+    //     })
+    // }
+
+    // const searchproducts=(products1)=>{
+    //     Setproducts(products1)
+    // }
 
 
 
 
         return (
             <div>
-
+        
                 <div>
                     seungju shop
                 </div>
                 <div style={{marginTop:70}}>
                 <ControlledCarousel/>
                 <Container>
-                <Row>
-                    <Col xs>
-                    <Card style={{ width: '18rem' }}>
-                    <Card.Img variant="top" src="holder.js/100px180" />
-                    <Card.Body>
-                        <Card.Title>Card Title</Card.Title>
-                        <Card.Text>
-                        Some quick example text to build on the card title and make up the bulk of
-                        the card's content.
-                        </Card.Text>
-                        <Button variant="primary">Go somewhere</Button>
-                    </Card.Body>
-                    </Card>
-                    </Col>
-                    <Col xs={{ order: 12 }}>상품 2</Col>
-                    <Col xs={{ order: 1 }}>상품 3</Col>
-                </Row>
-                <Row>
-                    <Col xs>First, but unordered</Col>
-                    <Col xs={{ order: 12 }}>Second, but last</Col>
-                    <Col xs={{ order: 1 }}>Third, but second</Col>
-                </Row>
-                <Row>
-                    <Col xs>First, but unordered</Col>
-                    <Col xs={{ order: 12 }}>Second, but last</Col>
-                    <Col xs={{ order: 1 }}>Third, but second</Col>
-                </Row>
-                <Row>
-                    <Col xs>First, but unordered</Col>
-                    <Col xs={{ order: 12 }}>Second, but last</Col>
-                    <Col xs={{ order: 1 }}>Third, but second</Col>
-                </Row>
+                    <DisplayProducts products={products}/>
                 </Container>
+               
 
                 </div>
             </div>
