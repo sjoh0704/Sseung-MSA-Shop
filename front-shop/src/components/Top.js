@@ -15,6 +15,7 @@ const Top = ()=>{
     if(!isLoggedIn){
         return(
             <Container>
+                <br/>
                 <Row>
                 <Col md={{ span: 5, offset: 8 }}>
                 <div>
@@ -32,6 +33,7 @@ const Top = ()=>{
     else{
         return(
             <Container>
+            <br/> 
             <Row>
             <Col md={{ span: 5, offset: 8 }}>
             <div>

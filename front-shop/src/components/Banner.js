@@ -10,7 +10,7 @@ const Banner = () => {
   <br />
   <Navbar bg="primary" variant="dark">
       <Container>
-      <Navbar.Brand href="#home">ShoppingMall</Navbar.Brand>
+      <Navbar.Brand href="#home">Shopping Mall</Navbar.Brand>
     <Form inline>
       <FormControl type="text" placeholder="Search" className="mr-sm-2" />
       <Button variant="outline-light">Search</Button>

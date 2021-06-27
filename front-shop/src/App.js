@@ -21,7 +21,7 @@ function App() {
     {/* <Register></Register> */}
     {/* <Home/> */}
     {/* <ProductRegister/> */}
-    <Move/>
+    
     <Top/>
     <Banner/>
     <Route exact path="/" component={Home}/>
@@ -30,7 +30,7 @@ function App() {
     <Route exact path="/product/register" component={ProductRegister}/>
     <Route exact path="/logout" component={Logout}/>
     <Route exact path="/category/1" component={ProductByCategory}/>
-    
+    <Move/>
    </div>
   );
 }

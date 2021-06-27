@@ -1,9 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-
+import {Container} from 'react-bootstrap'
 const Move = () => {
     return (
         <div>
+            <br/>
+            <hr/>
+            <Container>
             <ul>
                 <li><Link to="/">Home</Link></li>
                 <li><Link to="/login">Login</Link></li>
@@ -13,7 +16,8 @@ const Move = () => {
                 <li><Link to="/category/1">ProductByCategory</Link></li>
                 
             </ul>
-            <hr/>
+            </Container>
+           
         </div>
     );
 };
