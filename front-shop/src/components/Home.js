@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
-import {useSelector} from 'react-redux'
+import {useSelector, useDispatch} from 'react-redux'
+import {setCategory} from '../modules/category'
 import axios from "axios";
 import Carousel from "react-bootstrap/Carousel";
 import {Button, Container, Row,Col, Card} from 'react-bootstrap'
@@ -64,6 +65,8 @@ const LoginBanner = ()=>{
 export default function Home(props){
     const[products,Setproducts]= useState([])
 
+    const dispatch = useDispatch()
+
     const fetchProducts= async ()=>{
         await axios.get('/apis/v1/product').then(res=> {
             let product_list = res.data.map(data=> {
@@ -72,9 +75,20 @@ export default function Home(props){
             Setproducts(product_list);
         })
     }
+    const fetchCategory= async ()=>{
+        await axios.get('/apis/v1/category').then(res=> {
+            let category_list = res.data.map(data=> {
+                return data.fields
+            })
+           
+            console.log(category_list);
+            dispatch(setCategory(category_list))
+        })
+    }
 
     useEffect(()=>{
         fetchProducts();
+        fetchCategory();
     },[])
         return (
             <div>

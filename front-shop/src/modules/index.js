@@ -1,7 +1,8 @@
 import {combineReducers} from 'redux'
-import user from './user'
 import { persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage';
+import user from './user'
+import category from './category'
 
 const persistConfig = {
     key: 'root',
@@ -10,6 +11,7 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
     user,
+    category,
 
 })
 
