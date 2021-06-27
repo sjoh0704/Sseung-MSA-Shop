@@ -1,1 +1,1 @@
-This is for user service 
+MSA react-django-shop
