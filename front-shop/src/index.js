@@ -5,17 +5,27 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {Provider} from 'react-redux'
 import {createStore} from 'redux'
-import rootReducer from './modules'
 import {composeWithDevTools} from 'redux-devtools-extension'
-import 'bootstrap/dist/css/bootstrap.min.css';
-const store = createStore(rootReducer, composeWithDevTools());
-
+import { BrowserRouter } from 'react-router-dom';
+// import registerServiceWorker from './registerServiceWorker';
+// redux-persist
+import { PersistGate } from 'redux-persist/integration/react';
+import { persistStore } from 'redux-persist';	// 추가
+import persistedReducer from './modules';
+const store = createStore(persistedReducer, composeWithDevTools());
+const persistor = persistStore(store)
 ReactDOM.render(
   <Provider store={store}>
+     <PersistGate persistor={persistor}>
+       
+    <BrowserRouter>
     <App />
+    </BrowserRouter>
+    </PersistGate>	
   </Provider>,
   document.getElementById('root')
 );
+// registerServiceWorker();
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

@@ -1,12 +1,11 @@
-import React, {Component, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
+import {useSelector} from 'react-redux'
 import axios from "axios";
-// import ComplexNavigationBar from "../Common/ComplexNavigationBar/ComplexNavigationBar";
-// import Post from "../LoggeHome/Post";
-// import ComplexNavigationNonLogged from "./ComplexNavigationNonLogged";
 import Carousel from "react-bootstrap/Carousel";
 import {Button, Container, Row,Col, Card} from 'react-bootstrap'
-
+import Banner from './Banner'
 // import NonLoggedPost from "./NonLoggedPost";
+
 
 
 
@@ -20,53 +19,56 @@ const DisplayProducts = ({products}) =>{
                     <Card.Body>
                         <Card.Title>{product.name}</Card.Title>
                         <Card.Text>
-                        {product.description}
+                        {product.price}원
                         </Card.Text>
-                        <Button variant="primary">사러가기</Button>
-                        <Button variant="primary">장바구니</Button>
+                    
                     </Card.Body>
                     </Card>
                 </Col>
-            
                 )
-
     })
     return (
-        
         <Row>
-            {products}
-                {/* <Row>
-                    <Col xs>First, but unordered</Col>
-                    <Col xs={{ order: 12 }}>Second, but last</Col>
-                    <Col xs={{ order: 1 }}>Third, but second</Col>
-                </Row>
-                <Row>
-                    <Col xs>First, but unordered</Col>
-                    <Col xs={{ order: 12 }}>Second, but last</Col>
-                    <Col xs={{ order: 1 }}>Third, but second</Col>
-                </Row>
-                <Row>
-                    <Col xs>First, but unordered</Col>
-                    <Col xs={{ order: 12 }}>Second, but last</Col>
-                    <Col xs={{ order: 1 }}>Third, but second</Col>
-                </Row> */}
+        {products}
         </Row>
     )
 };
 
-export default function Home(props){
+const LoginBanner = ()=>{
+    const {isLoggedIn, userData} = useSelector(state =>({
+                isLoggedIn: state.user.isLoggedIn,
+                userData: state.user.payload
+    }))
 
-    const[userId,setUserID]= useState(0)
+    if(!isLoggedIn){
+        return(
+            <div>
+            <p>
+                로그인하세요!
+            </p>
+            <Button>로그인 하러가기</Button>
+            </div>
+        )
+    }
+    else{
+        return(
+            <p>
+                안녕하세요! {userData.username}
+            </p>
+        )
+    }
+}
+
+
+
+export default function Home(props){
     const[products,Setproducts]= useState([])
 
     const fetchProducts= async ()=>{
         await axios.get('/apis/v1/product').then(res=> {
-            console.log(res.data);
             let product_list = res.data.map(data=> {
                 return data.fields
             })
-            
-            console.log(product_list)
             Setproducts(product_list);
         })
     }
@@ -74,28 +76,14 @@ export default function Home(props){
     useEffect(()=>{
         fetchProducts();
     },[])
-
-
-
-    // const filterproducts=(catname)=>{
-    //     axios.post('http://localhost:8080/filterbycat',{"category":catname}).then(res=>{
-    //         Setproducts(res.data)
-    //     })
-    // }
-
-    // const searchproducts=(products1)=>{
-    //     Setproducts(products1)
-    // }
-
-
-
-
         return (
             <div>
-        
-                <div>
-                    seungju shop
-                </div>
+               <Banner/>
+                
+                <LoginBanner/>
+                
+                
+                
                 <div style={{marginTop:70}}>
                 <ControlledCarousel/>
                 <Container>
