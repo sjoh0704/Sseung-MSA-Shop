@@ -6,14 +6,14 @@ from django.views import View
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.models import User
-from django.db import IntegrityError
+from django.db import IntegrityError, reset_queries
 from django.core.validators import validate_email, ValidationError
 from django.contrib.auth import login, authenticate, logout
 class BaseView(View):
     @staticmethod
     def response(data={}, message ="", status=200):
         results = {
-            'data': data,
+            'payload': data,
             'message':message,
         }
 
@@ -26,14 +26,16 @@ class UserLoginView(BaseView):
         return super(UserLoginView, self).dispatch(request, *args, **kargs)
 
     def post(self, request):
-  
-        username = request.POST.get('username', '')
-     
+        try:
+            data = json.loads(request.body)
+        except:
+            data = request.POST
+        username = data.get('username')
+   
         if username is None:
-       
             return self.response(message="아이디를 입력해주세요", status=400)
 
-        password = request.POST.get('password', '')
+        password = data.get('password')
         if password is None:
             return self.response(message="비밀번호를 입력해주세요", status=400)
       
@@ -45,8 +47,11 @@ class UserLoginView(BaseView):
             # return JsonResponse({'data':{}, 'message': "입력정보를 확인해주세요"}, status=400)
   
         login(request, user)
+        print(user)
         data = {
-            'user_id': user.id
+            'user_id': user.id,
+            'username': user.username,
+            "useremail": user.email
         }
         return self.response(data=data, message="login success")   
 
@@ -69,6 +74,10 @@ class UserAPIView(BaseView):
 
 
     def post(self, request):
+        try:
+            data = json.loads(request.body)
+        except:
+            data = request.POST
         username = request.POST.get('username', '')
         if not username:
             return self.response(message="아이디를 입력해주세요", status=400)
@@ -95,7 +104,9 @@ class UserAPIView(BaseView):
             return self.response(message="존재하는 아이디입니다.", status=400)
         
         data = {
-            "user_id": user.id
+            'user_id': user.id,
+            'username': user.username,
+            "useremail": user.email
         }
         return self.response(data = data, message="create user success", status=200)
 
