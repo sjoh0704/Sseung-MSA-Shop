@@ -9,6 +9,8 @@ from django.contrib.auth.models import User
 from django.db import IntegrityError, reset_queries
 from django.core.validators import validate_email, ValidationError
 from django.contrib.auth import login, authenticate, logout
+import requests
+
 class BaseView(View):
     @staticmethod
     def response(data={}, message ="", status=200):
@@ -74,8 +76,11 @@ class UserAPIView(BaseView):
 
 
     def post(self, request):
+        print(request.body)
         try:
+            
             data = json.loads(request.body)
+        
         except:
             data = request.POST
         username = data.get('username', '')
@@ -110,10 +115,19 @@ class UserAPIView(BaseView):
         }
         return self.response(data = data, message="create user success", status=200)
 
+
+# 이 부분은 유의 
     def delete(self, request, pk):
-        user = get_object_or_404(User, id=pk)
-        user.delete()
-        return self.response(message='delete user success', status=200)
+        # user.delete()
+    
+        response = requests.delete("http://localhost:8000/apis/v1/user/{}/product".format(pk))  # product-service url
+        print(response)
+        if response.status_code == 200:
+            return self.response(message='deleting user successes', status=200)
+        else:
+            return self.response(message='deleting user fails', status=400)
+
+        
 
     def get(self, request, pk):
         user = get_object_or_404(User, id=pk)

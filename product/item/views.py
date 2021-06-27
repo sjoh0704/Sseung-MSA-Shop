@@ -2,12 +2,11 @@ from django.core import serializers
 from django.http import JsonResponse 
 import json
 from django.shortcuts import get_object_or_404
-from django.http.response import HttpResponse
+from django.http.response import Http404, HttpResponse
 from django.views import View
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from .models import Category, Product
-from django.core.serializers import json
 from rest_framework.renderers import JSONRenderer
 
 
@@ -21,6 +20,76 @@ class BaseView(View):
         }
 
         return JsonResponse(results, status=status)
+
+
+
+class ProductNonParam(BaseView):
+    @method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kargs):
+        return super(ProductNonParam, self).dispatch(request, *args, **kargs)
+
+
+    def post(self, request):
+        print(request.body)
+     
+        try:
+            data = json.loads(request.body)
+          
+        except:
+            data = request.POST
+            
+        print(data)
+        try:
+            print("try")
+            print(data)
+            seller_id = data.get('seller_id', '')
+            if not seller_id:
+                return self.response(message="seller_id 없음", status=400)
+
+            category_id = data.get('category_id', '')
+            category = get_object_or_404(Category, id=category_id)
+            if not category:
+                return self.response(message="없는 카테고리", status=400)
+        
+            name = data.get('name', '')
+            if not name:
+                return self.response(message="name 없음", status=400)
+
+            price = data.get('price', '')
+            if not price:
+                return self.response(message="price 없음", status=400)
+
+            quantity = data.get('quantity', '')
+            if not quantity:
+                return self.response(message="quantity 없음", status=400)
+                
+            description = data.get('description', '')
+            if not description:
+                return self.response(message="description 없음", status=400)
+            
+            product = Product.objects.create(name = name,
+                                            seller_id=seller_id,
+                                            category=category,
+                                            price=price,
+                                            quantity=quantity,
+                                            description=description)
+        except Exception as e:
+            return self.response(message=e, status=400)
+        else:
+            return self.response(message="create product success", status=200)
+
+
+
+    def get(self, request):
+  
+        products = Product.objects.all()
+        json_products = serializers.serialize('json', products)
+        print(json_products)
+        return HttpResponse(json_products, content_type="text/json-comment-filtered")
+        
+    
+        
+ 
 
 
 class ProductStatusView(BaseView):
@@ -80,68 +149,52 @@ class ProductStatusView(BaseView):
         return self.response(message='deleting product success', status=200)
 
     
+class GetCategory(BaseView):
 
-class ProductNonParam(BaseView):
+
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kargs):
-        return super(ProductNonParam, self).dispatch(request, *args, **kargs)
-
-
-
-    def post(self, request):
-        print(request.POST)
-        try:
-            data = json.loads(request.body)
-        except:
-            data = request.POST
-            print(data)
-        try:
-            print(data)
-            seller_id = data.get('seller_id', '')
-            if not seller_id:
-                return self.response(message="seller_id 없음", status=400)
-
-            category_id = data.get('category_id', '')
-            category = get_object_or_404(Category, id=category_id)
-            if not category:
-                return self.response(message="없는 카테고리", status=400)
-        
-            name = data.get('name', '')
-            if not name:
-                return self.response(message="name 없음", status=400)
-
-            price = data.get('price', '')
-            if not price:
-                return self.response(message="price 없음", status=400)
-
-            quantity = data.get('quantity', '')
-            if not quantity:
-                return self.response(message="quantity 없음", status=400)
-                
-            description = data.get('description', '')
-            if not description:
-                return self.response(message="description 없음", status=400)
-            
-            product = Product.objects.create(name = name,
-                                            seller_id=seller_id,
-                                            category=category,
-                                            price=price,
-                                            quantity=quantity,
-                                            description=description)
-        except Exception as e:
-            return self.response(message=e, status=400)
-        else:
-            return self.response(message="create product success", status=200)
-
-
-
+        return super(GetCategory, self).dispatch(request, *args, **kargs)
+   
+   
     def get(self, request):
-        print(request.get)
-        products = Product.objects.all()
-        json_products = serializers.serialize('json', products)
-        print(json_products)
-        return HttpResponse(json_products, content_type="text/json-comment-filtered")
-        
+        categories = Category.objects.all()
+        json_list = serializers.serialize('json', categories)
+        return HttpResponse(json_list, content_type="text/json-comment-filtered")
+
+
+class GetProductByCategory(BaseView):
     
+    
+    @method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kargs):
+        return super(GetProductByCategory, self).dispatch(request, *args, **kargs)
+    
+    
+    def get(self, request, pk):
+        category = Category.objects.get(id=pk)
+        products = Product.objects.filter(category=category)
+        # products = category.product_set.all()
+
+       
+        json_list = serializers.serialize('json', products)
+        return HttpResponse(json_list, content_type="text/json-comment-filtered")
+
+
+
+
+class DeleteProductCascadingUser(BaseView):
+    
+    
+    @method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kargs):
+        return super(DeleteProductCascadingUser, self).dispatch(request, *args, **kargs)
+    
+    
+    def delete(self, request, pk):
+        products = Product.objects.filter(seller_id=pk)
+        # products = category.product_set.all()
+        print(products)
+        products.delete()
+        return self.response(message="deleting product created by user_id={} successes".format(pk), status=200)
         
- 
