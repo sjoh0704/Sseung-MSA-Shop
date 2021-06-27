@@ -15,6 +15,8 @@ function ProductRegister(){
 
 
     })
+
+    
     const {name, category_id, price, quantity, description} = product;
 
     const onChangeHandler = (e) => {

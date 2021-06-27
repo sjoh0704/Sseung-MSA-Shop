@@ -10,6 +10,8 @@ const Move = () => {
                 <li><Link to="/logout">Logout</Link></li>
                 <li><Link to="/register">Register</Link></li>
                 <li><Link to="/product/register">ProductRegister</Link></li>
+                <li><Link to="/category/1">ProductByCategory</Link></li>
+                
             </ul>
             <hr/>
         </div>

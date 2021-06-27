@@ -6,8 +6,7 @@ const Banner = () => {
         // <Container>
         //     <h1>Shopping shop</h1>
         // </Container>
-        <>
-  
+  <>
   <br />
   <Navbar bg="primary" variant="dark">
       <Container>

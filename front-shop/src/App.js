@@ -7,6 +7,7 @@ import Home from './components/Home';
 import Move from './components/Move';
 import ProductRegister from './components/ProductRegister';
 import { Route} from 'react-router-dom';
+import ProductByCategory from './components/ProductByCategory'
 function App() {
   return (
 
@@ -23,6 +24,7 @@ function App() {
     <Route exact path="/register" component={Register}/>
     <Route exact path="/product/register" component={ProductRegister}/>
     <Route exact path="/logout" component={Logout}/>
+    <Route exact path="/category/1" component={ProductByCategory}/>
     
    </div>
   );

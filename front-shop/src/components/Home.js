@@ -5,12 +5,13 @@ import axios from "axios";
 import Carousel from "react-bootstrap/Carousel";
 import {Button, Container, Row,Col, Card} from 'react-bootstrap'
 import Banner from './Banner'
+import CategoryBanner from './CategoryBanner'
 // import NonLoggedPost from "./NonLoggedPost";
 
 
 
 
-const DisplayProducts = ({products}) =>{
+export const DisplayProducts = ({products}) =>{
     products = products.map(product => {
         return (
             
@@ -93,7 +94,7 @@ export default function Home(props){
         return (
             <div>
                <Banner/>
-                
+                <CategoryBanner/>
                 <LoginBanner/>
                 
                 
