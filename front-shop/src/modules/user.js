@@ -1,7 +1,6 @@
-import axios from 'axios'
 const LOGIN_USER = 'LOGIN_USER'; 
 const LOGOUT_USER = 'LOGOUT_USER';
-const SET_USER = 'SET_USER';
+
 
 export const loginAction = (requestData) => {
     return {
