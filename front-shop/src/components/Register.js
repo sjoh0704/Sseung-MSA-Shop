@@ -1,7 +1,9 @@
 import React, {useState} from 'react'
-import {useDispatch } from 'react-redux'
-import {loginAction} from '../modules/user'
 import axios from 'axios'
+import {useSelector, useDispatch} from 'react-redux'
+import {Form, Container, Button} from 'react-bootstrap'
+import Banner from './Banner'
+import Title from './Title'
 
 
 function Register(){
@@ -45,27 +47,68 @@ function Register(){
             email: ""
         })
     }
-    
+    return (
+        <div>
+        
+        <Title title="REGISTER"/>
+        <Container>
+            <Form onSubmit={onClickHandler} >
 
-    return (<div style ={{
-        display : 'flex', justifyContent : 'center', alignItems: 'center',
-        width : '100%', height : '100vh'
-    }}>
-        <form style ={{display : 'flex', flexDirection:'column'}}
-            onSubmit={onClickHandler}>
-            <label>ID</label>
-            <input name = "username" value = {username} onChange={onChangeHandler}/>
-            <label>Email</label>
-            <input name = "email" value = {email} onChange={onChangeHandler}/>
-            <label>Password</label>
-            <input name = "password" value = {password} onChange={onChangeHandler}/>
-            
+
+            <Form.Group controlId="exampleForm.ControlInput1">
+                <Form.Label>ID</Form.Label>
+                <Form.Control 
+                name = 'username'
+                value = {username}
+                onChange={onChangeHandler}
+                placeholder="ID를 입력해주세요" />
+            </Form.Group>
             <br/>
-            <button type = 'submit'>
-                Register
-            </button>
-        </form>
-    </div>);
+            <Form.Group controlId="exampleForm.ControlInput1">
+                <Form.Label>EMAIL</Form.Label>
+                <Form.Control 
+                name = 'email'
+                value = {email}
+                onChange={onChangeHandler}
+                placeholder="email을 입력해주세요" />
+            </Form.Group>
+            <br/>
+            <Form.Group controlId="exampleForm.ControlInput1">
+                <Form.Label>PASSWORD</Form.Label>
+                <Form.Control
+                name = 'password'
+                value = {password} 
+                onChange={onChangeHandler}
+                placeholder="비밀번호를 입력해주세요" />
+            </Form.Group>
+            <br/>
+           
+            <Button type="submit">Register</Button>
+            </Form>
+        </Container>
+        </div>
+   
+    );
+
+    // return (<div style ={{
+    //     display : 'flex', justifyContent : 'center', alignItems: 'center',
+    //     width : '100%', height : '100vh'
+    // }}>
+    //     <form style ={{display : 'flex', flexDirection:'column'}}
+    //         onSubmit={onClickHandler}>
+    //         <label>ID</label>
+    //         <input name = "username" value = {username} onChange={onChangeHandler}/>
+    //         <label>Email</label>
+    //         <input name = "email" value = {email} onChange={onChangeHandler}/>
+    //         <label>Password</label>
+    //         <input name = "password" value = {password} onChange={onChangeHandler}/>
+            
+    //         <br/>
+    //         <button type = 'submit'>
+    //             Register
+    //         </button>
+    //     </form>
+    // </div>);
 }
 
 export default Register;

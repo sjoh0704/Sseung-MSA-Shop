@@ -48,8 +48,7 @@ function Login(){
 
     return (
         <div>
-        <Banner/>
-        <br/>
+    
         <Title title="LOGIN"/>
         <Container>
             <Form onSubmit={onClickHandler} >

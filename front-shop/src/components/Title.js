@@ -5,11 +5,14 @@ function Title({title}){
     return (
         <Container>
             <br/>
-            
-            <h2>
-                {title}
-            </h2>
             <br/>
+            <h1>
+                {title}
+            </h1>
+            <hr/>
+            <br/>
+            <br/>
+            
         </Container>
     )
 }

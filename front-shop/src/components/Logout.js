@@ -2,8 +2,9 @@ import React, {useEffect} from 'react'
 import axios from 'axios';
 import {logoutAction} from '../modules/user'
 import {useDispatch} from 'react-redux'
-
-function Logout(props) {
+import {Container, Button} from 'react-bootstrap'
+import Title from './Title'
+function Logout() {
     const dispatch = useDispatch();
 
     const onClickHandler = () => {
@@ -17,13 +18,14 @@ function Logout(props) {
         })
     }
     return (
-        <div style ={{
-            display : 'flex', justifyContent : 'center', alignItems: 'center',
-            width : '100%', height : '100vh'
-        }}>
-            <h2>시작 페이지</h2>
-
-            <button onClick = {onClickHandler}>로그아웃</button>
+        <div>
+            <Container>
+            <Title title="LOGOUT"></Title>
+            <h3>정말 로그아웃 하시겠습니까?</h3>
+            <br/>
+            <Button onClick = {onClickHandler}>로그아웃</Button>
+            </Container>
+          
         </div>
     )
 }

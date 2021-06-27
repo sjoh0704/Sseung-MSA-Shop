@@ -3,6 +3,7 @@ import axios from 'axios'
 import React, {useEffect, useState} from 'react';
 import {DisplayProducts} from './Home'
 import {Container} from 'react-bootstrap'
+import Title from './Title';
 
 function ProductByCategory(){
     const[products,Setproducts]= useState([])
@@ -21,7 +22,7 @@ function ProductByCategory(){
     },[])
 
     return(<div>
-        <Banner/>
+        <Title title="카테고리 상품"></Title>
         <Container>
         <DisplayProducts products={products}/>
         </Container>

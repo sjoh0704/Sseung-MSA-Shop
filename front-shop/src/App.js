@@ -8,6 +8,9 @@ import Move from './components/Move';
 import ProductRegister from './components/ProductRegister';
 import { Route} from 'react-router-dom';
 import ProductByCategory from './components/ProductByCategory'
+import Top from './components/Top'
+import Banner from './components/Banner'
+
 function App() {
   return (
 
@@ -19,6 +22,8 @@ function App() {
     {/* <Home/> */}
     {/* <ProductRegister/> */}
     <Move/>
+    <Top/>
+    <Banner/>
     <Route exact path="/" component={Home}/>
     <Route exact path="/login" component={Login}/>
     <Route exact path="/register" component={Register}/>

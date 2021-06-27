@@ -3,6 +3,7 @@ import {useSelector, useDispatch} from 'react-redux'
 import axios from 'axios'
 import {Form, Container, Button} from 'react-bootstrap'
 import Banner from './Banner'
+import Title from './Title'
 
 function ProductRegister(){
 
@@ -53,10 +54,7 @@ function ProductRegister(){
     }
     
     return(<div>
-   
-        <Banner/>
-
-        <br/>
+        <Title title="REGISTER PRODUCT"></Title>
         <Container>
             <Form onSubmit={onClickHandler} >
 

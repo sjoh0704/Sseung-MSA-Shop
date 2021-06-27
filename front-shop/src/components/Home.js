@@ -4,6 +4,7 @@ import {setCategory} from '../modules/category'
 import axios from "axios";
 import Carousel from "react-bootstrap/Carousel";
 import {Button, Container, Row,Col, Card} from 'react-bootstrap'
+import Top from './Top'
 import Banner from './Banner'
 import CategoryBanner from './CategoryBanner'
 // import NonLoggedPost from "./NonLoggedPost";
@@ -35,31 +36,6 @@ export const DisplayProducts = ({products}) =>{
         </Row>
     )
 };
-
-const LoginBanner = ()=>{
-    const {isLoggedIn, userData} = useSelector(state =>({
-                isLoggedIn: state.user.isLoggedIn,
-                userData: state.user.payload
-    }))
-
-    if(!isLoggedIn){
-        return(
-            <div>
-            <p>
-                로그인하세요!
-            </p>
-            <Button>로그인 하러가기</Button>
-            </div>
-        )
-    }
-    else{
-        return(
-            <p>
-                안녕하세요! {userData.username}
-            </p>
-        )
-    }
-}
 
 
 
@@ -93,12 +69,6 @@ export default function Home(props){
     },[])
         return (
             <div>
-               <Banner/>
-                <CategoryBanner/>
-                <LoginBanner/>
-                
-                
-                
                 <div style={{marginTop:70}}>
                 <ControlledCarousel/>
                 <Container>
