@@ -43,11 +43,13 @@ class ProductStatusView(BaseView):
 
 
     def post(self, request, pk):
+    
         try:
             data = json.loads(request.body)
         except:
             data = request.POST
         try:
+           
             product = get_object_or_404(Product, id=pk)
             category_id = data.get('category_id', 0)
             category = get_object_or_404(Category, id=category_id)
@@ -80,17 +82,21 @@ class ProductStatusView(BaseView):
     
 
 class ProductNonParam(BaseView):
-
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kargs):
         return super(ProductNonParam, self).dispatch(request, *args, **kargs)
 
+
+
     def post(self, request):
+        print(request.POST)
         try:
             data = json.loads(request.body)
         except:
             data = request.POST
+            print(data)
         try:
+            print(data)
             seller_id = data.get('seller_id', '')
             if not seller_id:
                 return self.response(message="seller_id 없음", status=400)
@@ -130,9 +136,10 @@ class ProductNonParam(BaseView):
 
 
     def get(self, request):
-
+        print(request.get)
         products = Product.objects.all()
         json_products = serializers.serialize('json', products)
+        print(json_products)
         return HttpResponse(json_products, content_type="text/json-comment-filtered")
         
     
