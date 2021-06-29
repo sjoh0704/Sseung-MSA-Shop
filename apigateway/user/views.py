@@ -111,16 +111,19 @@ class UserAPIViewParam(BaseView):
 
 
         
-#     def put(self, request, pk):
-#         data = json.loads(request.body)
-
-#         user = get_object_or_404(User, id=pk)
-
-#         user.username = data['username']
-#         user.email = data['email']
-        
-#         user.save()
-        
-#         return self.response(message='edit user success')
+    def post(self, request, pk):
+        try:
+            data = json.loads(request.body)
+        except Exception as e:
+            data = request.POST
+        print(data)
+        response = requests.post('{}/apis/v1/user/{}'.format(USER_SERVICE_URL, pk), data)
+        dic_response = json.loads(response.content)
+        print(response)
+        print(dic_response)
+        if response.status_code == 200:
+            return self.response(data = dic_response, message='user edit success', status=200)
+        else:
+            return self.response(message='user edit fails', status=400)
         
  

@@ -147,16 +147,22 @@ class UserAPIViewParam(BaseView):
 
         return self.response(data=data ,message='get user success', status=200)
         
-    def put(self, request, pk):
-        data = json.loads(request.body)
-
+    def post(self, request, pk):
+        try:
+            data = json.loads(request.body)
+        except Exception as e:
+            data = request.POST
+        print(data)
         user = get_object_or_404(User, id=pk)
-
-        user.username = data['username']
-        user.email = data['email']
-        
+        username = data.get("username", "")
+        if not username:
+            return self.response(message='not username', status=400)
+        email = data.get("email", "")
+        if not email:
+            return self.response(message='not email', status=400)
+        user.username = username
+        user.email = email
         user.save()
-        
         return self.response(message='edit user success')
         
  
