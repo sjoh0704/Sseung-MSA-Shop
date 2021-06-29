@@ -118,12 +118,14 @@ class UserAPIView(BaseView):
 
 # 이 부분은 유의 
     def delete(self, request, pk):
-        # user.delete()
+      
     
         response = requests.delete("http://localhost:8000/apis/v1/user/{}/product".format(pk))  # product-service url
         print(response)
         if response.status_code == 200:
-            return self.response(message='deleting user successes', status=200)
+            user = get_object_or_404(User, id=pk)
+            user.delete()
+            return self.response(message='deleting user success', status=200)
         else:
             return self.response(message='deleting user fails', status=400)
 
