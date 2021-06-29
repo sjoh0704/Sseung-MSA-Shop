@@ -31,41 +31,17 @@ class UserLoginView(BaseView):
 
 
     def post(self, request):
-        response = requests.post('{}/apis/v1/user/login'.format(USER_SERVICE_URL))  # product-service url
-        print(response)
+        try:
+            data = json.loads(request.body)
+        except:
+            data = request.POST
+
+        response = requests.post('{}/apis/v1/user/login'.format(USER_SERVICE_URL), data)  # product-service url
+        dic_response = json.loads(response.content)
         if response.status_code == 200:
-            return self.response(message='user login success', status=200)
+            return self.response(data = dic_response, message='user login success', status=200)
         else:
             return self.response(message='user login fails', status=400)
-    # def post(self, request):
-    #     try:
-    #         data = json.loads(request.body)
-    #     except:
-    #         data = request.POST
-    #     username = data.get('username')
-   
-    #     if username is None:
-    #         return self.response(message="아이디를 입력해주세요", status=400)
-
-    #     password = data.get('password')
-    #     if password is None:
-    #         return self.response(message="비밀번호를 입력해주세요", status=400)
-      
-    #     user = authenticate(username=username, password=password)
-
-    #     if user is None:
-    #         print("정보 없음")
-    #         return self.response(message="입력 정보를 확인해주세요", status=400)
-    #         # return JsonResponse({'data':{}, 'message': "입력정보를 확인해주세요"}, status=400)
-  
-    #     login(request, user)
-    #     print(user)
-    #     data = {
-    #         'user_id': user.id,
-    #         'username': user.username,
-    #         "useremail": user.email
-    #     }
-    #     return self.response(data=data, message="login success")   
 
 
 class UserLogoutView(BaseView):
