@@ -11,6 +11,8 @@ from django.core.validators import validate_email, ValidationError
 from django.contrib.auth import login, authenticate, logout
 import requests
 
+PRODUCT_SERIVCE_URL = 'http://localhost:8000'
+
 class BaseView(View):
     @staticmethod
     def response(data={}, message ="", status=200):
@@ -65,7 +67,7 @@ class UserLogoutView(BaseView):
 
     def get(self, request):
         logout(request)
-        return self.response()
+        return self.response(status=200)
 
 
 class UserAPIView(BaseView):
@@ -116,18 +118,22 @@ class UserAPIView(BaseView):
         return self.response(data = data, message="create user success", status=200)
 
 
+
+class UserAPIViewParam(BaseView):
+
+    @method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kargs):
+        return super(UserAPIViewParam, self).dispatch(request, *args, **kargs)
 # 이 부분은 유의 
     def delete(self, request, pk):
-      
-    
-        response = requests.delete("http://localhost:8000/apis/v1/user/{}/product".format(pk))  # product-service url
+        response = requests.delete("{}/apis/v1/user/{}/product".format(PRODUCT_SERIVCE_URL, pk))  # product-service url
         print(response)
         if response.status_code == 200:
             user = get_object_or_404(User, id=pk)
             user.delete()
             return self.response(message='deleting user success', status=200)
-        else:
-            return self.response(message='deleting user fails', status=400)
+        
+        return self.response(message='deleting user fails', status=200)
 
         
 

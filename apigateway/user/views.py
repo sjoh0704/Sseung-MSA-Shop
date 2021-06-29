@@ -36,7 +36,7 @@ class UserLoginView(BaseView):
         except:
             data = request.POST
 
-        response = requests.post('{}/apis/v1/user/login'.format(USER_SERVICE_URL), data)  # product-service url
+        response = requests.post('{}/apis/v1/user/login'.format(USER_SERVICE_URL), data)
         dic_response = json.loads(response.content)
         if response.status_code == 200:
             return self.response(data = dic_response, message='user login success', status=200)
@@ -49,9 +49,16 @@ class UserLogoutView(BaseView):
     def dispatch(self, request, *args, **kargs):
         return super(UserLogoutView, self).dispatch(request, *args, **kargs)
 
-    # def get(self, request):
-    #     logout(request)
-    #     return self.response()
+    def get(self, request):
+        response = requests.get('{}/apis/v1/user/logout'.format(USER_SERVICE_URL))
+        dic_response = json.loads(response.content)
+        print(response)
+        print(dic_response)
+        if response.status_code == 200:
+            return self.response(data = dic_response, message='user logout success', status=200)
+        else:
+            return self.response(message='user logout fails', status=400)
+
 
 
 class UserAPIView(BaseView):
@@ -61,56 +68,44 @@ class UserAPIView(BaseView):
         return super(UserAPIView, self).dispatch(request, *args, **kargs)
 
 
-#     def post(self, request):
-#         print(request.body)
-#         try:
-            
-#             data = json.loads(request.body)
-        
-#         except:
-#             data = request.POST
-#         username = data.get('username', '')
-#         if not username:
-#             return self.response(message="아이디를 입력해주세요", status=400)
-#         password = data.get('password', '')
-#         if not password:
-#             return self.response(message="패스워드를 입력해주세요", status=400)
-#         email = data.get('email', '')
-#         if not email:
-#             return self.response(message="email을 입력해주세요", status=400)
-#         try:
-#             validate_email(email)
-#         except ValidationError:
-#             return self.response(message="유효하지 않은 이메일입니다.", status=400)
+    def post(self, request):
+        try:
+            data = json.loads(request.body)
+        except:
+            data = request.POST
+        response = requests.post('{}/apis/v1/user/'.format(USER_SERVICE_URL), data)
+        dic_response = json.loads(response.content)
+        print(response)
+        print(dic_response)
+        if response.status_code == 200:
+            return self.response(data = dic_response, message='user create success', status=200)
+        else:
+            return self.response(message='user create fails', status=400)
+ 
+class UserAPIViewParam(BaseView):
+
+    @method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kargs):
+        return super(UserAPIViewParam, self).dispatch(request, *args, **kargs)
 
 
-#         try:
-#             user = User.objects.create_user(username, email, password)
-#         except IntegrityError:
-#             return self.response(message="존재하는 아이디입니다.", status=400)
-        
-#         data = {
-#             'user_id': user.id,
-#             'username': user.username,
-#             "useremail": user.email
-#         }
-#         return self.response(data = data, message="create user success", status=200)
+    def delete(self, request, pk):
+        response = requests.delete("{}/apis/v1/user/{}".format(USER_SERVICE_URL, pk))
+        print(response)
+        if response.status_code == 200:
+            return self.response(message='user delete success', status=200)
+        else:
+            return self.response(message='user delete fails', status=400)
 
 
-# # 이 부분은 유의 
-#     def delete(self, request, pk):
-      
-    
-#         response = requests.delete("http://localhost:8000/apis/v1/user/{}/product".format(pk))  # product-service url
-#         print(response)
-#         if response.status_code == 200:
-#             user = get_object_or_404(User, id=pk)
-#             user.delete()
-#             return self.response(message='deleting user success', status=200)
-#         else:
-#             return self.response(message='deleting user fails', status=400)
 
-        
+    def get(self, request, pk):
+        response = requests.delete("{}/apis/v1/user/{}".format(USER_SERVICE_URL, pk))
+        print(response)
+        if response.status_code == 200:
+            return self.response(message='user delete success', status=200)
+        else:
+            return self.response(message='user delete fails', status=400)
 
 #     def get(self, request, pk):
 #         user = get_object_or_404(User, id=pk)
