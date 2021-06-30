@@ -7,8 +7,9 @@ from django.views import View
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.renderers import JSONRenderer
+import requests
 
-
+PRODUCT_SERIVCE_URL = 'http://localhost:8100'
 
 class BaseView(View):
     @staticmethod
@@ -32,25 +33,25 @@ class GetCategory(BaseView):
         return super(GetCategory, self).dispatch(request, *args, **kargs)
    
    
-    # def get(self, request):
-    #     categories = Category.objects.all()
-    #     json_list = serializers.serialize('json', categories)
-    #     return HttpResponse(json_list, content_type="text/json-comment-filtered")
-
+    def get(self, request):
+        response = requests.get('{}/apis/v1/category'.format(PRODUCT_SERIVCE_URL))
+        if response.status_code == 200:
+            data = json.loads(response.content)
+            print(data)
+            return self.response(data = data, message='get category success')
+        return self.response(message='get category fails', status=400)
 
 class GetProductByCategory(BaseView):
-    
     
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kargs):
         return super(GetProductByCategory, self).dispatch(request, *args, **kargs)
     
-    
-    # def get(self, request, pk):
-    #     category = Category.objects.get(id=pk)
-    #     products = Product.objects.filter(category=category)
-    #     # products = category.product_set.all()
+    def get(self, request, pk):
+        response = requests.get('{}/apis/v1/category/{}'.format(PRODUCT_SERIVCE_URL, pk))
+        if response.status_code == 200:
+            data = json.loads(response.content)
+            print(data)
+            return self.response(data = data, message='get product by category success')
+        return self.response(message='get product by category fails', status=400)
 
-       
-    #     json_list = serializers.serialize('json', products)
-    #     return HttpResponse(json_list, content_type="text/json-comment-filtered")

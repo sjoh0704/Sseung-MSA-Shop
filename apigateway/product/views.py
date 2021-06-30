@@ -7,8 +7,10 @@ from django.views import View
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.renderers import JSONRenderer
+import requests
+from django.conf import settings
 
-
+PRODUCT_SERIVCE_URL = getattr(settings, 'PRODUCT_SERVICE_URL','http://localhost:8000')
 
 class BaseView(View):
     @staticmethod
@@ -27,55 +29,22 @@ class ProductNonParam(BaseView):
     def dispatch(self, request, *args, **kargs):
         return super(ProductNonParam, self).dispatch(request, *args, **kargs)
 
-
-    # def post(self, request):
-    #     print(request.body)
+    
+    def post(self, request):
      
-    #     try:
-    #         data = json.loads(request.body)
+        try:
+            data = json.loads(request.body)
           
-    #     except:
-    #         data = request.POST
-            
-    #     print(data)
-    #     try:
-    #         print("try")
-    #         print(data)
-    #         seller_id = data.get('seller_id', '')
-    #         if not seller_id:
-    #             return self.response(message="seller_id 없음", status=400)
-
-    #         category_id = data.get('category_id', '')
-    #         category = get_object_or_404(Category, id=category_id)
-    #         if not category:
-    #             return self.response(message="없는 카테고리", status=400)
+        except:
+            data = request.POST
+        print(data)
         
-    #         name = data.get('name', '')
-    #         if not name:
-    #             return self.response(message="name 없음", status=400)
+        response = requests.post('{}/apis/v1/product'.format(PRODUCT_SERIVCE_URL), data)
 
-    #         price = data.get('price', '')
-    #         if not price:
-    #             return self.response(message="price 없음", status=400)
-
-    #         quantity = data.get('quantity', '')
-    #         if not quantity:
-    #             return self.response(message="quantity 없음", status=400)
-                
-    #         description = data.get('description', '')
-    #         if not description:
-    #             return self.response(message="description 없음", status=400)
-            
-    #         product = Product.objects.create(name = name,
-    #                                         seller_id=seller_id,
-    #                                         category=category,
-    #                                         price=price,
-    #                                         quantity=quantity,
-    #                                         description=description)
-    #     except Exception as e:
-    #         return self.response(message=e, status=400)
-    #     else:
-    #         return self.response(message="create product success", status=200)
+        if response.status_code == 200:
+            return self.response(message='create product success')
+        return self.response(message='create product fails', status=400)
+        
 
 
 

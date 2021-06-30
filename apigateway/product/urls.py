@@ -3,8 +3,8 @@ from .views import ProductNonParam, ProductStatusView, DeleteProductCascadingUse
 urlpatterns = [
 
     path('', ProductNonParam.as_view()),
-    path('<int:pk>', ProductStatusView.as_view()),
-    path('user/<int:pk>', DeleteProductCascadingUser.as_view()),
+    path('/<int:pk>', ProductStatusView.as_view()),
+    path('/user/<int:pk>', DeleteProductCascadingUser.as_view()),
     
     
 ]
