@@ -10,8 +10,9 @@ from django.db import IntegrityError, reset_queries
 from django.core.validators import validate_email, ValidationError
 from django.contrib.auth import login, authenticate, logout
 import requests
+from django.conf import settings
 
-USER_SERVICE_URL = 'http://localhost:8100'
+USER_SERIVCE_URL = getattr(settings, 'USER_SERVICE_URL','http://localhost:8000')
 
 class BaseView(View):
     @staticmethod

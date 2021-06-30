@@ -8,8 +8,9 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.renderers import JSONRenderer
 import requests
+from django.conf import settings
 
-PRODUCT_SERIVCE_URL = 'http://localhost:8100'
+PRODUCT_SERIVCE_URL = getattr(settings, 'PRODUCT_SERVICE_URL','http://localhost:8000')
 
 class BaseView(View):
     @staticmethod

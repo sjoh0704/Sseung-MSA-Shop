@@ -38,9 +38,7 @@ class ProductNonParam(BaseView):
         except:
             data = request.POST
         print(data)
-        
         response = requests.post('{}/apis/v1/product'.format(PRODUCT_SERIVCE_URL), data)
-
         if response.status_code == 200:
             return self.response(message='create product success')
         return self.response(message='create product fails', status=400)
@@ -48,15 +46,14 @@ class ProductNonParam(BaseView):
 
 
 
-    # def get(self, request):
-  
-    #     products = Product.objects.all()
-    #     json_products = serializers.serialize('json', products)
-    #     print(json_products)
-    #     return HttpResponse(json_products, content_type="text/json-comment-filtered")
+    def get(self, request):
         
-    
-        
+        response = requests.get('{}/apis/v1/product'.format(PRODUCT_SERIVCE_URL))
+        if response.status_code == 200:
+            data = json.loads(response.content)
+            print(data)
+            return self.response(data = data, message='get product success')
+        return self.response(message='get product fails', status=400)
  
 
 
@@ -64,70 +61,38 @@ class ProductStatusView(BaseView):
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kargs):
         return super(ProductStatusView, self).dispatch(request, *args, **kargs)
-
-    # def get(self, request, pk):
-    #     product = get_object_or_404(Product, id=pk)
-    #     data = {
-    #         "category": product.category.kind,
-    #         "name": product.name,
-    #         "price": product.price,
-    #         "quantity": product.quantity,
-    #         "description": product.description,
-    #         "created_at": product.created_at,
-    #         "updated_at": product.updated_at
-    #     }
-    #     return self.response(data=data, message="product data", status=200)
+    
+    
+    def get(self, request, pk):
+        response = requests.get('{}/apis/v1/product/{}'.format(PRODUCT_SERIVCE_URL, pk))
+        if response.status_code == 200:
+            data = json.loads(response.content)
+            print(data)
+            return self.response(data = data, message='get product success')
+        return self.response(message='get product fails', status=400)
 
 
-    # def post(self, request, pk):
-    
-    #     try:
-    #         data = json.loads(request.body)
-    #     except:
-    #         data = request.POST
-    #     try:
-           
-    #         product = get_object_or_404(Product, id=pk)
-    #         category_id = data.get('category_id', 0)
-    #         category = get_object_or_404(Category, id=category_id)
-    #         if category:
-    #             product.category=category
-    #         name = data.get('name', '')
-    #         if name:
-    #             product.name = name
-    #         price = data.get('price', '')
-    #         if price:
-    #             product.price = price
-    #         quantity = data.get('quantity', '')
-    #         if quantity:
-    #             product.quantity = quantity         
-    #         description = data.get('description', '')
-    #         if description:
-    #             product.description = description 
-    #         product.save()  
-    #     except Exception as e:
-    #         return self.response(message=e, status=400)
-    #     else: 
-    #         return self.response(message="change product status", status=200)
-    
-    
-    # def delete(self, request, pk):
-    #     product = get_object_or_404(Product, id=pk)
-    #     product.delete()
-    #     return self.response(message='deleting product success', status=200)
+        
+    def post(self, request, pk):
+     
+        try:
+            data = json.loads(request.body)
+          
+        except:
+            data = request.POST
+        print(data)
+        response = requests.post('{}/apis/v1/product/{}'.format(PRODUCT_SERIVCE_URL, pk), data)
+        if response.status_code == 200:
+            return self.response(message='edit product success')
+        return self.response(message='edit product fails', status=400)
 
-class DeleteProductCascadingUser(BaseView):
+
     
     
-    @method_decorator(csrf_exempt)
-    def dispatch(self, request, *args, **kargs):
-        return super(DeleteProductCascadingUser, self).dispatch(request, *args, **kargs)
-    
-    
-    # def delete(self, request, pk):
-    #     products = Product.objects.filter(seller_id=pk)
-    #     # products = category.product_set.all()
-    #     print(products)
-    #     products.delete()
-    #     return self.response(message="deleting product created by user_id={} successes".format(pk), status=200)
+    def delete(self, request, pk):
+        response = requests.delete('{}/apis/v1/product/{}'.format(PRODUCT_SERIVCE_URL, pk))
+        if response.status_code == 200:
+            return self.response(message='delete product success')
+        return self.response(message='delete product fails', status=400)
+
         
