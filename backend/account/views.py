@@ -9,6 +9,10 @@ from django.contrib.auth.models import User
 from django.db import IntegrityError, reset_queries
 from django.core.validators import validate_email, ValidationError
 from django.contrib.auth import login, authenticate, logout
+import requests
+
+PRODUCT_SERIVCE_URL = 'http://localhost:8000'
+
 class BaseView(View):
     @staticmethod
     def response(data={}, message ="", status=200):
@@ -63,7 +67,7 @@ class UserLogoutView(BaseView):
 
     def get(self, request):
         logout(request)
-        return self.response()
+        return self.response(status=200)
 
 
 class UserAPIView(BaseView):
@@ -74,17 +78,20 @@ class UserAPIView(BaseView):
 
 
     def post(self, request):
+        print(request.body)
         try:
+            
             data = json.loads(request.body)
+        
         except:
             data = request.POST
-        username = request.POST.get('username', '')
+        username = data.get('username', '')
         if not username:
             return self.response(message="아이디를 입력해주세요", status=400)
-        password = request.POST.get('password', '')
+        password = data.get('password', '')
         if not password:
             return self.response(message="패스워드를 입력해주세요", status=400)
-        email = request.POST.get('email', '')
+        email = data.get('email', '')
         if not email:
             return self.response(message="email을 입력해주세요", status=400)
         try:
@@ -110,10 +117,25 @@ class UserAPIView(BaseView):
         }
         return self.response(data = data, message="create user success", status=200)
 
+
+
+class UserAPIViewParam(BaseView):
+
+    @method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kargs):
+        return super(UserAPIViewParam, self).dispatch(request, *args, **kargs)
+# 이 부분은 유의 
     def delete(self, request, pk):
-        user = get_object_or_404(User, id=pk)
-        user.delete()
-        return self.response(message='delete user success', status=200)
+        response = requests.delete("{}/apis/v1/user/{}/product".format(PRODUCT_SERIVCE_URL, pk))  # product-service url
+        print(response)
+        if response.status_code == 200:
+            user = get_object_or_404(User, id=pk)
+            user.delete()
+            return self.response(message='deleting user success', status=200)
+        
+        return self.response(message='deleting user fails', status=200)
+
+        
 
     def get(self, request, pk):
         user = get_object_or_404(User, id=pk)
@@ -125,16 +147,22 @@ class UserAPIView(BaseView):
 
         return self.response(data=data ,message='get user success', status=200)
         
-    def put(self, request, pk):
-        data = json.loads(request.body)
-
+    def post(self, request, pk):
+        try:
+            data = json.loads(request.body)
+        except Exception as e:
+            data = request.POST
+        print(data)
         user = get_object_or_404(User, id=pk)
-
-        user.username = data['username']
-        user.email = data['email']
-        
+        username = data.get("username", "")
+        if not username:
+            return self.response(message='not username', status=400)
+        email = data.get("email", "")
+        if not email:
+            return self.response(message='not email', status=400)
+        user.username = username
+        user.email = email
         user.save()
-        
         return self.response(message='edit user success')
         
  
