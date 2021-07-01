@@ -126,7 +126,7 @@ class UserAPIViewParam(BaseView):
         return super(UserAPIViewParam, self).dispatch(request, *args, **kargs)
 # 이 부분은 유의 
     def delete(self, request, pk):
-        response = requests.delete("{}/apis/v1/user/{}/product".format(PRODUCT_SERIVCE_URL, pk))  # product-service url
+        response = requests.delete("{}/apis/v1/product/user/{}".format(PRODUCT_SERIVCE_URL, pk))  # product-service url
         print(response)
         if response.status_code == 200:
             user = get_object_or_404(User, id=pk)
