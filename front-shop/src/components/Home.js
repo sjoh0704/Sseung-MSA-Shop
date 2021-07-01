@@ -46,7 +46,8 @@ export default function Home(props){
 
     const fetchProducts= async ()=>{
         await axios.get('/apis/v1/product').then(res=> {
-            let product_list = res.data.map(data=> {
+            console.log(res)
+            let product_list = res.data.payload.map(data=> {
                 return data.fields
             })
             Setproducts(product_list);
@@ -54,7 +55,7 @@ export default function Home(props){
     }
     const fetchCategory= async ()=>{
         await axios.get('/apis/v1/category').then(res=> {
-            let category_list = res.data.map(data=> {
+            let category_list = res.data.payload.map(data=> {
                 return data.fields
             })
            
