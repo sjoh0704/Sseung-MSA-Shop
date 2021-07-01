@@ -12,7 +12,7 @@ from django.contrib.auth import login, authenticate, logout
 import requests
 from django.conf import settings
 
-USER_SERIVCE_URL = getattr(settings, 'USER_SERVICE_URL','http://localhost:8000')
+USER_SERIVCE_URL = 'http://user-api-service:8080'
 
 class BaseView(View):
     @staticmethod
@@ -36,8 +36,8 @@ class UserLoginView(BaseView):
             data = json.loads(request.body)
         except:
             data = request.POST
-
-        response = requests.post('{}/apis/v1/user/login'.format(USER_SERVICE_URL), data)
+        response = requests.post('{}/apis/v1/user/login'.format(USER_SERIVCE_URL), data)
+        # response = requests.post('{}/apis/v1/user/login'.format(USER_SERVICE_URL), data)
         dic_response = json.loads(response.content)
         if response.status_code == 200:
             return self.response(data = dic_response, message='user login success', status=200)

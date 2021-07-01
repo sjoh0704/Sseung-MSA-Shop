@@ -10,7 +10,7 @@ from rest_framework.renderers import JSONRenderer
 import requests
 from django.conf import settings
 
-PRODUCT_SERIVCE_URL = getattr(settings, 'PRODUCT_SERVICE_URL','http://localhost:8000')
+PRODUCT_SERIVCE_URL = 'http://product-api-service:8080'
 
 class BaseView(View):
     @staticmethod
