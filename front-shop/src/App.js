@@ -10,6 +10,7 @@ import { Route} from 'react-router-dom';
 import ProductByCategory from './components/ProductByCategory'
 import Top from './components/Top'
 import Banner from './components/Banner'
+import CategoryBanner from './components/CategoryBanner';
 
 function App() {
   return (
@@ -24,12 +25,13 @@ function App() {
     
     <Top/>
     <Banner/>
+    <CategoryBanner/>
     <Route exact path="/" component={Home}/>
     <Route exact path="/login" component={Login}/>
     <Route exact path="/register" component={Register}/>
     <Route exact path="/product/register" component={ProductRegister}/>
     <Route exact path="/logout" component={Logout}/>
-    <Route exact path="/category/1" component={ProductByCategory}/>
+    <Route exact path="/category/:number" component={ProductByCategory}/>
     <Move/>
    </div>
   );

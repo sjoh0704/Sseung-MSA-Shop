@@ -18,7 +18,7 @@ function Logout() {
         })
     }
     return (
-        <div>
+        <div >
             <Container>
             <Title title="LOGOUT"></Title>
             <h3>정말 로그아웃 하시겠습니까?</h3>

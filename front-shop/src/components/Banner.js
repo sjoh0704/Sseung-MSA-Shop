@@ -2,10 +2,7 @@ import React from 'react'
 import {Container, Row, Col, Nav, Navbar, Form, FormControl, Button} from 'react-bootstrap'
 const Banner = () => {
     return(
-        
-        // <Container>
-        //     <h1>Shopping shop</h1>
-        // </Container>
+  
   <>
   <br />
   <Navbar bg="primary" variant="dark">

@@ -6,36 +6,9 @@ import Carousel from "react-bootstrap/Carousel";
 import {Button, Container, Row,Col, Card} from 'react-bootstrap'
 import Top from './Top'
 import Banner from './Banner'
+import DisplayProducts from './DisplayProduct'
 import CategoryBanner from './CategoryBanner'
 // import NonLoggedPost from "./NonLoggedPost";
-
-
-
-
-export const DisplayProducts = ({products}) =>{
-    products = products.map(product => {
-        return (
-            
-                <Col xs>
-                    <Card style={{ width: '18rem' }}>
-                    <Card.Img variant="top" src="holder.js/100px180" />
-                    <Card.Body>
-                        <Card.Title>{product.name}</Card.Title>
-                        <Card.Text>
-                        {product.price}원
-                        </Card.Text>
-                    
-                    </Card.Body>
-                    </Card>
-                </Col>
-                )
-    })
-    return (
-        <Row>
-        {products}
-        </Row>
-    )
-};
 
 
 
