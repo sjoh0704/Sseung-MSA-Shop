@@ -3,7 +3,6 @@ import axios from 'axios'
 import React, {useState} from 'react'
 import {useSelector, useDispatch} from 'react-redux'
 import {Form, Container, Button} from 'react-bootstrap'
-import Banner from './Banner'
 import Title from './Title'
 
 
@@ -33,7 +32,7 @@ function Login(){
         .then(response => {
             // props.history.push('/')
             console.log("로그인 성공")
-            dispatch(loginAction(response.data.payload))
+            dispatch(loginAction(response.data.payload.payload))
             alert("로그인 성공")
         }).catch(e =>{
             alert("로그인 실패")

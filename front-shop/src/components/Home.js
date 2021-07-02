@@ -3,12 +3,9 @@ import {useSelector, useDispatch} from 'react-redux'
 import {setCategory} from '../modules/category'
 import axios from "axios";
 import Carousel from "react-bootstrap/Carousel";
-import {Button, Container, Row,Col, Card} from 'react-bootstrap'
-import Top from './Top'
-import Banner from './Banner'
+import {Container} from 'react-bootstrap'
 import DisplayProducts from './DisplayProduct'
-import CategoryBanner from './CategoryBanner'
-// import NonLoggedPost from "./NonLoggedPost";
+
 
 
 
@@ -21,9 +18,14 @@ export default function Home(props){
         await axios.get('/apis/v1/product').then(res=> {
             console.log(res)
             let product_list = res.data.payload.map(data=> {
-                return data.fields
+
+                return  {
+                    ...data.fields,
+                    id: data.pk
+                }
             })
             Setproducts(product_list);
+            console.log(product_list)
         })
     }
     const fetchCategory= async ()=>{

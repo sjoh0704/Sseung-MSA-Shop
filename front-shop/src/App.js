@@ -11,7 +11,7 @@ import ProductByCategory from './components/ProductByCategory'
 import Top from './components/Top'
 import Banner from './components/Banner'
 import CategoryBanner from './components/CategoryBanner';
-
+import ProductDetail from './components/ProductDetail'
 function App() {
   return (
 
@@ -32,6 +32,7 @@ function App() {
     <Route exact path="/product/register" component={ProductRegister}/>
     <Route exact path="/logout" component={Logout}/>
     <Route exact path="/category/:number" component={ProductByCategory}/>
+    <Route exact path="/product/:number" component={ProductDetail}/>
     <Move/>
    </div>
   );

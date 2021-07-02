@@ -6,8 +6,8 @@ import { Link } from 'react-router-dom';
 
 const Top = ()=>{
     const {isLoggedIn, userData} = useSelector(state =>({
-                isLoggedIn: state.user.isLoggedIn,
-                userData: state.user.payload
+            isLoggedIn: state.user.isLoggedIn,
+            userData: state.user.payload
     }))
 
     

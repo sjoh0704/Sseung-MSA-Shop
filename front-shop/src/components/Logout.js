@@ -12,9 +12,11 @@ function Logout() {
         .then(response => {
             console.log('로그아웃 합니다.')
             dispatch(logoutAction())
+            alert('로그아웃 합니다.')
         })
         .catch(e => {
             console.log('로그아웃 실패 에러')
+            alert('로그아웃 실패')
         })
     }
     return (
