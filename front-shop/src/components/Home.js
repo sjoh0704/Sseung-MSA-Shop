@@ -3,7 +3,7 @@ import {useSelector, useDispatch} from 'react-redux'
 import {setCategory} from '../modules/category'
 import axios from "axios";
 import Carousel from "react-bootstrap/Carousel";
-import {Container} from 'react-bootstrap'
+import {Container, Navbar} from 'react-bootstrap'
 import DisplayProducts from './DisplayProduct'
 
 
@@ -45,11 +45,17 @@ export default function Home(props){
     },[])
         return (
             <div>
-                <div style={{marginTop:70}}>
+                <br/>
+                <div style={{marginTop:30}}>
+                <Navbar bg="primary" variant="dark" />
+                
                 <ControlledCarousel/>
+                <Navbar bg="primary" variant="dark" />
+                <br/>
                 <Container>
                     <DisplayProducts products={products}/>
                 </Container>
+                
                
 
                 </div>

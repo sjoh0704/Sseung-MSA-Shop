@@ -1,26 +1,45 @@
 import React from 'react'
-import {Container, Row, Col, Nav, Navbar, Form, FormControl, Button} from 'react-bootstrap'
+import {Container,Row, Col, Nav, Navbar, Form, FormControl, Button} from 'react-bootstrap'
+import {Link} from 'react-router-dom'
+import CategoryBanner from './CategoryBanner'
 const Banner = () => {
     return(
   
   <>
+  <hr/>
   <br />
-  <Navbar bg="primary" variant="dark">
-      <Container>
-      <Navbar.Brand href="#home">Shopping Mall</Navbar.Brand>
-    <Form inline>
-      <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-      <Button variant="outline-light">Search</Button>
-    </Form>
-    <Nav className="mr-auto">
-      <Nav.Link href="#home">판매하기</Nav.Link>
-      <Nav.Link href="#features">내 상점</Nav.Link>
-      <Nav.Link href="#pricing">장바구니</Nav.Link>
-    </Nav>
-      </Container>
+<div>
+<Container>
+      <Row>
+        <Col md = {4}>
+        <Navbar.Brand href="#home">
+          <Link to="/" style={{textDecoration:'none', color:'inherit'}}>
+          <h2>
+            Shopping Mall
+            </h2>
+            </Link>
+            
+            </Navbar.Brand>
+        </Col>
+        <Col md={{ span: 4}}>
+        <Form>
+      <FormControl type="text" placeholder="Search" className=" mr-sm-2"/>
+      </Form>
+      
    
+        </Col>
+
+        <Col md={{ span: 4}}>
+        <Button variant="outline-primary">Search</Button>
+        </Col>
+
+        
+      </Row>
+      </Container>
     
-  </Navbar>
+   
+</div>
+
 
 </>
 

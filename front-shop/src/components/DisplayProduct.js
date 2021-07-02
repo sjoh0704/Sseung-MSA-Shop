@@ -5,8 +5,8 @@ const DisplayProducts = ({products}) =>{
     products = products.map((product, index) => {
         let path = '/product/' + product.id
         return (
-                <Link to={path}>
-                <Col xs key={index}>
+                <Link style={{textDecoration:'none', color:'inherit'}} key={index} to={path}>
+                <Col xs>
                     <Card style={{ width: '18rem' }}>
                     <Card.Img variant="top" src="holder.js/100px180" />
                     <Card.Body>

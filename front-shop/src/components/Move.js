@@ -8,13 +8,13 @@ const Move = () => {
             <hr/>
             <Container>
             <ul>
-                <li><Link to="/">Home</Link></li>
-                <li><Link to="/login">Login</Link></li>
-                <li><Link to="/logout">Logout</Link></li>
-                <li><Link to="/register">Register</Link></li>
-                <li><Link to="/product/register">ProductRegister</Link></li>
-                <li><Link to="/category/1">ProductByCategory</Link></li>
-                <li><Link to="/orderlist">OrderList</Link></li>
+                <li><Link to="/" style={{textDecoration:'none', color:'inherit'}}>Home</Link></li>
+                <li><Link to="/login" style={{textDecoration:'none', color:'inherit'}}>Login</Link></li>
+                <li><Link to="/logout"style={{textDecoration:'none', color:'inherit'}}>Logout</Link></li>
+                <li><Link to="/register"style={{textDecoration:'none', color:'inherit'}}>Register</Link></li>
+                <li><Link to="/product/register"style={{textDecoration:'none', color:'inherit'}}>ProductRegister</Link></li>
+                <li><Link to="/category/1"style={{textDecoration:'none', color:'inherit'}}>ProductByCategory</Link></li>
+                <li><Link to="/orderlist"style={{textDecoration:'none', color:'inherit'}}>OrderList</Link></li>
                 
             </ul>
             </Container>

@@ -1,6 +1,6 @@
 import React from 'react'
 import {useSelector} from 'react-redux'
-import {Container, Dropdown} from 'react-bootstrap'
+import {Container, Navbar, Nav, NavDropdown, Col, Row} from 'react-bootstrap'
 import {Link} from 'react-router-dom'
 function CategoryBanner(){
     const {kind} = useSelector(state => ({
@@ -10,26 +10,44 @@ function CategoryBanner(){
 
         let  path = '/category/' + (index + 1)
         return (
-            <Dropdown.Item key={index}><Link to={path}>{k.kind}</Link></Dropdown.Item>
+            <NavDropdown.Item key={index}><Link to={path} style={{textDecoration:'none', color:'inherit'}}>{k.kind}</Link></NavDropdown.Item>
+           
         );
     }
     );
     
 
     return(
-        <div style={{background:'primary'}}> 
-            <Container>
-        <Dropdown>
-            <Dropdown.Toggle variant='light' id="dropdown-basic">
-                Category
-            </Dropdown.Toggle>
 
-            <Dropdown.Menu>
-                {display_category}
-            </Dropdown.Menu>
-        </Dropdown>
+            <div>
+
+          
+                    
+                    <Container>
+                        <Row>
+                            <Col md={4}>
+                            <NavDropdown title="Category" id="navbarScrollingDropdown">
+                            {display_category}
+                            </NavDropdown>
+                            </Col>
+
+                            <Col>
+                            <Nav className="mr-auto">
+            
+                            <Nav.Link ><Link to="/register"style={{textDecoration:'none', color:'inherit'}}>판매하기</Link></Nav.Link>
+                            <Nav.Link ><Link to="/orderlist"style={{textDecoration:'none', color:'inherit'}}>구매목록</Link></Nav.Link>
+                            <Nav.Link ><Link to="/register"style={{textDecoration:'none', color:'inherit'}}>장바구니</Link></Nav.Link>
+                        
+                            </Nav>
+                            </Col>
+
+                            
+                        </Row>
+      
         </Container>
-        </div>
+            
+          </div>
+  
       
         
    );
