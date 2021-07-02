@@ -16,7 +16,7 @@ function ProductDetail({match}){
     const[product,setProduct]= useState({
     })
     const fetchProduct= async ()=>{
-        await axios.get('/apis/v1/product/' + match.params.number).then(res=> {
+        await axios.get('/apis/v1/order/' + match.params.number).then(res=> {
             console.log(res.data.payload.payload)
             setProduct(res.data.payload.payload);
         

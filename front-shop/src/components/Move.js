@@ -14,6 +14,7 @@ const Move = () => {
                 <li><Link to="/register">Register</Link></li>
                 <li><Link to="/product/register">ProductRegister</Link></li>
                 <li><Link to="/category/1">ProductByCategory</Link></li>
+                <li><Link to="/orderlist">OrderList</Link></li>
                 
             </ul>
             </Container>

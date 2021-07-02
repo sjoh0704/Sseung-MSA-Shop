@@ -1,16 +1,35 @@
-import React from 'react'
-import {ListGroup} from 'react-bootstrap'
+import React, {useState, useEffect} from 'react'
+import axios from 'axios'
+import {ListGroup, Container} from 'react-bootstrap'
+import Title from './Title'
 function OrderList(){
 
+    const [orders, setOrders] = useState([]) 
+    const fetchOrders= async ()=>{
+        await axios.get('/apis/v1/product').then(res=> {
+            let order_list = res.data.payload.map((data, index)=> {
+                return (
+                    <ListGroup.Item key= {index}>{data.fields.name}</ListGroup.Item>
+                )
+            })
+            setOrders(order_list);
+            console.log(orders)
+        })
+    }
+
+    useEffect(()=>{
+        fetchOrders()
+   
+    },[])
 
     return (<div>
+        <Title title="구매 목록" ></Title>
+        <Container>
         <ListGroup>
-  <ListGroup.Item>Cras justo odio</ListGroup.Item>
-  <ListGroup.Item>Dapibus ac facilisis in</ListGroup.Item>
-  <ListGroup.Item>Morbi leo risus</ListGroup.Item>
-  <ListGroup.Item>Porta ac consectetur ac</ListGroup.Item>
-  <ListGroup.Item>Vestibulum at eros</ListGroup.Item>
-</ListGroup>
+            {orders}
+        </ListGroup>
+        </Container>
+        
 
     </div>)
 }
