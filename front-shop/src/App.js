@@ -33,7 +33,9 @@ function App() {
     <Route exact path="/logout" component={Logout}/>
     <Route exact path="/category/:number" component={ProductByCategory}/>
     <Route exact path="/product/:number" component={ProductDetail}/>
+    
     <Move/>
+    
    </div>
   );
 }
