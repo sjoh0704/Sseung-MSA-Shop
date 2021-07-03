@@ -1,4 +1,4 @@
-import {ListGroup, Container, Button, Form} from 'react-bootstrap'
+import {ListGroup, Container, Button, Form, Row, Col} from 'react-bootstrap'
 import axios from 'axios'
 import {useEffect, useState} from 'react'
 import {useSelector} from 'react-redux'
@@ -71,6 +71,11 @@ function ProductDetail({match}){
 
     const onChangeHandler = (e) => {
         const {value} = e.target
+        if(value < 1){
+            alert("올바르지 않습니다.")
+            return;
+        }
+
         setAmount(parseInt(value))
     }
 
@@ -78,7 +83,9 @@ function ProductDetail({match}){
         <div>
         <Title title= {product.name}></Title>
         <Container>
-            <ListGroup>
+            <Row className="justify-content-md-center">
+                <Col xs lg="8">
+                <ListGroup>
             <ListGroup.Item>{product.category}</ListGroup.Item>
             <ListGroup.Item>상품명 / {product.name}</ListGroup.Item>
             <ListGroup.Item>상품 가격 / {product.price}</ListGroup.Item>
@@ -93,6 +100,9 @@ function ProductDetail({match}){
         <br/>
         <Button onClick={onClickWishList}>장바구니</Button>{' '}
         <Button onClick={onClickOrder}>구매하기</Button>
+                </Col>
+            </Row>
+            
         </Container>
 
         </div>

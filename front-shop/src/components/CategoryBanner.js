@@ -25,7 +25,7 @@ function CategoryBanner(){
                     
                     <Container>
                         <Row>
-                            <Col md={4}>
+                            <Col xs lg={3}>
                             <NavDropdown title="Category" id="navbarScrollingDropdown">
                             {display_category}
                             </NavDropdown>

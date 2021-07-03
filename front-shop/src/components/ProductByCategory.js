@@ -27,7 +27,7 @@ function ProductByCategory({match}){
     },[match.params.number])
 
     return(<div>
-        <Title title="카테고리 상품"></Title>
+        <Title title="카테고리 상품" set_middle={false}></Title>
         <Container>
         <DisplayProducts products={products}/>
         </Container>

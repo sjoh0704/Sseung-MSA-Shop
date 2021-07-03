@@ -6,6 +6,7 @@ const Move = () => {
         <div>
             <br/>
             <hr/>
+            <br/>
             <Container>
             <ul>
                 <li><Link to="/" style={{textDecoration:'none', color:'inherit'}}>Home</Link></li>

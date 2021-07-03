@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import {useSelector, useDispatch} from 'react-redux'
 import axios from 'axios'
-import {Form, Container, Button} from 'react-bootstrap'
+import {Form, Container, Button, Row, Col} from 'react-bootstrap'
 import Banner from './Banner'
 import Title from './Title'
 
@@ -56,7 +56,9 @@ function ProductRegister(){
     return(<div>
         <Title title="REGISTER PRODUCT"></Title>
         <Container>
-            <Form onSubmit={onClickHandler} >
+            <Row className="justify-content-md-center">
+                <Col xs lg={8}>
+                <Form onSubmit={onClickHandler} >
 
             <Form.Group controlId="exampleForm.ControlSelect1">
                 <Form.Label>카테고리</Form.Label>
@@ -95,14 +97,14 @@ function ProductRegister(){
                 onChange={onChangeHandler}
                 placeholder="수량을 적어주세요" />
             </Form.Group>
-{/* 
+            {/* 
             <Form.Group controlId="exampleForm.ControlInput1">
                 <Form.Label>사진</Form.Label>
                 <Form.Control placeholder="name@example.com" />
             </Form.Group> */}
 
-            
-         
+
+
             <Form.Group controlId="exampleForm.ControlTextarea1">
                 <Form.Label>상품 설명</Form.Label>
                 <Form.Control 
@@ -113,8 +115,13 @@ function ProductRegister(){
                 value = {description}
                 />
             </Form.Group>
+            <br/>
             <Button type="submit">등록</Button>
             </Form>
+                            
+                </Col>
+            </Row>
+
         </Container>
             
     </div>

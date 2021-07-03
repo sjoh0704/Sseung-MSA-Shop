@@ -11,7 +11,7 @@ const Banner = () => {
 <div>
 <Container>
       <Row>
-        <Col md = {4}>
+        <Col xs lg = {3}>
         <Navbar.Brand href="#home">
           <Link to="/" style={{textDecoration:'none', color:'inherit'}}>
           <h2>
@@ -21,7 +21,7 @@ const Banner = () => {
             
             </Navbar.Brand>
         </Col>
-        <Col md={{ span: 4}}>
+        <Col xs lg={6}>
         <Form>
       <FormControl type="text" placeholder="Search" className=" mr-sm-2"/>
       </Form>
@@ -29,7 +29,7 @@ const Banner = () => {
    
         </Col>
 
-        <Col md={{ span: 4}}>
+        <Col xs lg={3}>
         <Button variant="outline-primary">Search</Button>
         </Col>
 

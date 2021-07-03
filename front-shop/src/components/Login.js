@@ -2,7 +2,7 @@ import {loginAction} from '../modules/user'
 import axios from 'axios'
 import React, {useState} from 'react'
 import {useSelector, useDispatch} from 'react-redux'
-import {Form, Container, Button} from 'react-bootstrap'
+import {Form, Container, Button, Row, Col} from 'react-bootstrap'
 import Title from './Title'
 
 
@@ -49,8 +49,10 @@ function Login(){
         <div>
     
         <Title title="LOGIN"/>
-        <Container>
-            <Form onSubmit={onClickHandler} >
+        <Container >
+            <Row className="justify-content-md-center">
+                <Col lg="8">
+                <Form onSubmit={onClickHandler} >
 
 
             <Form.Group controlId="exampleForm.ControlInput1">
@@ -74,6 +76,10 @@ function Login(){
            
             <Button type="submit">Login</Button>
             </Form>
+                </Col>
+
+            </Row>
+            
         </Container>
         </div>
     );

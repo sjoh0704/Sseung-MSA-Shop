@@ -23,7 +23,7 @@ function OrderList(){
     },[])
 
     return (<div>
-        <Title title="구매 목록" ></Title>
+        <Title title="구매 목록" set_middle={false}></Title>
         <Container>
         <ListGroup>
             {orders}
