@@ -4,7 +4,7 @@ import {logoutAction} from '../modules/user'
 import {useDispatch} from 'react-redux'
 import {Container, Button, Col, Row} from 'react-bootstrap'
 import Title from './Title'
-function Logout() {
+function Logout({history}) {
     const dispatch = useDispatch();
 
     const onClickHandler = () => {
@@ -13,6 +13,7 @@ function Logout() {
             console.log('로그아웃 합니다.')
             dispatch(logoutAction())
             alert('로그아웃 합니다.')
+            history.replace('/')
         })
         .catch(e => {
             console.log('로그아웃 실패 에러')
