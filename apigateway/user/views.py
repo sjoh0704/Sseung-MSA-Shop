@@ -11,8 +11,8 @@ from django.core.validators import validate_email, ValidationError
 from django.contrib.auth import login, authenticate, logout
 import requests
 from django.conf import settings
-
-USER_SERIVCE_URL = getattr(settings, 'USER_SERVICE_URL','http://localhost:8000')
+import os
+USER_SERVICE_URL = os.environ.get("USER_SERVICE_URL",'http://localhost:8200')
 
 class BaseView(View):
     @staticmethod

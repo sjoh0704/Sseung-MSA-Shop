@@ -9,8 +9,8 @@ from django.views.decorators.csrf import csrf_exempt
 from rest_framework.renderers import JSONRenderer
 import requests
 from django.conf import settings
-
-PRODUCT_SERIVCE_URL = getattr(settings, 'PRODUCT_SERVICE_URL','http://localhost:8000')
+import os 
+PRODUCT_SERVICE_URL = os.environ.get("PRODUCT_SERVICE_URL",'http://localhost:8100')
 
 class BaseView(View):
     @staticmethod
@@ -35,7 +35,7 @@ class GetCategory(BaseView):
    
    
     def get(self, request):
-        response = requests.get('{}/apis/v1/category'.format(PRODUCT_SERIVCE_URL))
+        response = requests.get('{}/apis/v1/category'.format(PRODUCT_SERVICE_URL))
         if response.status_code == 200:
             data = json.loads(response.content)
             print(data)
@@ -49,7 +49,7 @@ class GetProductByCategory(BaseView):
         return super(GetProductByCategory, self).dispatch(request, *args, **kargs)
     
     def get(self, request, pk):
-        response = requests.get('{}/apis/v1/category/{}'.format(PRODUCT_SERIVCE_URL, pk))
+        response = requests.get('{}/apis/v1/category/{}'.format(PRODUCT_SERVICE_URL, pk))
         if response.status_code == 200:
             data = json.loads(response.content)
             print(data)
