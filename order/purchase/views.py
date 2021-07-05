@@ -39,36 +39,38 @@ class OrderNonParam(BaseView):
         except:
             data = request.POST
         print(data)
+        seller_id = data.get('seller_id')
         buyer_id = data.get('buyer_id')
         product_id = data.get('product_id')
         quantity = data.get('quantity')
         email_address = data.get('email_address')
         address = data.get('address')
 
-        if not (buyer_id and product_id and quantity and email_address and address):
+        if not (buyer_id and product_id and quantity and email_address and address and seller_id):
             return self.response(message="not sufficent info", status=400)
-        order = Order(
-                    buyer_id = buyer_id,
-                    quantity = quantity,
-                    product_id = product_id,
-                    email_address = email_address,
-                    address = address
-        )
-        order.save()
 
-        return self.response(message='create order success', status=200)
+
+        get_response = requests.get('{}/apis/v1/product/{}'.format(PRODUCT_SERIVCE_URL, product_id))
+        dic_response = json.loads(get_response.content)['payload']
+        dic_response["quantity"] -= int(quantity)
+        post_response = requests.post('{}/apis/v1/product/{}'.format(PRODUCT_SERIVCE_URL, product_id), dic_response)
+
+        if post_response.status_code == 200:
+        
+            order = Order(
+                        seller_id = seller_id,
+                        buyer_id = buyer_id,
+                        quantity = quantity,
+                        product_id = product_id,
+                        email_address = email_address,
+                        address = address
+            )
+            order.save()
+
+            return self.response(message='create order success', status=200)
+        return self.response(message='create order fails', status=400)
         
 
-
-    # 모든 주문 정보 얻기 
-    # def get(self, request):
-        
-    #     response = requests.get('{}/apis/v1/product'.format(PRODUCT_SERIVCE_URL))
-    #     if response.status_code == 200:
-    #         data = json.loads(response.content)
-    #         print(data)
-    #         return self.response(data = data, message='get product success')
-    #     return self.response(message='get product fails', status=400)
  
 
 
@@ -88,34 +90,35 @@ class OrderView(BaseView):
 
 
         # 주문 편집
-    def post(self, request, buyer_id):
+        # pk = order_id
+    def post(self, request, pk):
+
+        order = Order.objects.get(pk=pk)
+
         try:
             data = json.loads(request.body)
           
         except:
             data = request.POST
         print(data)
-        product_id = data.get('product_id')
+       
         quantity = data.get('quantity')
         email_address = data.get('email_address')
         address = data.get('address')
-        if not (buyer_id and product_id and quantity and email_address and address):
+        if not (quantity and email_address and address):
             return self.response(message="not sufficent info", status=400)
-        order = Order(
-                    buyer_id = buyer_id,
-                    quantity = quantity,
-                    product_id = product_id,
-                    email_address = email_address,
-                    address = address
-        )
+        order.quantity = quantity
+        order.email_address = email_address
+        order.address =address
         order.save()
 
-        return self.response(message='create order success', status=200)
+        return self.response(message='edit order success', status=200)
 
 
     
-    
+        # 주문 취소 
     def delete(self, request, pk):
+
         response = requests.delete('{}/apis/v1/product/{}'.format(PRODUCT_SERIVCE_URL, pk))
         if response.status_code == 200:
             return self.response(message='delete product success')

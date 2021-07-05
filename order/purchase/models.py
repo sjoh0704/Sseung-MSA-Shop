@@ -5,6 +5,7 @@ from django.db import models
 class Order(models.Model):
     product_id = models.IntegerField(default=0)
     buyer_id = models.IntegerField(default=0)
+    seller_id = models.IntegerField(default=0)
     quantity = models.IntegerField(default=0)
     email_address = models.CharField(max_length=250)
     address = models.CharField(max_length=250) 
