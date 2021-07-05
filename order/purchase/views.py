@@ -67,8 +67,8 @@ class OrderNonParam(BaseView):
             )
             order.save()
 
-            return self.response(message='create order success', status=200)
-        return self.response(message='create order fails', status=400)
+            return self.response(message='delete order success', status=200)
+        return self.response(message='delete order fails', status=400)
         
 
  
@@ -93,23 +93,19 @@ class OrderView(BaseView):
         # pk = order_id
     def post(self, request, pk):
 
-        order = Order.objects.get(pk=pk)
-
+        order = get_object_or_404(Order, pk=pk)
         try:
             data = json.loads(request.body)
-          
         except:
             data = request.POST
         print(data)
        
-        quantity = data.get('quantity')
         email_address = data.get('email_address')
+        if email_address:
+            order.email_address = email_address
         address = data.get('address')
-        if not (quantity and email_address and address):
-            return self.response(message="not sufficent info", status=400)
-        order.quantity = quantity
-        order.email_address = email_address
-        order.address =address
+        if address:
+            order.address = address
         order.save()
 
         return self.response(message='edit order success', status=200)
@@ -117,11 +113,19 @@ class OrderView(BaseView):
 
     
         # 주문 취소 
+        # pk = order_id
     def delete(self, request, pk):
+        order = get_object_or_404(Order, pk=pk)
+        product_id = order.product_id
+        quantity = order.quantity
+        get_response = requests.get('{}/apis/v1/product/{}'.format(PRODUCT_SERIVCE_URL, product_id))
+        dic_response = json.loads(get_response.content)['payload']
+        dic_response["quantity"] += int(quantity)
+        post_response = requests.post('{}/apis/v1/product/{}'.format(PRODUCT_SERIVCE_URL, product_id), dic_response)
 
-        response = requests.delete('{}/apis/v1/product/{}'.format(PRODUCT_SERIVCE_URL, pk))
-        if response.status_code == 200:
-            return self.response(message='delete product success')
-        return self.response(message='delete product fails', status=400)
+        if post_response.status_code == 200:
+            # order.delete()
 
+            return self.response(message='create order success', status=200)
+        return self.response(message='create order fails', status=400)
         
