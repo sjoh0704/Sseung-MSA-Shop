@@ -19,7 +19,7 @@ const Top = ()=>{
                 <Col md={{ span: 5, offset: 9 }}>
                 <div>
                 <span><Link to='/login' style={{textDecoration:'none'}}>로그인 / </Link></span>
-                <span><Link to='/logout' style={{textDecoration:'none'}}>회원가입</Link></span>
+                <span><Link to='/register' style={{textDecoration:'none'}}>회원가입</Link></span>
                 </div>
                 </Col>
                 
