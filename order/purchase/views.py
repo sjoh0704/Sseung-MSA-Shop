@@ -124,7 +124,7 @@ class OrderView(BaseView):
         post_response = requests.post('{}/apis/v1/product/{}'.format(PRODUCT_SERIVCE_URL, product_id), dic_response)
 
         if post_response.status_code == 200:
-            # order.delete()
+            order.delete()
 
             return self.response(message='create order success', status=200)
         return self.response(message='create order fails', status=400)
