@@ -15,7 +15,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from purchase.views import OrderView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('apis/v1/order/<int:product_id>', OrderView.as_view())
 ]
