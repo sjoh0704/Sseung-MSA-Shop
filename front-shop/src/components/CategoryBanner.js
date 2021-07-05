@@ -6,8 +6,9 @@ function CategoryBanner(){
     const {kind} = useSelector(state => ({
         kind: state.category.payload
     }))
-    const display_category = kind.map((k, index) =>{
-
+    console.log(kind)
+    const display_category = kind.map((k, index) => {
+        
         let  path = '/category/' + (index + 1)
         return (
             <NavDropdown.Item key={index}><Link to={path} style={{textDecoration:'none', color:'inherit'}}>{k.kind}</Link></NavDropdown.Item>

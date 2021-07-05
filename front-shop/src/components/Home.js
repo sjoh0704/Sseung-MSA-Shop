@@ -36,7 +36,9 @@ export default function Home(props){
            
             console.log(category_list);
             dispatch(setCategory(category_list))
-        })
+        }).catch((e) => {
+            console.log(e)
+        } )
     }
 
     useEffect(()=>{
