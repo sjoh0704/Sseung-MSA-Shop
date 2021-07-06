@@ -25,7 +25,7 @@ export default function Home(props){
                 }
             })
             Setproducts(product_list);
-            console.log(product_list)
+
         })
     }
     const fetchCategory= async ()=>{

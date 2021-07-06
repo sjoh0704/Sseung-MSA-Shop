@@ -4,7 +4,7 @@ import {useEffect, useState} from 'react'
 import {useSelector} from 'react-redux'
 import Title from './Title'
 
-function PurchasePage({location}){
+function PurchasePage({location, history}){
     const {product, demand_amount} = location.state
     const {isLoggedIn, userData} = useSelector(state =>({
         isLoggedIn: state.user.isLoggedIn,
@@ -34,24 +34,26 @@ function PurchasePage({location}){
         await axios.post('/apis/v1/order/', body).then(res=> {
             
             alert('주문 성공')
+            history.replace('/orderlist')
         })
         .catch(e => {
             // 정보가 없을 때 처리
             alert('주문 실패')
         })
     }
-    // useEffect(()=>{
-        
-    //         fetchProduct()
-        
-    // },[match.params.number])
+
 
     const onClickOrder = () => {
         if(isLoggedIn === false){
             alert("로그인 후 이용하세요.")
             return;
         }
+        if(address == null || email_address == null){
+            alert('모두 입력해주세요')
+            return;
+        }
         orderProduct();
+        
     }
 
     const onChangeHandler = (e) => {
@@ -117,10 +119,13 @@ function PurchasePage({location}){
             
             </Form>
             <br/>
+        <h1>총 가격: {product.price * demand_amount}원</h1>
+            <br/>
         <Button onClick={onClickOrder}>구매하기</Button>
+        
                 </Col>
             </Row>
-            
+       
         </Container>
 
         </div>

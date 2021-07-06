@@ -99,6 +99,7 @@ function ProductDetail({match}){
                 </Col>
             </Row>
             
+      
         </Container>
 
         </div>
