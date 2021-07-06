@@ -22,8 +22,6 @@ function CategoryBanner(){
 
             <div>
 
-          
-                    
                     <Container>
                         <Row>
                             <Col xs lg={3}>
@@ -35,7 +33,7 @@ function CategoryBanner(){
                             <Col>
                             <Nav className="mr-auto">
             
-                            <Nav.Link ><Link to="/register"style={{textDecoration:'none', color:'inherit'}}>판매하기</Link></Nav.Link>
+                            <Nav.Link ><Link to="/product/register"style={{textDecoration:'none', color:'inherit'}}>판매하기</Link></Nav.Link>
                             <Nav.Link ><Link to="/orderlist"style={{textDecoration:'none', color:'inherit'}}>구매목록</Link></Nav.Link>
                             <Nav.Link ><Link to="/register"style={{textDecoration:'none', color:'inherit'}}>장바구니</Link></Nav.Link>
                         

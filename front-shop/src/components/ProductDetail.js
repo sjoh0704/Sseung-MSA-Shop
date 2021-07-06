@@ -75,12 +75,12 @@ function ProductDetail({match}){
             <Row className="justify-content-md-center">
                 <Col xs lg="8">
                 <ListGroup>
-            <ListGroup.Item>{product.category}</ListGroup.Item>
-            <ListGroup.Item>상품명 / {product.name}</ListGroup.Item>
-            <ListGroup.Item>상품 가격 / {product.price}</ListGroup.Item>
-            <ListGroup.Item>상품 수량 / {product.quantity}</ListGroup.Item>
-            <ListGroup.Item>{product.description}</ListGroup.Item>
-            <ListGroup.Item>{product.created_at}</ListGroup.Item>
+            <ListGroup.Item>상품 카테고리: {product.category}</ListGroup.Item>
+            <ListGroup.Item>상품명: {product.name}</ListGroup.Item>
+            <ListGroup.Item>상품 가격: {product.price}</ListGroup.Item>
+            <ListGroup.Item>상품 수량: {product.quantity}</ListGroup.Item>
+            <ListGroup.Item>상품 설명: {product.description}</ListGroup.Item>
+            <ListGroup.Item>상품 등록일:{product.created_at}</ListGroup.Item>
             </ListGroup>
         <br/>
         <p>구매 수량</p>

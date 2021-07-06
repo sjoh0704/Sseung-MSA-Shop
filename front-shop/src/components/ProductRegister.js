@@ -5,11 +5,33 @@ import {Form, Container, Button, Row, Col} from 'react-bootstrap'
 import Banner from './Banner'
 import Title from './Title'
 
-function ProductRegister(){
+function ProductRegister({history}){
+    const {isLoggedIn, userData} = useSelector(state =>({
+        isLoggedIn: state.user.isLoggedIn,
+        userData: state.user.payload
+    }))
+    const {kind} = useSelector(state => ({
+        kind: state.category.payload
+    }))
+    console.log(kind)
+    
+    const displayCategory = kind.map((k, index) => {
+        return (
+            <option>{k.kind}</option>
+           
+        );
+    }
+    );
+        
+    if(isLoggedIn === false){
+        alert('로그인 먼저 해주세요')
+        history('/login')
+    }
+
 
     const [product, setProduct] = useState({
         name: "",
-        category_id: null,
+        category: null,
         price: null,
         quantity: null,
         description: "",
@@ -18,7 +40,9 @@ function ProductRegister(){
     })
 
     
-    const {name, category_id, price, quantity, description} = product;
+    const {name, category, price, quantity, description} = product
+
+
 
     const onChangeHandler = (e) => {
         const {name, value} = e.target;
@@ -30,28 +54,30 @@ function ProductRegister(){
 
     };
     const onClickHandler = (e)=>{
+        let category_id = kind.findIndex((k) => k.kind === category) + 1
+
         e.preventDefault();
         let body = {
-            seller_id: 4,
+            seller_id: userData.user_id,
             name: name,
-            category_id: 2,
+            category_id: category_id,
             price: price,
             quantity: quantity,
             description: description,
         };
-        
+  
+    
         axios.post('/apis/v1/product/', body)
         .then(response => {
-            // props.history.push('/')
-            console.log("상품 등록 성공")
-            // dispatch(loginAction(response.data.payload))
             alert("상품 등록 성공")
+            history.replace('/')
         }).catch(e =>{
             alert("상품 등록 실패")
-            console.log("상품 등록 실패")
+     
         })
 
     }
+
     
     return(<div>
         <Title title="REGISTER PRODUCT"></Title>
@@ -62,12 +88,12 @@ function ProductRegister(){
 
             <Form.Group controlId="exampleForm.ControlSelect1">
                 <Form.Label>카테고리</Form.Label>
-                <Form.Control as="select">
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
+                <Form.Control as="select"
+                name = 'category'
+                onChange={onChangeHandler}
+                value = {category}>
+                {displayCategory}
+
                 </Form.Control>
             </Form.Group>
 
