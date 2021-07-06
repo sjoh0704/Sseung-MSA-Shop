@@ -3,6 +3,8 @@ import axios from 'axios'
 import {useEffect, useState} from 'react'
 import {useSelector} from 'react-redux'
 import Title from './Title'
+import { Link } from 'react-router-dom'
+import PurchasePage from './PurchasePage'
 
 function ProductDetail({match}){
     const [amount, setAmount] = useState(1)
@@ -11,36 +13,19 @@ function ProductDetail({match}){
         userData: state.user.payload
     }))
 
-
-
     const[product,setProduct]= useState({
     })
     const fetchProduct= async ()=>{
         await axios.get('/apis/v1/product/' + match.params.number).then(res=> {
-            console.log(res.data.payload.payload)
-            setProduct(res.data.payload.payload);
+            setProduct({
+            ...res.data.payload.payload,
+            product_id: match.params.number
+            });
         
         })
         .catch(e => {
             // 정보가 없을 때 처리
             alert('없는 상품 정보')
-        })
-    }
-
-    const orderProduct= async ()=>{
-        let body = {
-            ...product,
-            user_id: userData.user_id,
-            demand_amount: amount,
-        };
-        console.log(body)
-        await axios.post('/apis/v1/order/' + match.params.number, body).then(res=> {
-            console.log(res.data.payload.payload)
-            alert('주문 성공')
-        })
-        .catch(e => {
-            // 정보가 없을 때 처리
-            alert('주문 실패')
         })
     }
     useEffect(()=>{
@@ -59,7 +44,6 @@ function ProductDetail({match}){
             return; 
         }
 
-        orderProduct();
     }
 
     const onClickWishList = () => {
@@ -67,6 +51,8 @@ function ProductDetail({match}){
             alert("로그인 후 이용하세요.")
             return;
         }
+
+
     }
 
     const onChangeHandler = (e) => {
@@ -77,6 +63,9 @@ function ProductDetail({match}){
         }
 
         setAmount(parseInt(value))
+
+
+
     }
 
     return(
@@ -99,7 +88,14 @@ function ProductDetail({match}){
         <br/>
         <br/>
         <Button onClick={onClickWishList}>장바구니</Button>{' '}
-        <Button onClick={onClickOrder}>구매하기</Button>
+        
+        <Link to={{
+            pathname: `/purchase`,
+            state: {
+                product:product,
+                demand_amount:amount,
+            }
+          }}><Button onClick={onClickOrder}>구매하기</Button></Link>
                 </Col>
             </Row>
             

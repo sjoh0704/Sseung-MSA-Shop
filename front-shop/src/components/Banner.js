@@ -1,7 +1,7 @@
 import React from 'react'
 import {Container,Row, Col, Nav, Navbar, Form, FormControl, Button} from 'react-bootstrap'
 import {Link} from 'react-router-dom'
-import CategoryBanner from './CategoryBanner'
+
 const Banner = () => {
     return(
   

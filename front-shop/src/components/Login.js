@@ -6,7 +6,7 @@ import {Form, Container, Button, Row, Col} from 'react-bootstrap'
 import Title from './Title'
 
 
-function Login(){
+function Login({history}){
     const dispatch = useDispatch();
     const [userData, setUserData] = useState({
         username: "",
@@ -30,7 +30,7 @@ function Login(){
         };
         axios.post('/apis/v1/user/login', body)
         .then(response => {
-            // props.history.push('/')
+            history.replace('/')
             console.log("로그인 성공")
             dispatch(loginAction(response.data.payload.payload))
             alert("로그인 성공")

@@ -13,6 +13,7 @@ import Banner from './components/Banner'
 import CategoryBanner from './components/CategoryBanner';
 import ProductDetail from './components/ProductDetail'
 import OrderList from './components/OrderList';
+import PurchasePage from './components/PurchasePage';
 function App() {
   return (
 
@@ -36,6 +37,7 @@ function App() {
     <Route exact path="/category/:number" component={ProductByCategory}/>
     <Route exact path="/product/:number" component={ProductDetail}/>
     <Route exact path="/orderlist" component={OrderList}/>
+    <Route exact path="/purchase" component={PurchasePage}/>
     </Switch>
    
     
