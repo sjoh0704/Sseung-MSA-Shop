@@ -9,7 +9,15 @@ pipeline {
     
     stage("clone"){
         steps{
-        checkout scm
+ 
+        checkout([
+             $class: 'GitSCM',
+             branches: scm.dev,
+             doGenerateSubmoduleConfigurations: scm.doGenerateSubmoduleConfigurations,
+             extensions: scm.extensions,
+             userRemoteConfigs: scm.userRemoteConfigs
+        ])
+
  
         }
 
