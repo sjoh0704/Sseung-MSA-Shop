@@ -10,7 +10,7 @@ function ProductByCategory({match}){
     const[products,Setproducts]= useState([])
     const fetchProducts= async ()=>{
         await axios.get('/apis/v1/category/' + match.params.number).then(res=> {
-            let product_list = res.data.payload.map(data=> {
+            let product_list = res.data.payload.map((data, index)=> {
                 return {
                     ...data.fields,
                     id: data.pk
@@ -27,7 +27,7 @@ function ProductByCategory({match}){
     },[match.params.number])
 
     return(<div>
-        <Title title="카테고리 상품"></Title>
+        <Title title="카테고리 상품" set_middle={false}></Title>
         <Container>
         <DisplayProducts products={products}/>
         </Container>

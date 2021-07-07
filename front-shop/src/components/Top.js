@@ -10,17 +10,16 @@ const Top = ()=>{
             userData: state.user.payload
     }))
 
-    
 
     if(!isLoggedIn){
         return(
             <Container>
                 <br/>
                 <Row>
-                <Col md={{ span: 5, offset: 8 }}>
+                <Col md={{ span: 5, offset: 9 }}>
                 <div>
-                <span><Link to='/login'>로그인 / </Link></span>
-                <span><Link to='/logout'>회원가입</Link></span>
+                <span><Link to='/login' style={{textDecoration:'none'}}>로그인 / </Link></span>
+                <span><Link to='/register' style={{textDecoration:'none'}}>회원가입</Link></span>
                 </div>
                 </Col>
                 
@@ -35,10 +34,10 @@ const Top = ()=>{
             <Container>
             <br/> 
             <Row>
-            <Col md={{ span: 5, offset: 8 }}>
+            <Col md={{ span: 5, offset: 7 }}>
             <div>
             <span >오늘도 오셨군요! {userData.username}님! / </span>
-            <span><Link to='/logout'>로그아웃</Link></span>
+            <span><Link to='/logout' style={{textDecoration:'none'}}>로그아웃</Link></span>
             </div>
             </Col>
             

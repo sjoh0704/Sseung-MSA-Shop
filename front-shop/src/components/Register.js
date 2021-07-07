@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import axios from 'axios'
 import {useSelector, useDispatch} from 'react-redux'
-import {Form, Container, Button} from 'react-bootstrap'
+import {Form, Container, Button, Row, Col} from 'react-bootstrap'
 import Banner from './Banner'
 import Title from './Title'
 
@@ -52,7 +52,9 @@ function Register(){
         
         <Title title="REGISTER"/>
         <Container>
-            <Form onSubmit={onClickHandler} >
+            <Row className="justify-content-md-center"> 
+                <Col xs lg={8}>
+                <Form onSubmit={onClickHandler} >
 
 
             <Form.Group controlId="exampleForm.ControlInput1">
@@ -85,6 +87,10 @@ function Register(){
            
             <Button type="submit">Register</Button>
             </Form>
+                
+                </Col>
+            </Row>
+            
         </Container>
         </div>
    

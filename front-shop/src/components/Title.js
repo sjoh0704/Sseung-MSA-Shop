@@ -1,15 +1,25 @@
 import React from 'react'
-import {Container} from 'react-bootstrap'
-function Title({title}){
+import {Col, Container, Row} from 'react-bootstrap'
+function Title({title, set_middle = true}){
 
     return (
         <Container>
             <br/>
             <br/>
             <h1>
-                {title}
+                <div>
+
+                </div>
+                
+                <Row className={set_middle ? "justify-content-md-center": ""}> 
+                    <Col xs lg= {set_middle?"8":"12"}>
+                    {title}
+                    <hr/>
+                    </Col>
+                </Row>
+                
             </h1>
-            <hr/>
+            
             <br/>
             <br/>
             

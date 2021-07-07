@@ -1,14 +1,16 @@
 import {Row, Col, Card} from 'react-bootstrap'
+import placeholder from '../images/placeholder.jpg'
 import {Link} from 'react-router-dom'
 // id가 필요하다!!
 const DisplayProducts = ({products}) =>{
     products = products.map((product, index) => {
         let path = '/product/' + product.id
         return (
-                <Link to={path}>
-                <Col xs key={index}>
+            <Col md={4} xs={6}>
+                <Link style={{textDecoration:'none', color:'inherit'}} key={index} to={path}>
+                
                     <Card style={{ width: '18rem' }}>
-                    <Card.Img variant="top" src="holder.js/100px180" />
+                    <Card.Img variant="top" src={placeholder} />
                     <Card.Body>
                         <Card.Title>{product.name}</Card.Title>
                         <Card.Text>
@@ -17,8 +19,10 @@ const DisplayProducts = ({products}) =>{
                     
                     </Card.Body>
                     </Card>
-                </Col>
+                
                 </Link>
+                <br/>
+                </Col>
                 
                 )
     })

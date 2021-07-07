@@ -9,7 +9,7 @@ export const setCategory = (requestData) => {
   };
 
   const initialState = {
-    payload: null,
+    payload: [],
   };
   
   const category = (state = initialState, action) => {
