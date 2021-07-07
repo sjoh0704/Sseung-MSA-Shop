@@ -27,6 +27,8 @@ pipeline {
             steps{
             dir('front-shop'){
             sh 'pwd'
+            sh 'docker build -t ${DOCKER_ID}/${FRONT_IMAGE}:${TAG} .'
+            sh 'docker images'
 //             sh 'docker build -t ${IMAGE_NAME} .'
 //             sh 'docker tag ${IMAGE_NAME}:latest 752943197678.dkr.ecr.ap-northeast-2.amazonaws.com/${IMAGE_NAME}:$BUILD_NUMBER'
             }
