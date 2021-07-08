@@ -19,6 +19,20 @@ spec:
         imagePullPolicy: Always
         ports:
         - containerPort: 3000
+
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 3000
+          initialDelaySeconds: 50
+          periodSeconds: 10
+          
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 3000
+          initialDelaySeconds: 50
+          periodSeconds: 10
 ---
 apiVersion: v1
 kind: Service
@@ -58,6 +72,21 @@ spec:
         envFrom: 
         - configMapRef:
             name: service-url
+
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 50
+          periodSeconds: 10
+
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 50
+          periodSeconds: 10
+      
 ---
 apiVersion: v1
 kind: Service
@@ -97,6 +126,20 @@ spec:
         envFrom: 
         - configMapRef:
             name: service-url
+
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 50
+          periodSeconds: 10
+          
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 50
+          periodSeconds: 10
 ---
 apiVersion: v1
 kind: Service
@@ -137,6 +180,21 @@ spec:
         envFrom: 
         - configMapRef:
             name: service-url
+
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 50
+          periodSeconds: 10
+          
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 50
+          periodSeconds: 10
+      
 ---
 apiVersion: v1
 kind: Service
@@ -176,6 +234,20 @@ spec:
         envFrom: 
         - configMapRef:
             name: service-url
+        
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 50
+          periodSeconds: 10
+          
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 50
+          periodSeconds: 10
 ---
 apiVersion: v1
 kind: Service
