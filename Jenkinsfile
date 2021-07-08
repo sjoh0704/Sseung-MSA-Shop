@@ -26,7 +26,7 @@ pipeline {
             steps{
                 
                 
-            dir('product'){
+                dir('${WORKSPACE}/product'){
    
             sh 'docker build -t ${DOCKER_ID}/${PRODUCT_IMAGE}:${TAG} .'
             }
