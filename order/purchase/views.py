@@ -45,22 +45,22 @@ class OrderNonParam(BaseView):
         quantity = data.get('quantity')
         email_address = data.get('email_address')
         address = data.get('address')
-
-        if not (buyer_id and product_id and quantity and email_address and address and seller_id):
+        demand_amount = data.get('demand_amount')
+        print(seller_id, buyer_id, product_id, quantity, email_address, address,demand_amount)
+        if not (buyer_id and product_id and quantity and email_address and address and seller_id and demand_amount):
+            print("여기")
             return self.response(message="not sufficent info", status=400)
 
-
-        get_response = requests.get('{}/apis/v1/product/{}'.format(PRODUCT_SERIVCE_URL, product_id))
-        dic_response = json.loads(get_response.content)['payload']
-        dic_response["quantity"] -= int(quantity)
-        post_response = requests.post('{}/apis/v1/product/{}'.format(PRODUCT_SERIVCE_URL, product_id), dic_response)
-
-        if post_response.status_code == 200:
+        data_dict = data.dict()
+        data_dict["quantity"] = int(quantity) - int(demand_amount)
+        
+        response = requests.post('{}/apis/v1/product/{}'.format(PRODUCT_SERIVCE_URL, product_id), data_dict)
+        if response.status_code == 200:
         
             order = Order(
                         seller_id = seller_id,
                         buyer_id = buyer_id,
-                        quantity = quantity,
+                        quantity = demand_amount,
                         product_id = product_id,
                         email_address = email_address,
                         address = address

@@ -105,7 +105,8 @@ class ProductStatusView(BaseView):
             "quantity": product.quantity,
             "description": product.description,
             "created_at": product.created_at,
-            "updated_at": product.updated_at
+            "updated_at": product.updated_at,
+            "seller_id": product.seller_id,
         }
         return self.response(data=data, message="product data", status=200)
 
