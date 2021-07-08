@@ -48,5 +48,5 @@
   "devDependencies": {
     "http-proxy-middleware": "^2.0.0"
   },
-  "proxy": "http://localhost:8000"
+  "proxy": "http://api-gateway-service:8080"
 }
