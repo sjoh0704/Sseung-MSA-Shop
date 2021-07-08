@@ -26,18 +26,18 @@ pipeline {
             steps{
                 
                 
-            dir('product@tmp'){
+            dir('product'){
    
             sh 'docker build -t ${DOCKER_ID}/${PRODUCT_IMAGE}:${TAG} .'
             }
                 
                 
-            dir('front-shop@tmp'){
+            dir('front-shop'){
             sh 'git branch'
             sh 'docker build -t ${DOCKER_ID}/${FRONT_IMAGE}:${TAG} .'
             }
                 
-            dir('backend@tmp'){
+            dir('backend'){
             sh 'pwd'
             sh 'git branch'
             sh 'docker build -t ${DOCKER_ID}/${USER_IMAGE}:${TAG} .'
@@ -45,12 +45,12 @@ pipeline {
             }
              
                 
-            dir('order@tmp'){
+            dir('order'){
             sh 'pwd'
             sh 'docker build -t ${DOCKER_ID}/${ORDER_IMAGE}:${TAG} .'
             }
                 
-            dir('apigateway@tmp'){
+            dir('apigateway'){
             sh 'pwd'
             sh 'docker build -t ${DOCKER_ID}/${GATEWAY_IMAGE}:${TAG} .'
             }
