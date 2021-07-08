@@ -16,23 +16,6 @@ pipeline {
     
     stage("clone"){
         steps{
-            withCredentials([usernamePassword(credentialsId: 'dockerhub-credential', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-  // available as an env variable, but will be masked if you try to print it out any which way
-  // note: single quotes prevent Groovy interpolation; expansion is by Bourne Shell, which is what you want
-  sh 'echo $PASSWORD'
-  sh 'docker login -u $USERNAME -p $PASSWORD'
-  // also available as a Groovy variable
-  echo USERNAME
-  // or inside double quotes for string interpolation
-  echo "username is $USERNAME"
-}
-//          withCredentials([
-//                 usernamePassword(credentialsId: 'dockerhub-credential', usernameVariable: DOCKER_USER, passwordVariable: DOCKER_PWD)
-//             ]){
-//                 echo 'docker login!!!'
-//                 sh "docker login -u ${DOCKER_USER} -p ${DOCKER_PWD}"
-//             }
- 
         checkout scm
         sh 'git checkout dev'
         }
@@ -67,16 +50,14 @@ pipeline {
 
     stage("image push"){
         steps{
-            withCredentials([
-                usernamePassword(credentialsId: 'dockerhub-credential', usernameVariable: DOCKER_USER, passwordVariable: DOCKER_PWD)
-            ]){
-                echo 'docker login!!!'
-                sh "docker login -u ${DOCKER_USER} -p ${DOCKER_PWD}"
+            withCredentials([usernamePassword(credentialsId: 'dockerhub-credential', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+              sh 'docker login -u $USERNAME -p $PASSWORD'
             }
+            
+            sh 'docker push ${DOCKER_ID}/${FRONT_IMAGE}:${TAG}'
+
            
 
-//         sh 'aws ecr get-login-password --region ap-northeast-2 | docker login --username AWS --password-stdin 752943197678.dkr.ecr.ap-northeast-2.amazonaws.com'
-//         sh 'docker push 752943197678.dkr.ecr.ap-northeast-2.amazonaws.com/${IMAGE_NAME}:$BUILD_NUMBER'
         }
  
     }
