@@ -29,9 +29,9 @@ spec:
     app: frontend
   ports:
     - name: http
-      port: 8080
+      port: 80
       targetPort: 3000
-  type: NodePort
+  type: LoadBalancer
 
 ---
 # api gate way
@@ -99,6 +99,79 @@ metadata:
 spec:
   selector:
     app: user
+  ports:
+    - name: http
+      port: 8080
+      targetPort: 8000
+  type: ClusterIP
+
+
+---
+# product-api-server
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: product-api-server
+spec:
+  selector:
+    matchLabels:
+      app: product
+  replicas: 1
+  template: 
+    metadata:
+      labels:
+        app: product
+    spec:
+      containers:
+      - name: product-api-container
+        image: sjoh0704/product-service
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name:  product-api-service
+spec:
+  selector:
+    app: product
+  ports:
+    - name: http
+      port: 8080
+      targetPort: 8000
+  type: ClusterIP
+
+---
+# order-api-server
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: order-api-server
+spec:
+  selector:
+    matchLabels:
+      app: order
+  replicas: 1
+  template: 
+    metadata:
+      labels:
+        app: order
+    spec:
+      containers:
+      - name: product-api-container
+        image: tmdwn0704/order-service:test
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name:  order-api-service
+spec:
+  selector:
+    app: order
   ports:
     - name: http
       port: 8080
