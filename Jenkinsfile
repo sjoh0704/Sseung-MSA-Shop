@@ -25,21 +25,28 @@ pipeline {
         stage("image build"){
             steps{
             dir('front-shop'){
-            sh 'pwd'
             sh 'docker build -t ${DOCKER_ID}/${FRONT_IMAGE}:${TAG} .'
-            sh 'docker images'
-//             sh 'docker build -t ${IMAGE_NAME} .'
-//             sh 'docker tag ${IMAGE_NAME}:latest 752943197678.dkr.ecr.ap-northeast-2.amazonaws.com/${IMAGE_NAME}:$BUILD_NUMBER'
             }
+                
             dir('backend'){
             sh 'pwd'
-//             sh 'docker build -t ${IMAGE_NAME} .'
-//             sh 'docker tag ${IMAGE_NAME}:latest 752943197678.dkr.ecr.ap-northeast-2.amazonaws.com/${IMAGE_NAME}:$BUILD_NUMBER'
+            sh 'docker build -t ${DOCKER_ID}/${USER_IMAGE}:${TAG} .'
+
             }
+                
             dir('product'){
             sh 'pwd'
-//             sh 'docker build -t ${IMAGE_NAME} .'
-//             sh 'docker tag ${IMAGE_NAME}:latest 752943197678.dkr.ecr.ap-northeast-2.amazonaws.com/${IMAGE_NAME}:$BUILD_NUMBER'
+            sh 'docker build -t ${DOCKER_ID}/${PRODUCT_IMAGE}:${TAG} .'
+            }
+                
+            dir('order'){
+            sh 'pwd'
+            sh 'docker build -t ${DOCKER_ID}/${ORDER_IMAGE}:${TAG} .'
+            }
+                
+            dir('apigateway'){
+            sh 'pwd'
+            sh 'docker build -t ${DOCKER_ID}/${GATEWAY_IMAGE}:${TAG} .'
             }
             
             
@@ -55,20 +62,15 @@ pipeline {
             }
             
             sh 'docker push ${DOCKER_ID}/${FRONT_IMAGE}:${TAG}'
+            sh 'docker push ${DOCKER_ID}/${USER_IMAGE}:${TAG}'
+            sh 'docker push ${DOCKER_ID}/${PRODUCT_IMAGE}:${TAG}'
+            sh 'docker push ${DOCKER_ID}/${GATEWAY_IMAGE}:${TAG}'
+            sh 'docker push ${DOCKER_ID}/${ORDER_IMAGE}:${TAG}'
 
            
 
         }
  
-    }
-
-    stage("deploy"){
-        steps{
-        echo "deploy!!"
-        }
-   
-        }
-
     }
     
 }
