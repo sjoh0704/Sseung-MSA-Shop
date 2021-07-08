@@ -55,6 +55,9 @@ spec:
         imagePullPolicy: Always
         ports:
         - containerPort: 8000
+      envFrom: 
+      - configmapRef:
+          name: service-url
 ---
 apiVersion: v1
 kind: Service
@@ -91,6 +94,9 @@ spec:
         imagePullPolicy: Always
         ports:
         - containerPort: 8000
+        envFrom: 
+        - configmapRef:
+            name: service-url
 ---
 apiVersion: v1
 kind: Service
@@ -124,10 +130,13 @@ spec:
     spec:
       containers:
       - name: product-api-container
-        image: sjoh0704/product-service
+        image: tmdwn0704/product-service:test
         imagePullPolicy: Always
         ports:
         - containerPort: 8000
+        envFrom: 
+        - configmapRef:
+            name: service-url
 ---
 apiVersion: v1
 kind: Service
@@ -164,6 +173,9 @@ spec:
         imagePullPolicy: Always
         ports:
         - containerPort: 8000
+        envFrom: 
+        - configmapRef:
+            name: service-url
 ---
 apiVersion: v1
 kind: Service
