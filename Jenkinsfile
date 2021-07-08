@@ -55,7 +55,7 @@ pipeline {
                 usernamePassword(credentialsId: 'dockerhub-credential', usernameVariable: DOCKER_USER, passwordVariable: DOCKER_PWD)
             ]){
                 echo 'docker login!!!'
-                sh "docker login -u $DOCKER_USER -p $DOCKER_PWD"
+                sh "docker login -u ${DOCKER_USER} -p ${DOCKER_PWD}"
             }
            
 
