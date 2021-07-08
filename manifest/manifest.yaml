@@ -199,8 +199,8 @@ metadata:
   name: service-url
 data:
 
-  PRODUCT_SERIVCE_URL: 'http://product-api-service:8080'
-  ORDER_SERIVCE_URL: 'http://order-api-service:8080'
-  USER_SERIVCE_URL: 'http://user-api-service:8080'
+  PRODUCT_SERVICE_URL: 'http://product-api-service:8080'
+  ORDER_SERVICE_URL: 'http://order-api-service:8080'
+  USER_SERVICE_URL: 'http://user-api-service:8080'
   APIGATWAY_URL: 'http://api-gateway-service:8080'
   FRONTEND_URL: 'http://frontend-service:8080'
