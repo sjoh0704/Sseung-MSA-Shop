@@ -19,17 +19,26 @@ pipeline {
         checkout scm
         sh 'git checkout dev'
         }
+        sh 'git branch'
 
     }
 
         stage("image build"){
             steps{
+            dir('product'){
+            sh 'pwd'
+            sh 'docker build -t ${DOCKER_ID}/${PRODUCT_IMAGE}:${TAG} .'
+            }
+                
+                
             dir('front-shop'){
+            sh 'git branch'
             sh 'docker build -t ${DOCKER_ID}/${FRONT_IMAGE}:${TAG} .'
             }
                 
             dir('backend'){
             sh 'pwd'
+            sh 'git branch'
             sh 'docker build -t ${DOCKER_ID}/${USER_IMAGE}:${TAG} .'
 
             }
