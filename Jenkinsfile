@@ -51,8 +51,15 @@ pipeline {
 
     stage("image push"){
         steps{
-        sh 'aws ecr get-login-password --region ap-northeast-2 | docker login --username AWS --password-stdin 752943197678.dkr.ecr.ap-northeast-2.amazonaws.com'
-        sh 'docker push 752943197678.dkr.ecr.ap-northeast-2.amazonaws.com/${IMAGE_NAME}:$BUILD_NUMBER'
+            withCredentials([
+                usernamePassword(credentials: 'dockerhub-credential', usernameVariable: USER, passwordVariable: PWD)
+            ]{
+                sh "docker login -u ${USER} -p ${PWD}"
+            }
+           )
+
+//         sh 'aws ecr get-login-password --region ap-northeast-2 | docker login --username AWS --password-stdin 752943197678.dkr.ecr.ap-northeast-2.amazonaws.com'
+//         sh 'docker push 752943197678.dkr.ecr.ap-northeast-2.amazonaws.com/${IMAGE_NAME}:$BUILD_NUMBER'
         }
  
     }
