@@ -1,7 +1,14 @@
+
 pipeline {
     agent any
     environment{
-    IMAGE_NAME = 'test'
+    DOCKER_ID = 'tmdwn0704'
+    FRONT_IMAGE = 'frontend'
+    USER_IMAGE = 'user-service'
+    PRODUCT_IMAGE = 'product-service'
+    ORDER_IMAGE = 'order-service'    
+    GATEWAY_IMAGE = 'gateway-service'
+    TAG = 'test'
     }
     
 
@@ -9,41 +16,69 @@ pipeline {
     
     stage("clone"){
         steps{
-        checkout scm
- 
+            git([url: 'https://github.com/sjoh0704/react-django-shop.git', branch: 'dev', credentialsId: 'github-credential'])
+
         }
+
 
     }
 
         stage("image build"){
             steps{
-            dir('front'){
-        
-            sh 'docker build -t ${IMAGE_NAME} .'
-            sh 'docker tag ${IMAGE_NAME}:latest 752943197678.dkr.ecr.ap-northeast-2.amazonaws.com/${IMAGE_NAME}:$BUILD_NUMBER'
+                
+                
+            dir('product'){
+   
+            sh 'docker build -t ${DOCKER_ID}/${PRODUCT_IMAGE}:${TAG} .'
+            }
+                
+                
+            dir('front-shop'){
+            sh 'git branch'
+            sh 'docker build -t ${DOCKER_ID}/${FRONT_IMAGE}:${TAG} .'
+            }
+                
+            dir('backend'){
+            sh 'pwd'
+            sh 'git branch'
+            sh 'docker build -t ${DOCKER_ID}/${USER_IMAGE}:${TAG} .'
+
+            }
+             
+                
+            dir('order'){
+            sh 'pwd'
+            sh 'docker build -t ${DOCKER_ID}/${ORDER_IMAGE}:${TAG} .'
+            }
+                
+            dir('apigateway'){
+            sh 'pwd'
+            sh 'docker build -t ${DOCKER_ID}/${GATEWAY_IMAGE}:${TAG} .'
             }
             
             
-    }
+        }
 
     }
     
 
     stage("image push"){
         steps{
-        sh 'aws ecr get-login-password --region ap-northeast-2 | docker login --username AWS --password-stdin 752943197678.dkr.ecr.ap-northeast-2.amazonaws.com'
-        sh 'docker push 752943197678.dkr.ecr.ap-northeast-2.amazonaws.com/${IMAGE_NAME}:$BUILD_NUMBER'
+            withCredentials([usernamePassword(credentialsId: 'dockerhub-credential', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+              sh 'docker login -u $USERNAME -p $PASSWORD'
+            }
+            
+            sh 'docker push ${DOCKER_ID}/${FRONT_IMAGE}:${TAG}'
+            sh 'docker push ${DOCKER_ID}/${USER_IMAGE}:${TAG}'
+            sh 'docker push ${DOCKER_ID}/${PRODUCT_IMAGE}:${TAG}'
+            sh 'docker push ${DOCKER_ID}/${GATEWAY_IMAGE}:${TAG}'
+            sh 'docker push ${DOCKER_ID}/${ORDER_IMAGE}:${TAG}'
+
+           
+
         }
  
     }
-
-    stage("deploy"){
-        steps{
-        echo "deploy!!"
-        }
-   
-        }
-
-    }
     
+}
 }
