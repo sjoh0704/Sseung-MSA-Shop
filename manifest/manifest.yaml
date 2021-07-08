@@ -55,9 +55,9 @@ spec:
         imagePullPolicy: Always
         ports:
         - containerPort: 8000
-      envFrom: 
-      - configmapRef:
-          name: service-url
+        envFrom: 
+        - configmapRef:
+            name: service-url
 ---
 apiVersion: v1
 kind: Service
