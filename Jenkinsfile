@@ -18,13 +18,16 @@ pipeline {
         steps{
         checkout scm
         sh 'git checkout dev'
-        }
         sh 'git branch'
+        }
+
 
     }
 
         stage("image build"){
             steps{
+                
+                
             dir('product'){
             sh 'pwd'
             sh 'docker build -t ${DOCKER_ID}/${PRODUCT_IMAGE}:${TAG} .'
