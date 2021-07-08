@@ -16,7 +16,8 @@ pipeline {
     
     stage("clone"){
         steps{
-        checkout scm
+            git([url: 'https://github.com/sjoh0704/react-django-shop.git', branch: 'dev', credentialsId: 'github-credential'])
+//         checkout scm
         }
 
 
@@ -26,7 +27,7 @@ pipeline {
             steps{
                 
                 
-                dir('${WORKSPACE}/product'){
+            dir('product'){
    
             sh 'docker build -t ${DOCKER_ID}/${PRODUCT_IMAGE}:${TAG} .'
             }
