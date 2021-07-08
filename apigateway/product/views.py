@@ -9,8 +9,8 @@ from django.views.decorators.csrf import csrf_exempt
 from rest_framework.renderers import JSONRenderer
 import requests
 from django.conf import settings
-
-PRODUCT_SERIVCE_URL = 'http://product-api-service:8080'
+import os 
+PRODUCT_SERVICE_URL = os.environ.get("PRODUCT_SERVICE_URL",'http://localhost:8100')
 
 class BaseView(View):
     @staticmethod
@@ -38,7 +38,7 @@ class ProductNonParam(BaseView):
         except:
             data = request.POST
         print(data)
-        response = requests.post('{}/apis/v1/product'.format(PRODUCT_SERIVCE_URL), data)
+        response = requests.post('{}/apis/v1/product'.format(PRODUCT_SERVICE_URL), data)
         if response.status_code == 200:
             return self.response(message='create product success')
         return self.response(message='create product fails', status=400)
@@ -48,7 +48,7 @@ class ProductNonParam(BaseView):
 
     def get(self, request):
         
-        response = requests.get('{}/apis/v1/product'.format(PRODUCT_SERIVCE_URL))
+        response = requests.get('{}/apis/v1/product'.format(PRODUCT_SERVICE_URL))
         if response.status_code == 200:
             data = json.loads(response.content)
             print(data)
@@ -64,7 +64,7 @@ class ProductStatusView(BaseView):
     
     
     def get(self, request, pk):
-        response = requests.get('{}/apis/v1/product/{}'.format(PRODUCT_SERIVCE_URL, pk))
+        response = requests.get('{}/apis/v1/product/{}'.format(PRODUCT_SERVICE_URL, pk))
         if response.status_code == 200:
             data = json.loads(response.content)
             print(data)
@@ -81,7 +81,7 @@ class ProductStatusView(BaseView):
         except:
             data = request.POST
         print(data)
-        response = requests.post('{}/apis/v1/product/{}'.format(PRODUCT_SERIVCE_URL, pk), data)
+        response = requests.post('{}/apis/v1/product/{}'.format(PRODUCT_SERVICE_URL, pk), data)
         if response.status_code == 200:
             return self.response(message='edit product success')
         return self.response(message='edit product fails', status=400)
@@ -90,7 +90,7 @@ class ProductStatusView(BaseView):
     
     
     def delete(self, request, pk):
-        response = requests.delete('{}/apis/v1/product/{}'.format(PRODUCT_SERIVCE_URL, pk))
+        response = requests.delete('{}/apis/v1/product/{}'.format(PRODUCT_SERVICE_URL, pk))
         if response.status_code == 200:
             return self.response(message='delete product success')
         return self.response(message='delete product fails', status=400)

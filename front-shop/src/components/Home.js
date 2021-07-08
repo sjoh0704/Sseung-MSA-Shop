@@ -3,39 +3,9 @@ import {useSelector, useDispatch} from 'react-redux'
 import {setCategory} from '../modules/category'
 import axios from "axios";
 import Carousel from "react-bootstrap/Carousel";
-import {Button, Container, Row,Col, Card} from 'react-bootstrap'
-import Top from './Top'
-import Banner from './Banner'
-import CategoryBanner from './CategoryBanner'
-// import NonLoggedPost from "./NonLoggedPost";
+import {Container, Navbar} from 'react-bootstrap'
+import DisplayProducts from './DisplayProduct'
 
-
-
-
-export const DisplayProducts = ({products}) =>{
-    products = products.map(product => {
-        return (
-            
-                <Col xs>
-                    <Card style={{ width: '18rem' }}>
-                    <Card.Img variant="top" src="holder.js/100px180" />
-                    <Card.Body>
-                        <Card.Title>{product.name}</Card.Title>
-                        <Card.Text>
-                        {product.price}원
-                        </Card.Text>
-                    
-                    </Card.Body>
-                    </Card>
-                </Col>
-                )
-    })
-    return (
-        <Row>
-        {products}
-        </Row>
-    )
-};
 
 
 
@@ -48,9 +18,14 @@ export default function Home(props){
         await axios.get('/apis/v1/product').then(res=> {
             console.log(res)
             let product_list = res.data.payload.map(data=> {
-                return data.fields
+
+                return  {
+                    ...data.fields,
+                    id: data.pk
+                }
             })
             Setproducts(product_list);
+
         })
     }
     const fetchCategory= async ()=>{
@@ -61,7 +36,9 @@ export default function Home(props){
            
             console.log(category_list);
             dispatch(setCategory(category_list))
-        })
+        }).catch((e) => {
+            console.log(e)
+        } )
     }
 
     useEffect(()=>{
@@ -70,11 +47,17 @@ export default function Home(props){
     },[])
         return (
             <div>
-                <div style={{marginTop:70}}>
+                <br/>
+                <div style={{marginTop:30}}>
+                <Navbar bg="primary" variant="dark" />
+                
                 <ControlledCarousel/>
+                <Navbar bg="primary" variant="dark" />
+                <br/>
                 <Container>
                     <DisplayProducts products={products}/>
                 </Container>
+                
                
 
                 </div>

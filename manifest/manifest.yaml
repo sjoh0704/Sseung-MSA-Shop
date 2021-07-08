@@ -15,10 +15,24 @@ spec:
     spec:
       containers:
       - name: frontend-container
-        image: sjoh0704/frontend
+        image: tmdwn0704/frontend:test
         imagePullPolicy: Always
         ports:
         - containerPort: 3000
+
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 3000
+          initialDelaySeconds: 80
+          periodSeconds: 10
+          
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 3000
+          initialDelaySeconds: 80
+          periodSeconds: 10
 ---
 apiVersion: v1
 kind: Service
@@ -51,10 +65,28 @@ spec:
     spec:
       containers:
       - name: api-gateway-container
-        image: sjoh0704/apigateway
+        image: tmdwn0704/gateway-service:test
         imagePullPolicy: Always
         ports:
         - containerPort: 8000
+        envFrom: 
+        - configMapRef:
+            name: service-url
+
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 80
+          periodSeconds: 10
+
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 80
+          periodSeconds: 10
+      
 ---
 apiVersion: v1
 kind: Service
@@ -86,11 +118,28 @@ spec:
         app: user
     spec:
       containers:
-      - name: user-api-container
-        image: sjoh0704/user-service
+      - name: api-gateway-container
+        image: tmdwn0704/user-service:test
         imagePullPolicy: Always
         ports:
         - containerPort: 8000
+        envFrom: 
+        - configMapRef:
+            name: service-url
+
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 80
+          periodSeconds: 10
+          
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 80
+          periodSeconds: 10
 ---
 apiVersion: v1
 kind: Service
@@ -124,10 +173,28 @@ spec:
     spec:
       containers:
       - name: product-api-container
-        image: sjoh0704/product-service
+        image: tmdwn0704/product-service:test
         imagePullPolicy: Always
         ports:
         - containerPort: 8000
+        envFrom: 
+        - configMapRef:
+            name: service-url
+
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 80
+          periodSeconds: 10
+          
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 80
+          periodSeconds: 10
+      
 ---
 apiVersion: v1
 kind: Service
@@ -141,3 +208,71 @@ spec:
       port: 8080
       targetPort: 8000
   type: ClusterIP
+
+---
+# order-api-server
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: order-api-server
+spec:
+  selector:
+    matchLabels:
+      app: order
+  replicas: 1
+  template: 
+    metadata:
+      labels:
+        app: order
+    spec:
+      containers:
+      - name: product-api-container
+        image: tmdwn0704/order-service:test
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8000
+        envFrom: 
+        - configMapRef:
+            name: service-url
+        
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 80
+          periodSeconds: 10
+          
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 80
+          periodSeconds: 10
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name:  order-api-service
+spec:
+  selector:
+    app: order
+  ports:
+    - name: http
+      port: 8080
+      targetPort: 8000
+  type: ClusterIP
+
+---
+# url 환경변수 
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: service-url
+data:
+
+  PRODUCT_SERVICE_URL: 'http://product-api-service:8080'
+  ORDER_SERVICE_URL: 'http://order-api-service:8080'
+  USER_SERVICE_URL: 'http://user-api-service:8080'
+  APIGATWAY_URL: 'http://api-gateway-service:8080'
+  FRONTEND_URL: 'http://frontend-service:8080'

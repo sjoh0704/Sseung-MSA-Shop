@@ -7,7 +7,6 @@ from django.views import View
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from .models import Category, Product
-from rest_framework.renderers import JSONRenderer
 
 
 
@@ -106,7 +105,8 @@ class ProductStatusView(BaseView):
             "quantity": product.quantity,
             "description": product.description,
             "created_at": product.created_at,
-            "updated_at": product.updated_at
+            "updated_at": product.updated_at,
+            "seller_id": product.seller_id,
         }
         return self.response(data=data, message="product data", status=200)
 
@@ -118,11 +118,10 @@ class ProductStatusView(BaseView):
         except:
             data = request.POST
         try:
-           
             product = get_object_or_404(Product, id=pk)
-            category_id = data.get('category_id', 0)
-            category = get_object_or_404(Category, id=category_id)
-            if category:
+            category_id = data.get('category_id')
+            if category_id:
+                category = get_object_or_404(Category, id=category_id)
                 product.category=category
             name = data.get('name', '')
             if name:
