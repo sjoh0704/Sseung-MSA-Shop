@@ -16,6 +16,12 @@ pipeline {
     
     stage("clone"){
         steps{
+         withCredentials([
+                usernamePassword(credentialsId: 'dockerhub-credential', usernameVariable: DOCKER_USER, passwordVariable: DOCKER_PWD)
+            ]){
+                echo 'docker login!!!'
+                sh "docker login -u ${DOCKER_USER} -p ${DOCKER_PWD}"
+            }
  
         checkout scm
         sh 'git checkout dev'
