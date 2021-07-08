@@ -16,8 +16,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from purchase.views import OrderView, OrderNonParam
+from django.http.response import HttpResponse
+
+def healthCheck(request):
+    return HttpResponse("good")
 
 urlpatterns = [
+    path('health/', healthCheck),
     path('admin/', admin.site.urls),
     path('apis/v1/order/<int:pk>', OrderView.as_view()),
     path('apis/v1/order', OrderNonParam.as_view())
