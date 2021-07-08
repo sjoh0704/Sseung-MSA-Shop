@@ -6,7 +6,7 @@ import Title from './Title'
 import { Link } from 'react-router-dom'
 import PurchasePage from './PurchasePage'
 
-function ProductDetail({match}){
+function ProductDetail({match, history}){
     const [amount, setAmount] = useState(1)
     const {isLoggedIn, userData} = useSelector(state =>({
         isLoggedIn: state.user.isLoggedIn,
@@ -35,9 +35,9 @@ function ProductDetail({match}){
     },[match.params.number])
 
     const onClickOrder = () => {
-        if(isLoggedIn === false){
+        if(isLoggedIn === false || userData == null){
             alert("로그인 후 이용하세요.")
-            return;
+            history.replace('/login')
         }
         if(amount > product.quantity){
             alert("수량이 잘못 되었습니다. ")
@@ -89,13 +89,13 @@ function ProductDetail({match}){
         <br/>
         <Button onClick={onClickWishList}>장바구니</Button>{' '}
         
-        <Link to={{
+        <Link to={isLoggedIn?{
             pathname: `/purchase`,
             state: {
                 product:product,
                 demand_amount:amount,
             }
-          }}><Button onClick={onClickOrder}>구매하기</Button></Link>
+          }:'/product/' + match.params.number}><Button onClick={onClickOrder}>구매하기</Button></Link>
                 </Col>
             </Row>
             

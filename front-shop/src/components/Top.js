@@ -11,7 +11,7 @@ const Top = ()=>{
     }))
 
 
-    if(!isLoggedIn){
+    if(!isLoggedIn || userData == null){
         return(
             <Container>
                 <br/>
