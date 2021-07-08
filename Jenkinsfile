@@ -17,8 +17,6 @@ pipeline {
     stage("clone"){
         steps{
         checkout scm
-        sh 'git checkout dev'
-        sh 'git branch'
         }
 
 
@@ -28,36 +26,31 @@ pipeline {
             steps{
                 
                 
-            dir('product'){
-            sh 'pwd'
-            sh 'ls'
+            dir('product@tmp'){
+   
             sh 'docker build -t ${DOCKER_ID}/${PRODUCT_IMAGE}:${TAG} .'
             }
                 
                 
-            dir('front-shop'){
+            dir('front-shop@tmp'){
             sh 'git branch'
             sh 'docker build -t ${DOCKER_ID}/${FRONT_IMAGE}:${TAG} .'
             }
                 
-            dir('backend'){
+            dir('backend@tmp'){
             sh 'pwd'
             sh 'git branch'
             sh 'docker build -t ${DOCKER_ID}/${USER_IMAGE}:${TAG} .'
 
             }
+             
                 
-            dir('product'){
-            sh 'pwd'
-            sh 'docker build -t ${DOCKER_ID}/${PRODUCT_IMAGE}:${TAG} .'
-            }
-                
-            dir('order'){
+            dir('order@tmp'){
             sh 'pwd'
             sh 'docker build -t ${DOCKER_ID}/${ORDER_IMAGE}:${TAG} .'
             }
                 
-            dir('apigateway'){
+            dir('apigateway@tmp'){
             sh 'pwd'
             sh 'docker build -t ${DOCKER_ID}/${GATEWAY_IMAGE}:${TAG} .'
             }
