@@ -30,6 +30,7 @@ pipeline {
                 
             dir('product'){
             sh 'pwd'
+            sh 'ls'
             sh 'docker build -t ${DOCKER_ID}/${PRODUCT_IMAGE}:${TAG} .'
             }
                 
