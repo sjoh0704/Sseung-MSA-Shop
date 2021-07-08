@@ -24,14 +24,14 @@ spec:
           httpGet:
             path: /
             port: 3000
-          initialDelaySeconds: 50
+          initialDelaySeconds: 80
           periodSeconds: 10
           
         readinessProbe:
           httpGet:
             path: /
             port: 3000
-          initialDelaySeconds: 50
+          initialDelaySeconds: 80
           periodSeconds: 10
 ---
 apiVersion: v1
@@ -77,14 +77,14 @@ spec:
           httpGet:
             path: /health
             port: 8000
-          initialDelaySeconds: 50
+          initialDelaySeconds: 80
           periodSeconds: 10
 
         readinessProbe:
           httpGet:
             path: /health
             port: 8000
-          initialDelaySeconds: 50
+          initialDelaySeconds: 80
           periodSeconds: 10
       
 ---
@@ -131,14 +131,14 @@ spec:
           httpGet:
             path: /health
             port: 8000
-          initialDelaySeconds: 50
+          initialDelaySeconds: 80
           periodSeconds: 10
           
         readinessProbe:
           httpGet:
             path: /health
             port: 8000
-          initialDelaySeconds: 50
+          initialDelaySeconds: 80
           periodSeconds: 10
 ---
 apiVersion: v1
@@ -185,14 +185,14 @@ spec:
           httpGet:
             path: /health
             port: 8000
-          initialDelaySeconds: 50
+          initialDelaySeconds: 80
           periodSeconds: 10
           
         readinessProbe:
           httpGet:
             path: /health
             port: 8000
-          initialDelaySeconds: 50
+          initialDelaySeconds: 80
           periodSeconds: 10
       
 ---
@@ -239,14 +239,14 @@ spec:
           httpGet:
             path: /health
             port: 8000
-          initialDelaySeconds: 50
+          initialDelaySeconds: 80
           periodSeconds: 10
           
         readinessProbe:
           httpGet:
             path: /health
             port: 8000
-          initialDelaySeconds: 50
+          initialDelaySeconds: 80
           periodSeconds: 10
 ---
 apiVersion: v1
