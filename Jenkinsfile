@@ -52,7 +52,7 @@ pipeline {
     stage("image push"){
         steps{
             withCredentials([
-                usernamePassword(credentials: 'dockerhub-credential', usernameVariable: USER, passwordVariable: PWD)
+                usernamePassword(credentialsId: 'dockerhub-credential', usernameVariable: USER, passwordVariable: PWD)
             ]){
                 sh 'docker login!!!'
                 sh "docker login -u ${USER} -p ${PWD}"
