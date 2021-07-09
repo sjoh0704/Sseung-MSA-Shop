@@ -4,6 +4,7 @@ import axios from 'axios'
 import {Form, Container, Button, Row, Col} from 'react-bootstrap'
 import Banner from './Banner'
 import Title from './Title'
+import ImageUpload from './ImageUpload'
 
 function ProductRegister({history}){
     const {isLoggedIn, userData} = useSelector(state =>({
@@ -144,11 +145,15 @@ function ProductRegister({history}){
             <br/>
             <Button type="submit">등록</Button>
             </Form>
-                            
-                </Col>
-            </Row>
 
+            <br/>
+            <ImageUpload/>
+                </Col>
+                
+            </Row>
+            
         </Container>
+        
             
     </div>
 
