@@ -22,8 +22,11 @@ function ProductDetail({match, history}){
             ...res.data.payload.payload,
             product_id: match.params.number
             });
-            let image_list = res.data.payload.payload.image.map(img => (<div>
-                <img src={img}></img>
+            let image_list = res.data.payload.payload.image.map(img => (<div >
+                <br/>
+                <img style = {{  
+                    width: "40vw",
+                    }} src={img}></img>
                 <br/>
                 <br/>
                 
@@ -84,7 +87,7 @@ function ProductDetail({match, history}){
         <Title title= {product.name}></Title>
         <Container>
             <Row className="justify-content-md-center">
-                <Col xs lg="8">
+                <Col lg={10}>
                 <ListGroup>
             <ListGroup.Item>상품 카테고리: {product.category}</ListGroup.Item>
             <ListGroup.Item>상품명: {product.name}</ListGroup.Item>
@@ -92,7 +95,7 @@ function ProductDetail({match, history}){
             <ListGroup.Item>상품 수량: {product.quantity}</ListGroup.Item>
             <ListGroup.Item>상품 설명: {product.description}</ListGroup.Item>
             <ListGroup.Item>상품 등록일:{product.created_at}</ListGroup.Item>
-            <ListGroup.Item>{images}</ListGroup.Item>
+            <ListGroup.Item >{images}</ListGroup.Item>
             </ListGroup>
         <br/>
         <p>구매 수량</p>

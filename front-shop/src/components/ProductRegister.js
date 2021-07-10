@@ -163,7 +163,7 @@ function ProductRegister({history}){
         <Title title="REGISTER PRODUCT"></Title>
         <Container>
             <Row className="justify-content-md-center">
-                <Col xs lg={8}>
+                <Col lg={10}>
                 {/* <Form onSubmit={onClickHandler} > */}
                 <Form>
             <Form.Group controlId="exampleForm.ControlSelect1">

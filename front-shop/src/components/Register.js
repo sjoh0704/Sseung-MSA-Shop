@@ -53,7 +53,7 @@ function Register(){
         <Title title="REGISTER"/>
         <Container>
             <Row className="justify-content-md-center"> 
-                <Col xs lg={8}>
+                <Col xs lg={10}>
                 <Form onSubmit={onClickHandler} >
 
 

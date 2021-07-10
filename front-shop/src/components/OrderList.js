@@ -54,7 +54,7 @@ function OrderList({history}){
          await axios.get('/apis/v1/product').then(res=> {
     
             console.log(res.data.payload)
-            let tmp = res.data.payload.map(data=> {
+            let tmp = res.data.payload.payload.map(data=> {
                 return  {
                     ...data.fields,
                     product_id: data.pk
