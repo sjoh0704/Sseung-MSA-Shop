@@ -13,15 +13,23 @@ function ProductDetail({match, history}){
         userData: state.user.payload
     }))
 
-    const[product,setProduct]= useState({
-    })
+    const[images,setImages]= useState([])
+    const[product,setProduct]= useState({})
     const fetchProduct= async ()=>{
         await axios.get('/apis/v1/product/' + match.params.number).then(res=> {
+            console.log(res.data)
             setProduct({
             ...res.data.payload.payload,
             product_id: match.params.number
             });
-        
+            let image_list = res.data.payload.payload.image.map(img => (<div>
+                <img src={img}></img>
+                <br/>
+                <br/>
+                
+            </div>))
+            setImages(image_list);
+            
         })
         .catch(e => {
             // 정보가 없을 때 처리
@@ -67,6 +75,9 @@ function ProductDetail({match, history}){
 
 
     }
+    
+  
+
 
     return(
         <div>
@@ -81,6 +92,7 @@ function ProductDetail({match, history}){
             <ListGroup.Item>상품 수량: {product.quantity}</ListGroup.Item>
             <ListGroup.Item>상품 설명: {product.description}</ListGroup.Item>
             <ListGroup.Item>상품 등록일:{product.created_at}</ListGroup.Item>
+            <ListGroup.Item>{images}</ListGroup.Item>
             </ListGroup>
         <br/>
         <p>구매 수량</p>
