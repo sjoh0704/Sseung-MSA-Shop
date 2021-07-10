@@ -137,17 +137,28 @@ class ProductStatusView(BaseView):
         return super(ProductStatusView, self).dispatch(request, *args, **kargs)
 
     def get(self, request, pk):
-        product = get_object_or_404(Product, id=pk)
-        data = {
-            "category": product.category.kind,
-            "name": product.name,
-            "price": product.price,
-            "quantity": product.quantity,
-            "description": product.description,
-            "created_at": product.created_at,
-            "updated_at": product.updated_at,
-            "seller_id": product.seller_id,
-        }
+        try:
+
+            product = get_object_or_404(Product, id=pk)
+            data = {
+                "category": product.category.kind,
+                "name": product.name,
+                "price": product.price,
+                "quantity": product.quantity,
+                "description": product.description,
+                "created_at": product.created_at,
+                "updated_at": product.updated_at,
+                "seller_id": product.seller_id,
+                "image":[]
+            }
+            tmp = product.productimage_set.all()
+            for i in range(len(tmp)):
+                data['image'].append(tmp[i].base64_image_url)
+                # data['image' + str(i)] = tmp[i].base64_image_url
+            print(data)
+        except Exception as e:
+            print(e)
+            return self.response(status=400)
         return self.response(data=data, message="product data", status=200)
 
 
@@ -211,13 +222,29 @@ class GetProductByCategory(BaseView):
     
     
     def get(self, request, pk):
-        category = Category.objects.get(id=pk)
-        products = Product.objects.filter(category=category)
-        # products = category.product_set.all()
+        try:
+            category = Category.objects.get(id=pk)
+            products = Product.objects.filter(category=category)
+            product_list = [{}for _ in range(len(products))]
+            for i, product in enumerate(products):
+                product_list[i]['pk'] = product.id
+                product_list[i]['seller_id'] = product.seller_id
+                product_list[i]['category'] = product.category.id
+                product_list[i]['name'] = product.name
+                product_list[i]['description'] = product.description
+                product_list[i]['quantity'] = product.quantity
+                product_list[i]['price'] = product.price
+                product_list[i]['created_at'] = product.created_at
+                product_list[i]['updated_at'] = product.updated_at
+                if product.productimage_set.first():
+                    product_list[i]['base64_image_url'] = product.productimage_set.first().base64_image_url
+                else:
+                    product_list[i]['base64_image_url'] = None
 
-       
-        json_list = serializers.serialize('json', products)
-        return HttpResponse(json_list, content_type="text/json-comment-filtered")
+        except Exception as e:
+            print(e)
+            return self.response(status=400)
+        return self.response(data = product_list, message=200)
 
 
 
