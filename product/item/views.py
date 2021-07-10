@@ -6,7 +6,7 @@ from django.http.response import Http404, HttpResponse
 from django.views import View
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
-from .models import Category, Product
+from .models import Category, Product, ProductImage
 
 
 
@@ -27,19 +27,15 @@ class ProductNonParam(BaseView):
     def dispatch(self, request, *args, **kargs):
         return super(ProductNonParam, self).dispatch(request, *args, **kargs)
 
-
+    # product 생성하기 
     def post(self, request):
         print(request.body)
      
         try:
-            data = json.loads(request.body)
-          
+            data = json.loads(request.body)     
         except:
             data = request.POST
-            
-        print(data)
         try:
-            print("try")
             print(data)
             seller_id = data.get('seller_id', '')
             if not seller_id:
@@ -66,16 +62,41 @@ class ProductNonParam(BaseView):
             if not description:
                 return self.response(message="description 없음", status=400)
             
-            product = Product.objects.create(name = name,
-                                            seller_id=seller_id,
-                                            category=category,
-                                            price=price,
-                                            quantity=quantity,
-                                            description=description)
+
+            product = Product(name = name,
+                            seller_id=seller_id,
+                            category=category,
+                            price=price,
+                            quantity=quantity,
+                            description=description)
+            i = 0
+            image_list = []
+            while True:
+
+                try:
+ 
+                    base64 = data['{}'.format(i)]
+                    productImage = ProductImage(product = product, base64_image_url=base64)
+                    image_list.append(productImage)
+                    i += 1
+                except Exception as e:
+                    print(e)
+                
+                    break
+            if i == 0:
+                print('fails')
+                return self.response(message="uploading image fail", status=400)
+
+            
         except Exception as e:
+            print(e)
             return self.response(message=e, status=400)
-        else:
-            return self.response(message="create product success", status=200)
+        
+        product.save()
+        for img in image_list:
+            img.save()
+        
+        return self.response(message="create product success", status=200)
 
 
 
