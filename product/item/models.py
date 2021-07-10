@@ -22,7 +22,7 @@ class Product(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
-        ordering = ['-created_at', ]
+        ordering = ['-created_at' ]
 
     def __str__(self):
         return '판매자 id: {} /상품명: {} /상품 등록일: {}'.format(self.seller_id ,self.name, self.created_at)

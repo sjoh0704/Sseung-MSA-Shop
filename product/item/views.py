@@ -99,13 +99,32 @@ class ProductNonParam(BaseView):
         return self.response(message="create product success", status=200)
 
 
-
+    # 상품 가져오기 
     def get(self, request):
-  
-        products = Product.objects.all()
-        json_products = serializers.serialize('json', products)
-        print(json_products)
-        return HttpResponse(json_products, content_type="text/json-comment-filtered")
+        try:
+                
+            products = Product.objects.all()
+            product_list = [{}for _ in range(len(products))]
+            for i, product in enumerate(products):
+                product_list[i]['pk'] = product.id
+                product_list[i]['seller_id'] = product.seller_id
+                product_list[i]['category'] = product.category.id
+                product_list[i]['name'] = product.name
+                product_list[i]['description'] = product.description
+                product_list[i]['quantity'] = product.quantity
+                product_list[i]['price'] = product.price
+                product_list[i]['created_at'] = product.created_at
+                product_list[i]['updated_at'] = product.updated_at
+                if product.productimage_set.first():
+                    product_list[i]['base64_image_url'] = product.productimage_set.first().base64_image_url
+                else:
+                    product_list[i]['base64_image_url'] = None
+
+        except Exception as e:
+            print(e)
+            return self.response(status=400)
+        return self.response(data = product_list, message=200)
+
         
     
         
