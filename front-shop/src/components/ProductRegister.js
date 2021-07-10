@@ -109,7 +109,7 @@ function ProductRegister({history}){
 
     const [product, setProduct] = useState({
         name: "",
-        category: 1,
+        category: kind[0].kind,
         price: null,
         quantity: 1,
         description: "",
@@ -118,7 +118,7 @@ function ProductRegister({history}){
 
     
     const {name, category, price, quantity, description} = product
-
+    
 
 
     const onChangeHandler = (e) => {
@@ -128,11 +128,12 @@ function ProductRegister({history}){
             [name]: value
         })
         console.log(product)
-
     };
+
+
     const onClickHandler = (e)=>{
         let category_id = kind.findIndex((k) => k.kind === category) + 1
-
+        let image_list = images.map((img, index) => (img.data_url))
         e.preventDefault();
         let body = {
             seller_id: userData.user_id,
@@ -141,7 +142,7 @@ function ProductRegister({history}){
             price: price,
             quantity: quantity,
             description: description,
-            ...images
+            ...image_list
         };
         console.log(body)
   
