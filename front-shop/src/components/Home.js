@@ -17,10 +17,10 @@ export default function Home(props){
     const fetchProducts= async ()=>{
         await axios.get('/apis/v1/product').then(res=> {
             console.log(res)
-            let product_list = res.data.payload.map(data=> {
+            let product_list = res.data.payload.payload.map(data=> {
 
                 return  {
-                    ...data.fields,
+                    ...data,
                     id: data.pk
                 }
             })

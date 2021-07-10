@@ -9,8 +9,8 @@ const DisplayProducts = ({products}) =>{
             <Col md={4} xs={6} key={index}>
                 <Link style={{textDecoration:'none', color:'inherit'}} key={index} to={path}>
                 
-                    <Card style={{ width: '18rem' }}>
-                    <Card.Img variant="top" src={placeholder} />
+                    <Card style={{ width: '20rem' }}>
+                    <Card.Img variant="top" src={product.base64_image_url ? product.base64_image_url: placeholder} />
                     <Card.Body>
                         <Card.Title>{product.name}</Card.Title>
                         <Card.Text>
