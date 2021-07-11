@@ -9,6 +9,7 @@ pipeline {
     ORDER_IMAGE = 'order-service'    
     GATEWAY_IMAGE = 'gateway-service'
     TAG = 'test'
+    VERSION = 'test${BUILD_NUMBER}'
     }
     
 
@@ -29,31 +30,31 @@ pipeline {
                 
             dir('product'){
    
-            sh 'docker build -t ${DOCKER_ID}/${PRODUCT_IMAGE}:${TAG} .'
+            sh 'docker build -t ${DOCKER_ID}/${PRODUCT_IMAGE}:${VERSION} .'
             }
                 
                 
             dir('front-shop'){
             sh 'git branch'
-            sh 'docker build -t ${DOCKER_ID}/${FRONT_IMAGE}:${TAG} .'
+            sh 'docker build -t ${DOCKER_ID}/${FRONT_IMAGE}:${VERSION} .'
             }
                 
             dir('backend'){
             sh 'pwd'
             sh 'git branch'
-            sh 'docker build -t ${DOCKER_ID}/${USER_IMAGE}:${TAG} .'
+            sh 'docker build -t ${DOCKER_ID}/${USER_IMAGE}:${VERSION} .'
 
             }
              
                 
             dir('order'){
             sh 'pwd'
-            sh 'docker build -t ${DOCKER_ID}/${ORDER_IMAGE}:${TAG} .'
+            sh 'docker build -t ${DOCKER_ID}/${ORDER_IMAGE}:${VERSION} .'
             }
                 
             dir('apigateway'){
             sh 'pwd'
-            sh 'docker build -t ${DOCKER_ID}/${GATEWAY_IMAGE}:${TAG} .'
+            sh 'docker build -t ${DOCKER_ID}/${GATEWAY_IMAGE}:${VERSION} .'
             }
             
             
@@ -62,23 +63,40 @@ pipeline {
     }
     
 
-    stage("image push"){
+    stage("push images"){
         steps{
             withCredentials([usernamePassword(credentialsId: 'dockerhub-credential', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
               sh 'docker login -u $USERNAME -p $PASSWORD'
             }
             
-            sh 'docker push ${DOCKER_ID}/${FRONT_IMAGE}:${TAG}'
-            sh 'docker push ${DOCKER_ID}/${USER_IMAGE}:${TAG}'
-            sh 'docker push ${DOCKER_ID}/${PRODUCT_IMAGE}:${TAG}'
-            sh 'docker push ${DOCKER_ID}/${GATEWAY_IMAGE}:${TAG}'
-            sh 'docker push ${DOCKER_ID}/${ORDER_IMAGE}:${TAG}'
+            sh 'docker push ${DOCKER_ID}/${FRONT_IMAGE}:${VERSION}'
+            sh 'docker push ${DOCKER_ID}/${USER_IMAGE}:${VERSION}'
+            sh 'docker push ${DOCKER_ID}/${PRODUCT_IMAGE}:${VERSION}'
+            sh 'docker push ${DOCKER_ID}/${GATEWAY_IMAGE}:${VERSION}'
+            sh 'docker push ${DOCKER_ID}/${ORDER_IMAGE}:${VERSION}'
 
            
 
         }
  
     }
+        
+        stage("update manifest"){
+            
+             git([url: 'https://github.com/sjoh0704/react-django-shop.git', branch: 'manifest', credentialsId: 'github-credential'])
+             dir('manifest'){
+           
+             echo "update yamls"
+             sh "sed 's/test/${VERSION}/' > manifest{$BUILD_NUMBER}.yaml" 
+             sh 'git add . '
+             sh 'git commit -m "commit manifest${BUILD_NUMBER}"'
+             sh 'git push origin manifest'
+            
+             }
+            
+            
+        }
+        
     
 }
 }
