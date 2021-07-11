@@ -88,7 +88,7 @@ pipeline {
             sh 'git add . '
             sh 'git commit -m "commit manifest${BUILD_NUMBER}"'
             withCredentials([usernamePassword(credentialsId: 'github-credential', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
-                        sh('git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/sjoh0704/react-django-shop.git manifest')
+                        sh('git push https://${GIT_USERNAME}:${GIT_PASSWORD::-1}%40github.com/sjoh0704/react-django-shop.git manifest')
                     }
             
              }
