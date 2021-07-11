@@ -8,7 +8,6 @@ pipeline {
     ORDER_IMAGE = 'order-service'    
     GATEWAY_IMAGE = 'gateway-service'
     TAG = 'test'
-    VERSION = 'test${BUILD_NUMBER}'
     }
     
 
@@ -29,7 +28,7 @@ pipeline {
                 
             dir('product'){
    
-            sh 'docker build -t ${DOCKER_ID}/${PRODUCT_IMAGE}:${VERSION} .'
+                sh 'docker build -t ${DOCKER_ID}/${PRODUCT_IMAGE}:${TAG}${BUILD_NUMBER} .'
             }
                 
                 
