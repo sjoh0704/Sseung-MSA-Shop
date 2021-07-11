@@ -87,7 +87,9 @@ pipeline {
             sh "sed 's/${TAG}/${TAG}${BUILD_NUMBER}/' > manifest${BUILD_NUMBER}.yaml" 
             sh 'git add . '
             sh 'git commit -m "commit manifest${BUILD_NUMBER}"'
-            sh 'git push origin manifest'
+            withCredentials([usernamePassword(credentialsId: 'github-credential', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
+                        sh('git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/sjoh0704/react-django-shop.git manifest')
+                    }
             
              }
             }
