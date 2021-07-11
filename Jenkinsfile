@@ -35,25 +35,24 @@ pipeline {
                 
                 
             dir('front-shop'){
-            sh 'git branch'
+            
             sh 'docker build -t ${DOCKER_ID}/${FRONT_IMAGE}:${VERSION} .'
             }
                 
             dir('backend'){
-            sh 'pwd'
-            sh 'git branch'
+            
             sh 'docker build -t ${DOCKER_ID}/${USER_IMAGE}:${VERSION} .'
 
             }
              
                 
             dir('order'){
-            sh 'pwd'
+           
             sh 'docker build -t ${DOCKER_ID}/${ORDER_IMAGE}:${VERSION} .'
             }
                 
             dir('apigateway'){
-            sh 'pwd'
+          
             sh 'docker build -t ${DOCKER_ID}/${GATEWAY_IMAGE}:${VERSION} .'
             }
             
