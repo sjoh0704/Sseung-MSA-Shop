@@ -80,17 +80,19 @@ pipeline {
     }
         
         stage("update manifest"){
-            
-             git([url: 'https://github.com/sjoh0704/react-django-shop.git', branch: 'manifest', credentialsId: 'github-credential'])
-             dir('manifest'){
+            steps{
+            git([url: 'https://github.com/sjoh0704/react-django-shop.git', branch: 'manifest', credentialsId: 'github-credential'])
+            dir('manifest'){
            
-             echo "update yamls"
-             sh "sed 's/test/${VERSION}/' > manifest{$BUILD_NUMBER}.yaml" 
-             sh 'git add . '
-             sh 'git commit -m "commit manifest${BUILD_NUMBER}"'
-             sh 'git push origin manifest'
+            echo "update yamls"
+            sh "sed 's/test/${VERSION}/' > manifest{$BUILD_NUMBER}.yaml" 
+            sh 'git add . '
+            sh 'git commit -m "commit manifest${BUILD_NUMBER}"'
+            sh 'git push origin manifest'
             
              }
+            }
+             
             
             
         }
