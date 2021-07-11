@@ -14,6 +14,7 @@ import CategoryBanner from './components/CategoryBanner';
 import ProductDetail from './components/ProductDetail'
 import OrderList from './components/OrderList';
 import PurchasePage from './components/PurchasePage';
+
 function App() {
   return (
 
@@ -24,7 +25,7 @@ function App() {
     {/* <Register></Register> */}
     {/* <Home/> */}
     {/* <ProductRegister/> */}
-    
+
     <Top/>
     <Banner/>
     <CategoryBanner/>

@@ -12,7 +12,7 @@ function Title({title, set_middle = true}){
                 </div>
                 
                 <Row className={set_middle ? "justify-content-md-center": ""}> 
-                    <Col xs lg= {set_middle?"8":"12"}>
+                    <Col xs lg= {set_middle?"10":"12"}>
                     {title}
                     <hr/>
                     </Col>

@@ -2,8 +2,56 @@ import React, {useState} from 'react'
 import {useSelector, useDispatch} from 'react-redux'
 import axios from 'axios'
 import {Form, Container, Button, Row, Col} from 'react-bootstrap'
-import Banner from './Banner'
 import Title from './Title'
+import ImageUploading from 'react-images-uploading';
+
+
+
+function ImageUpload() {
+
+  const [images, setImages] = useState([]);
+  const maxNumber = 4;
+
+  const onChangeImage = (imageList, addUpdateIndex) => {
+    console.log(imageList, addUpdateIndex);
+    setImages(imageList);
+  };
+
+  // 추가
+  const onError = (errors, files) => {
+    if(errors.maxNumber) {
+      alert(`이미지는 ${maxNumber}개까지만 첨부할 수 있습니다`)
+    }
+  }
+
+  
+  // const onClickGetImage = async () => {
+    
+  //   let imageList = await axios.get("/apis/image/product").then(res => {
+      
+  //     return(res.data.map(data => {
+  //       return {
+  //         data_url: data.fields.base64_image_url}
+  //     }))
+  //   })
+  //   .catch(e => {
+  //     console.log(e)
+  //   })
+
+  //   console.log(imageList)
+
+  // }
+
+
+
+  return (
+    <Container>
+     
+    </Container>
+  )
+}
+
+
 
 function ProductRegister({history}){
     const {isLoggedIn, userData} = useSelector(state =>({
@@ -13,7 +61,37 @@ function ProductRegister({history}){
     const {kind} = useSelector(state => ({
         kind: state.category.payload
     }))
-    console.log(kind)
+    const [images, setImages] = useState([]);
+    const maxNumber = 4;
+  
+    const onChangeImage = (imageList, addUpdateIndex) => {
+      console.log(imageList, addUpdateIndex);
+      setImages(imageList);
+    };
+
+    const onError = (errors, files) => {
+      if(errors.maxNumber) {
+        alert(`이미지는 ${maxNumber}개까지만 첨부할 수 있습니다`)
+      }
+    }
+  
+    
+    // const onClickGetImage = async () => {
+      
+    //   let imageList = await axios.get("/apis/image/product").then(res => {
+        
+    //     return(res.data.map(data => {
+    //       return {
+    //         data_url: data.fields.base64_image_url}
+    //     }))
+    //   })
+    //   .catch(e => {
+    //     console.log(e)
+    //   })
+  
+    //   console.log(imageList)
+  
+    // }
     
     const displayCategory = kind.map((k, index) => {
         return (
@@ -31,17 +109,16 @@ function ProductRegister({history}){
 
     const [product, setProduct] = useState({
         name: "",
-        category: null,
+        category: kind[0].kind,
         price: null,
-        quantity: null,
+        quantity: 1,
         description: "",
-
 
     })
 
     
     const {name, category, price, quantity, description} = product
-
+    
 
 
     const onChangeHandler = (e) => {
@@ -51,11 +128,12 @@ function ProductRegister({history}){
             [name]: value
         })
         console.log(product)
-
     };
+
+
     const onClickHandler = (e)=>{
         let category_id = kind.findIndex((k) => k.kind === category) + 1
-
+        let image_list = images.map((img, index) => (img.data_url))
         e.preventDefault();
         let body = {
             seller_id: userData.user_id,
@@ -64,7 +142,9 @@ function ProductRegister({history}){
             price: price,
             quantity: quantity,
             description: description,
+            ...image_list
         };
+        console.log(body)
   
     
         axios.post('/apis/v1/product/', body)
@@ -83,9 +163,9 @@ function ProductRegister({history}){
         <Title title="REGISTER PRODUCT"></Title>
         <Container>
             <Row className="justify-content-md-center">
-                <Col xs lg={8}>
-                <Form onSubmit={onClickHandler} >
-
+                <Col lg={10}>
+                {/* <Form onSubmit={onClickHandler} > */}
+                <Form>
             <Form.Group controlId="exampleForm.ControlSelect1">
                 <Form.Label>카테고리</Form.Label>
                 <Form.Control as="select"
@@ -123,14 +203,6 @@ function ProductRegister({history}){
                 onChange={onChangeHandler}
                 placeholder="수량을 적어주세요" />
             </Form.Group>
-            {/* 
-            <Form.Group controlId="exampleForm.ControlInput1">
-                <Form.Label>사진</Form.Label>
-                <Form.Control placeholder="name@example.com" />
-            </Form.Group> */}
-
-
-
             <Form.Group controlId="exampleForm.ControlTextarea1">
                 <Form.Label>상품 설명</Form.Label>
                 <Form.Control 
@@ -141,14 +213,71 @@ function ProductRegister({history}){
                 value = {description}
                 />
             </Form.Group>
-            <br/>
-            <Button type="submit">등록</Button>
-            </Form>
-                            
-                </Col>
-            </Row>
+            <Form.Group controlId="exampleForm.ControlTextarea1">
+                <Form.Label>상품 이미지 등록</Form.Label>
+             {/* <Button onClick={onClickGetImage}>이미지 가져오기 </Button> */}
+            <ImageUploading
+                multiple
+                value={images}
+                onChange={onChangeImage}
+                maxNumber={maxNumber}
+                dataURLKey="data_url"
+                onError={onError}			// 추가
+                >
+                {({
+                imageList,
+                onImageUpload,
+                onImageUpdate,
+                onImageRemove,
+                isDragging,
+                dragProps,
+                }) => (
+                // write your building UI
+                <div className="upload__image-wrapper">
+                    <Button
+                    style={isDragging ? { color: 'red' } : undefined}
+                    onClick={(e) => {
+                        e.preventDefault()
+                        onImageUpload()}}
+                    {...dragProps}
+                    >
+                    사진추가
+                    </Button>
+                    <br/>
+                    &nbsp;
+                    {imageList.map((image, index) => (
+                    <div key={index} className="image-item">
+                        <img src={image['data_url']} alt="" width="700" />
+                        <div className="image-item__btn-wrapper">
+                        <br/>
+                        <Button onClick={(e) => {
+                            e.preventDefault()
+                            onImageUpdate(index)}}>수정</Button>{' '}
+                        <Button onClick={(e) => {
+                            e.preventDefault()
+                            onImageRemove(index)}}>삭제</Button>
+                        </div>
+                        <br/>
+                    </div>
+                    ))}
+                </div>
+            
+                )}
+            </ImageUploading>
 
+
+
+            </Form.Group>
+            <Button type="submit" onClick={onClickHandler}>상품 등록</Button>
+            </Form>
+
+            
+                </Col>
+                
+            </Row>
+            
         </Container>
+        
             
     </div>
 

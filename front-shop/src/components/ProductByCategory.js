@@ -10,9 +10,9 @@ function ProductByCategory({match}){
     const[products,Setproducts]= useState([])
     const fetchProducts= async ()=>{
         await axios.get('/apis/v1/category/' + match.params.number).then(res=> {
-            let product_list = res.data.payload.map((data, index)=> {
+            let product_list = res.data.payload.payload.map((data, index)=> {
                 return {
-                    ...data.fields,
+                    ...data,
                     id: data.pk
                 }
             })
