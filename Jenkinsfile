@@ -34,24 +34,24 @@ pipeline {
                 
             dir('front-shop'){
             
-            sh 'docker build -t ${DOCKER_ID}/${FRONT_IMAGE}:${VERSION} .'
+            sh 'docker build -t ${DOCKER_ID}/${FRONT_IMAGE}:${TAG}${BUILD_NUMBER} .'
             }
                 
             dir('backend'){
             
-            sh 'docker build -t ${DOCKER_ID}/${USER_IMAGE}:${VERSION} .'
+            sh 'docker build -t ${DOCKER_ID}/${USER_IMAGE}:${TAG}${BUILD_NUMBER} .'
 
             }
              
                 
             dir('order'){
            
-            sh 'docker build -t ${DOCKER_ID}/${ORDER_IMAGE}:${VERSION} .'
+            sh 'docker build -t ${DOCKER_ID}/${ORDER_IMAGE}:${TAG}${BUILD_NUMBER} .'
             }
                 
             dir('apigateway'){
           
-            sh 'docker build -t ${DOCKER_ID}/${GATEWAY_IMAGE}:${VERSION} .'
+            sh 'docker build -t ${DOCKER_ID}/${GATEWAY_IMAGE}:${TAG}${BUILD_NUMBER} .'
             }
             
             
@@ -66,11 +66,11 @@ pipeline {
               sh 'docker login -u $USERNAME -p $PASSWORD'
             }
             
-            sh 'docker push ${DOCKER_ID}/${FRONT_IMAGE}:${VERSION}'
-            sh 'docker push ${DOCKER_ID}/${USER_IMAGE}:${VERSION}'
-            sh 'docker push ${DOCKER_ID}/${PRODUCT_IMAGE}:${VERSION}'
-            sh 'docker push ${DOCKER_ID}/${GATEWAY_IMAGE}:${VERSION}'
-            sh 'docker push ${DOCKER_ID}/${ORDER_IMAGE}:${VERSION}'
+            sh 'docker push ${DOCKER_ID}/${FRONT_IMAGE}:${TAG}${BUILD_NUMBER}'
+            sh 'docker push ${DOCKER_ID}/${USER_IMAGE}:${TAG}${BUILD_NUMBER}'
+            sh 'docker push ${DOCKER_ID}/${PRODUCT_IMAGE}:${TAG}${BUILD_NUMBER}'
+            sh 'docker push ${DOCKER_ID}/${GATEWAY_IMAGE}:${TAG}${BUILD_NUMBER}'
+            sh 'docker push ${DOCKER_ID}/${ORDER_IMAGE}:${TAG}${BUILD_NUMBER}'
 
            
 
@@ -84,7 +84,7 @@ pipeline {
             dir('manifest'){
            
             echo "update yamls"
-            sh "sed 's/test/${VERSION}/' > manifest{$BUILD_NUMBER}.yaml" 
+            sh "sed 's/${TAG}/${TAG}${BUILD_NUMBER}/' > manifest${BUILD_NUMBER}.yaml" 
             sh 'git add . '
             sh 'git commit -m "commit manifest${BUILD_NUMBER}"'
             sh 'git push origin manifest'
