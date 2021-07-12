@@ -101,12 +101,6 @@ function ProductRegister({history}){
     }
     );
         
-    if(isLoggedIn === false){
-        alert('로그인 먼저 해주세요')
-        history.replace('/login')
-    }
-
-
     const [product, setProduct] = useState({
         name: "",
         category: kind[0].kind,

@@ -73,10 +73,6 @@ function OrderList({history}){
    
     },[userData.user_id])
 
-    if(isLoggedIn === false){
-        alert('로그인 후 이용해주세요!')
-        history.replace('/login')
-    }
 
     return (<div>
         <Title title="구매 목록" set_middle={false}></Title>

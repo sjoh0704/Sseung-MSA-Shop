@@ -3,6 +3,11 @@ import {useSelector} from 'react-redux'
 import {Container, Navbar, Nav, NavDropdown, Col, Row} from 'react-bootstrap'
 import {Link} from 'react-router-dom'
 function CategoryBanner(){
+
+    const{isLoggedIn} = useSelector(state=>({
+        isLoggedIn: state.user.isLoggedIn
+    }))
+
     const {kind} = useSelector(state => ({
         kind: state.category.payload
     }))
@@ -16,6 +21,13 @@ function CategoryBanner(){
         );
     }
     );
+
+    const Item = ({path, pathname})=> {
+        if(!isLoggedIn){
+            return (<Nav.Link ><Link onClick={()=>{alert("로그인 후 이용해주세요^^")}}to="/" style={{textDecoration:'none', color:'inherit'}}>{pathname}</Link></Nav.Link>)
+        }
+        return (<Nav.Link ><Link to={path}style={{textDecoration:'none', color:'inherit'}}>{pathname}</Link></Nav.Link>)
+    }
     
 
     return(
@@ -32,11 +44,10 @@ function CategoryBanner(){
 
                             <Col>
                             <Nav className="mr-auto">
-            
-                            <Nav.Link ><Link to="/product/register"style={{textDecoration:'none', color:'inherit'}}>판매하기</Link></Nav.Link>
-                            <Nav.Link ><Link to="/orderlist"style={{textDecoration:'none', color:'inherit'}}>구매목록</Link></Nav.Link>
-                            <Nav.Link ><Link to="/register"style={{textDecoration:'none', color:'inherit'}}>장바구니</Link></Nav.Link>
-                            <Nav.Link ><Link to="/profile"style={{textDecoration:'none', color:'inherit'}}>내정보</Link></Nav.Link>
+                            <Item path={"/product/register"} pathname={'판매하기'}/>
+                            <Item path={"/orderlist"} pathname={'구매목록'}/>
+                            <Item path={"/register"} pathname={'장바구니'}/>
+                            <Item path={"/profile"} pathname={'내정보'}/>
                         
                             </Nav>
                             </Col>

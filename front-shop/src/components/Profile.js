@@ -11,11 +11,6 @@ function Profile({history}){
         isLoggedIn: state.user.isLoggedIn,
         userData: state.user.payload
     }))
-
-    if(isLoggedIn==false || userData==null){
-        alert('로그인 먼저 해주세요!');
-        history.replace('/')
-    }
     
     console.log(userData)
     
@@ -56,6 +51,7 @@ function Profile({history}){
             alert("회원 탈퇴 완료")
             dispatch(logoutAction())
             history.replace('/')
+   
         }).catch(e =>{
             alert("회원 탈퇴 실패")
         })
