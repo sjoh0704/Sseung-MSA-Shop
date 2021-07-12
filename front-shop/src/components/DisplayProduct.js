@@ -1,5 +1,5 @@
 import {Row, Col, Card} from 'react-bootstrap'
-import placeholder from '../images/placeholder.jpg'
+import placeholder from '../images/placeholder2.jpg'
 import {Link} from 'react-router-dom'
 // id가 필요하다!!
 const DisplayProducts = ({products}) =>{
@@ -10,7 +10,7 @@ const DisplayProducts = ({products}) =>{
                 <Link style={{textDecoration:'none', color:'inherit'}} key={index} to={path}>
                 
                     <Card style={{ height: '22rem', width:'25rem' }}>
-                    <Card.Img variant="top" style={{ height: '15rem', width:'25rem'}} src={product.base64_image_url ? product.base64_image_url: placeholder} />
+                    <Card.Img variant="top" style={{ height: '15rem', width:'24.7rem'}} src={product.base64_image_url ? product.base64_image_url: placeholder} />
                     <Card.Body style={{marginTop:15}}>
                     
                         <Card.Title>{product.name}</Card.Title>
