@@ -98,8 +98,19 @@ function ProductDetail({match, history}){
             <ListGroup.Item >{images}</ListGroup.Item>
             </ListGroup>
         <br/>
-        <p>구매 수량</p>
-        <input type='number' onChange={onChangeHandler}value={amount}></input>
+        <Row>
+            <Col xs lg="2">
+            <Form>
+            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+            <Form.Label>구매 수량</Form.Label>
+            <Form.Control type='number' onChange={onChangeHandler} value={amount} />
+            </Form.Group>
+            </Form>
+            
+            </Col>
+        </Row>
+        
+        
         <br/>
         <br/>
         <Button onClick={onClickWishList}>장바구니</Button>{' '}
