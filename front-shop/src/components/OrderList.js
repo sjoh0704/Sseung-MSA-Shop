@@ -3,6 +3,7 @@ import axios from 'axios'
 import {ListGroup, Container} from 'react-bootstrap'
 import Title from './Title'
 import {useSelector} from 'react-redux'
+import Loading from './Loading'
 
 function OrderList({history}){
     var products = []

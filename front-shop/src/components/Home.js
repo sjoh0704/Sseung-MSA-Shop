@@ -3,10 +3,8 @@ import {useSelector, useDispatch} from 'react-redux'
 import {setCategory} from '../modules/category'
 import axios from "axios";
 import Carousel from "react-bootstrap/Carousel";
-import {Container, Navbar} from 'react-bootstrap'
-import DisplayProducts from './DisplayProduct'
-
-
+import {Container, Navbar, Spinner} from 'react-bootstrap'
+import Loading from './Loading'
 
 
 export default function Home(props){
@@ -45,6 +43,10 @@ export default function Home(props){
         fetchProducts();
         fetchCategory();
     },[])
+
+    
+    
+
         return (
             <div>
                 <br/>
@@ -59,9 +61,10 @@ export default function Home(props){
                 <Container>
                 <div style={{marginTop:30}}/>
                 <h3>오늘의 상품 추천</h3>
+ 
                 <hr/>
-                <div style={{marginTop:30}}/>
-                    <DisplayProducts products={products}/>
+                <Loading products={products}/>
+   
                 </Container>
                 
                

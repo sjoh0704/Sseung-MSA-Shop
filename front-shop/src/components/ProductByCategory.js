@@ -4,6 +4,7 @@ import React, {useEffect, useState} from 'react';
 import DisplayProducts from './DisplayProduct'
 import {Container} from 'react-bootstrap'
 import Title from './Title';
+import Loading from './Loading';
 
 function ProductByCategory({match}){
     console.log(match.params.number)
@@ -33,7 +34,7 @@ function ProductByCategory({match}){
     return(<div>
         <Title title={kind[match.params.number-1].kind} set_middle={false}></Title>
         <Container>
-        <DisplayProducts products={products}/>
+        <Loading products={products}></Loading>
         </Container>
        
           
