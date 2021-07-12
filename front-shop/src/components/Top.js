@@ -30,6 +30,7 @@ const Top = ()=>{
         )
     }
     else{
+        console.log(userData)
         return(
             <Container>
             <br/> 

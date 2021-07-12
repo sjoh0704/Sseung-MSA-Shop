@@ -18,7 +18,6 @@ export const loginAction = (requestData) => {
   };
 
   const initialState = {
-    id: null,
     payload: null,
     isLoggedIn: false
   };

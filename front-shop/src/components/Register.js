@@ -6,8 +6,7 @@ import Banner from './Banner'
 import Title from './Title'
 
 
-function Register(){
-    const dispatch = useDispatch();
+function Register({history}){
     const [userData, setUserData] = useState({
         username: "",
         password: "",
@@ -32,10 +31,9 @@ function Register(){
         };
         axios.post('/apis/v1/user/', body)
         .then(response => {
-            // props.history.push('/')
-            console.log("회원가입 성공")
-            // dispatch(loginAction(response.data.payload))
-            alert("회원가입 성공")
+            
+            alert("축하합니다. 회원이 되셨어요!")
+            history.replace('/login')
         }).catch(e =>{
             alert("회원가입 실패")
             console.log("회원가입 실패")

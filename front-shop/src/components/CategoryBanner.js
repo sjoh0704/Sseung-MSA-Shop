@@ -36,6 +36,7 @@ function CategoryBanner(){
                             <Nav.Link ><Link to="/product/register"style={{textDecoration:'none', color:'inherit'}}>판매하기</Link></Nav.Link>
                             <Nav.Link ><Link to="/orderlist"style={{textDecoration:'none', color:'inherit'}}>구매목록</Link></Nav.Link>
                             <Nav.Link ><Link to="/register"style={{textDecoration:'none', color:'inherit'}}>장바구니</Link></Nav.Link>
+                            <Nav.Link ><Link to="/profile"style={{textDecoration:'none', color:'inherit'}}>내정보</Link></Nav.Link>
                         
                             </Nav>
                             </Col>

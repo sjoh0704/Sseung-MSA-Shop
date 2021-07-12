@@ -31,17 +31,12 @@ function Login({history}){
         axios.post('/apis/v1/user/login', body)
         .then(response => {
             history.replace('/')
-            console.log("로그인 성공")
+            console.log("login")
             dispatch(loginAction(response.data.payload.payload))
             alert("로그인 성공")
         }).catch(e =>{
             alert("로그인 실패")
             console.log("로그인 실패")
-        })
-
-        setUserData({
-            username: "",
-            password: ""
         })
     }
 
@@ -51,7 +46,7 @@ function Login({history}){
         <Title title="LOGIN"/>
         <Container >
             <Row className="justify-content-md-center">
-                <Col lg="8">
+                <Col lg="10">
                 <Form onSubmit={onClickHandler} >
 
 

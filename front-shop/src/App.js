@@ -14,6 +14,7 @@ import CategoryBanner from './components/CategoryBanner';
 import ProductDetail from './components/ProductDetail'
 import OrderList from './components/OrderList';
 import PurchasePage from './components/PurchasePage';
+import Profile from './components/Profile';
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function App() {
     <Route exact path="/product/:number" component={ProductDetail}/>
     <Route exact path="/orderlist" component={OrderList}/>
     <Route exact path="/purchase" component={PurchasePage}/>
+    <Route exact path="/profile" component={Profile}/>
     </Switch>
    
     
