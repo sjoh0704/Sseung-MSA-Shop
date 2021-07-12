@@ -29,6 +29,7 @@ function App() {
 
     <Top/>
     <Banner/>
+    <div style={{marginTop:20}}/>
     <CategoryBanner/>
     <Switch>
     <Route exact path="/" component={Home}/>

@@ -49,12 +49,18 @@ export default function Home(props){
             <div>
                 <br/>
                 <div style={{marginTop:30}}>
-                <Navbar bg="primary" variant="dark" />
-                
+                <Container>
+    
                 <ControlledCarousel/>
-                <Navbar bg="primary" variant="dark" />
+           
+                </Container>
+                
                 <br/>
                 <Container>
+                <div style={{marginTop:30}}/>
+                <h3>오늘의 상품 추천</h3>
+                <hr/>
+                <div style={{marginTop:30}}/>
                     <DisplayProducts products={products}/>
                 </Container>
                 
@@ -72,6 +78,7 @@ function ControlledCarousel() {
         setIndex(selectedIndex);
     };
     return (
+        
         <Carousel activeIndex={index} onSelect={handleSelect}>
             <Carousel.Item>
                 <img

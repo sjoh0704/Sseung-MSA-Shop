@@ -1,4 +1,4 @@
-import Banner from './Banner'
+import {useSelector} from 'react-redux'
 import axios from 'axios'
 import React, {useEffect, useState} from 'react';
 import DisplayProducts from './DisplayProduct'
@@ -7,6 +7,10 @@ import Title from './Title';
 
 function ProductByCategory({match}){
     console.log(match.params.number)
+    const {kind} = useSelector(state => ({
+        kind: state.category.payload
+    }))
+    console.log(kind)
     const[products,Setproducts]= useState([])
     const fetchProducts= async ()=>{
         await axios.get('/apis/v1/category/' + match.params.number).then(res=> {
@@ -27,7 +31,7 @@ function ProductByCategory({match}){
     },[match.params.number])
 
     return(<div>
-        <Title title="카테고리 상품" set_middle={false}></Title>
+        <Title title={kind[match.params.number-1].kind} set_middle={false}></Title>
         <Container>
         <DisplayProducts products={products}/>
         </Container>
