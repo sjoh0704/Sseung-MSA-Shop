@@ -53,6 +53,11 @@ pipeline {
           
             sh 'docker build -t ${DOCKER_ID}/${GATEWAY_IMAGE}:${TAG}${BUILD_NUMBER} .'
             }
+            dir('dev-manifest'){
+          
+            sh 'mv manifest.yaml ..'
+            }
+            
             
             
         }
@@ -83,11 +88,13 @@ pipeline {
             git([url: 'https://github.com/sjoh0704/react-django-shop.git', branch: 'manifest', credentialsId: 'github-credential'])
             sh 'pwd'
             sh 'ls -al'
+            sh 'cp manifest.yaml ./manifestfiles'
+        
             dir('manifestfiles'){
            
             echo "update yamls"
             sh 'pwd'
-            sh 'cp ../dev-manifest/manifest.yaml .'
+        
             sh "sed 's/${TAG}/${TAG}${BUILD_NUMBER}/' > manifest${BUILD_NUMBER}.yaml" 
             sh 'git add . '
             sh 'git commit -m "commit manifest${BUILD_NUMBER}"'
