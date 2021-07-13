@@ -270,12 +270,20 @@ kind: ConfigMap
 metadata:
   name: service-url
 data:
-
   PRODUCT_SERVICE_URL: 'http://product-api-service:8080'
   ORDER_SERVICE_URL: 'http://order-api-service:8080'
   USER_SERVICE_URL: 'http://user-api-service:8080'
   APIGATWAY_URL: 'http://api-gateway-service:8080'
   FRONTEND_URL: 'http://frontend-service:8080'
+---
+# db 환경변수  
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: database
+data:
+  MYSQL_ROOT_PASSWORD: 'root'
 
 ---
 # database
@@ -295,6 +303,7 @@ kind: StatefulSet
 metadata:
   name: mysql
 spec:
+  replicas: 1
   selector:
     matchLabels:
       app: mysql
@@ -306,12 +315,11 @@ spec:
         app: mysql
     spec:
       containers:
-      - image: mysql:5.6
+      - image: tmdwn0704/mysql
         name: mysql
-        env:
-          # Use secret in real usage
-        - name: MYSQL_ROOT_PASSWORD
-          value: password
+        envFrom: 
+        - configMapRef:
+            name: database
         ports:
         - containerPort: 3306
           name: mysql
