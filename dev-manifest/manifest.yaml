@@ -293,7 +293,7 @@ data:
 apiVersion: v1
 kind: Service
 metadata:
-  name: mysql
+  name: mysql-service
 spec:
   ports:
   - port: 3306
@@ -307,6 +307,7 @@ kind: StatefulSet
 metadata:
   name: mysql
 spec:
+  serviceName: mysql-service
   replicas: 1
   selector:
     matchLabels:
