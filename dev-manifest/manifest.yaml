@@ -126,6 +126,9 @@ spec:
         envFrom: 
         - configMapRef:
             name: service-url
+        envFrom:
+        - configMapRef:
+            name: database
 
         livenessProbe:
           httpGet:
@@ -298,6 +301,7 @@ spec:
     app: mysql
   clusterIP: None
 ---
+# database statefulset 
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
@@ -307,8 +311,6 @@ spec:
   selector:
     matchLabels:
       app: mysql
-  strategy:
-    type: Recreate
   template:
     metadata:
       labels:
@@ -329,7 +331,7 @@ spec:
       volumes:
       - name: mysql-persistent-storage
         hostPath: 
-          path: /tmp
+          path: /data
         # persistentVolumeClaim:
         #   claimName: mysql-pv-claim
 

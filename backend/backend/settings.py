@@ -100,7 +100,7 @@ DATABASES = {
         'NAME': 'data', # DB명
         'USER': 'root', # 데이터베이스 계정
         'PASSWORD': os.environ.get('MYSQL_ROOT_PASSWORD', ''), # 계정 비밀번호
-        'HOST': 'mysql-0', # 데이테베이스 주소(IP)
+        'HOST': 'mysql-0.mysql-service', # 데이테베이스 주소(IP)
         'PORT': '3306', # 데이터베이스 포트(보통은 3306)
     }
 }
