@@ -81,9 +81,11 @@ pipeline {
         stage("update manifest"){
             steps{
             git([url: 'https://github.com/sjoh0704/react-django-shop.git', branch: 'manifest', credentialsId: 'github-credential'])
+            sh 'pwd'
             dir('manifest'){
            
             echo "update yamls"
+            sh 'pwd'
             sh 'cp ../dev-manifest/manifest.yaml .'
             sh "sed 's/${TAG}/${TAG}${BUILD_NUMBER}/' > manifest${BUILD_NUMBER}.yaml" 
             sh 'git add . '
