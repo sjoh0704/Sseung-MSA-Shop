@@ -84,6 +84,7 @@ pipeline {
             dir('manifest'){
            
             echo "update yamls"
+            sh 'cp ../dev-manifest/manifest.yaml .'
             sh "sed 's/${TAG}/${TAG}${BUILD_NUMBER}/' > manifest${BUILD_NUMBER}.yaml" 
             sh 'git add . '
             sh 'git commit -m "commit manifest${BUILD_NUMBER}"'
