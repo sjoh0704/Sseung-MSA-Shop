@@ -118,7 +118,7 @@ spec:
         app: user
     spec:
       containers:
-      - name: api-gateway-container
+      - name: user-api-container
         image: tmdwn0704/user-service:test
         imagePullPolicy: Always
         ports:
@@ -134,7 +134,7 @@ spec:
           httpGet:
             path: /health
             port: 8000
-          initialDelaySeconds: 80
+          initialDelaySeconds: 60
           periodSeconds: 10
           
         readinessProbe:
@@ -229,7 +229,7 @@ spec:
         app: order
     spec:
       containers:
-      - name: product-api-container
+      - name: order-api-container
         image: tmdwn0704/order-service:test
         imagePullPolicy: Always
         ports:
