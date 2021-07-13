@@ -82,7 +82,7 @@ pipeline {
             steps{
             git([url: 'https://github.com/sjoh0704/react-django-shop.git', branch: 'manifest', credentialsId: 'github-credential'])
             sh 'pwd'
-            dir('manifest'){
+            dir('manifestfile'){
            
             echo "update yamls"
             sh 'pwd'
