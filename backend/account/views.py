@@ -10,8 +10,9 @@ from django.db import IntegrityError, reset_queries
 from django.core.validators import validate_email, ValidationError
 from django.contrib.auth import login, authenticate, logout
 import requests
+import os
 
-PRODUCT_SERIVCE_URL = 'http://localhost:8000'
+PRODUCT_SERIVCE_URL = os.environ.get("PRODUCT_SERIVCE_URL", 'http://localhost:8100')
 
 class BaseView(View):
     @staticmethod
@@ -133,7 +134,7 @@ class UserAPIViewParam(BaseView):
             user.delete()
             return self.response(message='deleting user success', status=200)
         
-        return self.response(message='deleting user fails', status=200)
+        return self.response(message='deleting user fails', status=400)
 
         
 
