@@ -1,1 +1,0 @@
-MSA react-django-shop
