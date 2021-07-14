@@ -39,7 +39,7 @@ spec:
         app: mysql
     spec:
       containers:
-      - image: tmdwn0704/mysql
+      - image: mysql:5.6
         name: mysql
         envFrom: 
         - configMapRef:
