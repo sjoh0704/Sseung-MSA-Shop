@@ -1,9 +1,11 @@
 import React, {useState, useEffect} from 'react'
 import axios from 'axios'
-import {ListGroup, Container} from 'react-bootstrap'
+import {ListGroup, Container, Row, Col} from 'react-bootstrap'
 import Title from './Title'
 import {useSelector} from 'react-redux'
-import Loading from './Loading'
+import placeholder from '../images/placeholder2.jpg'
+
+
 
 function OrderList({history}){
     var products = []
@@ -17,67 +19,71 @@ function OrderList({history}){
 
     const fetchOrders= async()=>{
             await axios.get('/apis/v1/order/' + userData.user_id).then(res=> {
-            let order_list = res.data.payload.map((data, index)=> {
-            let product = products.find(pro => pro.product_id == data.fields.product_id)
-                return ({
-                ...product,
-                ...data.fields
-            })
-            })
-            
-            let displayOrder = order_list.map((order, index) => {
-                return (
+                console.log(res.data.payload.payload)
+                let orderlist = res.data.payload.payload.map((order, index) => {
+                    return (
+                            
+                             <ListGroup.Item>
+                            <Row>
+                            <Col xs={6} md={6} lg={4}>
+                            <img style={{ height: '15rem', width:'24.7rem'}} src={order.base64_image_url?order.base64_image_url:placeholder}></img>
+                            </Col>
+                            <Col xs={6} md={6} lg={8}>
+                           <div>
+                            
+                            <p>
+                            상품명: {order.name}
+                            </p>
+                            <p>
+                            수량: {order.demand_quantity}
+                            </p>
+                            <p>
+                            지불 금액: {order.price}
+                            </p>
+                            <p>
+                            주문 날짜: {order.created_at}
+                            </p>
+                            </div>
+                            
+                            </Col>
+                            </Row>
+                            </ListGroup.Item>
+                       
+                        
+                  );
+                })
+                setOrders(orderlist);  
+        
                 
-                    <ListGroup.Item><div>
-                        <p>
-                        상품명: {order.name}
-                        </p>
-                        <p>
-                        수량: {order.quantity}
-                        </p>
-                        <p>
-                        지불 금액: {order.price}
-                        </p>
-                        <p>
-                        주문 날짜: {order.created_at}
-                        </p>
-                        </div></ListGroup.Item>
-              );
             })
             
-            setOrders(displayOrder);
-        })
-    }
-
-
-
-    const fetchProducts= async()=>{
-         await axios.get('/apis/v1/product').then(res=> {
-    
-            console.log(res.data.payload)
-            let tmp = res.data.payload.payload.map(data=> {
-                return  {
-                    ...data.fields,
-                    product_id: data.pk
-                }
-            })
-            console.log(tmp)
-            products = tmp
-            fetchOrders()
-        })
+            
+        
     }
 
 
     useEffect(()=>{
-        fetchProducts()
-       
-   
+        fetchOrders()
     },[userData.user_id])
 
+    if(orders.length == 0)
+    (<div>
+        <Title title="구매 목록" set_middle={false}></Title>
+        <Container>
+        <Row>
+            <Col>
+            <h2>상품이 없습니다.</h2>
+            </Col>
+        </Row>
+        </Container>
+
+    </div>)
+    
 
     return (<div>
         <Title title="구매 목록" set_middle={false}></Title>
         <Container>
+          
         <ListGroup>
             {orders}
         </ListGroup>
