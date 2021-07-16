@@ -45,14 +45,14 @@ function ProductDetail({match, history}){
         
     },[match.params.number])
 
-    const onClickOrder = () => {
+    const onClickOrder = (e) => {
         if(isLoggedIn === false || userData == null){
             alert("로그인 후 이용하세요.")
             history.replace('/login')
         }
-        if(amount > product.quantity){
-            alert("수량이 잘못 되었습니다. ")
-            return; 
+        if(amount < 1 || amount > product.quantity){
+            alert("수량이 올바르지 않습니다.")
+            e.preventDefault()
         }
 
     }
@@ -68,15 +68,7 @@ function ProductDetail({match, history}){
 
     const onChangeHandler = (e) => {
         const {value} = e.target
-        if(value < 1){
-            alert("올바르지 않습니다.")
-            return;
-        }
-
         setAmount(parseInt(value))
-
-
-
     }
     
   
