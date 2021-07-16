@@ -92,6 +92,7 @@ class OrderView(BaseView):
             for order in orders:
                 for product in products:
                     if order.product_id == product.get('pk'):
+                        print(order.product_id)
                         data = {}
                         data['product_id'] = product.get('pk', None)
                         data['seller_id'] = product.get('seller_id', None)
@@ -109,7 +110,7 @@ class OrderView(BaseView):
                         data['base64_image_url'] = product.get('base64_image_url', None)
                         order_by_user.append(data)
                         break
-            print(order_by_user)
+          
         except Exception as e:
             return self.response(message="get order fails Error: "+e, status=400)
 

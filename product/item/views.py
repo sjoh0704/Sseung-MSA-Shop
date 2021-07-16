@@ -26,7 +26,6 @@ class BaseView(View):
 class ProductNonParam(BaseView):
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kargs):
-        products = Product.objects.filter(quantity=0).delete()
         return super(ProductNonParam, self).dispatch(request, *args, **kargs)
 
     # product 생성하기 
@@ -216,7 +215,6 @@ class GetProductByCategory(BaseView):
     
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kargs):
-        products = Product.objects.filter(quantity=0).delete()
         return super(GetProductByCategory, self).dispatch(request, *args, **kargs)
     
     
@@ -226,6 +224,7 @@ class GetProductByCategory(BaseView):
             products = Product.objects.filter(category=category)
             product_list = [{}for _ in range(len(products))]
             for i, product in enumerate(products):
+
                 product_list[i]['pk'] = product.id
                 product_list[i]['seller_id'] = product.seller_id
                 product_list[i]['category'] = product.category.id
