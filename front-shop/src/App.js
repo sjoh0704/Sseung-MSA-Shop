@@ -12,6 +12,7 @@ import Top from './components/Top'
 import Banner from './components/Banner'
 import CategoryBanner from './components/CategoryBanner';
 import ProductDetail from './components/ProductDetail'
+import PurchaseList from './components/PurchaseList';
 import OrderList from './components/OrderList';
 import PurchasePage from './components/PurchasePage';
 import Profile from './components/Profile';
@@ -40,6 +41,7 @@ function App() {
     <Route exact path="/category/:number" component={ProductByCategory}/>
     <Route exact path="/product/:number" component={ProductDetail}/>
     <Route exact path="/orderlist" component={OrderList}/>
+    <Route exact path="/purchaselist" component={PurchaseList}/>
     <Route exact path="/purchase" component={PurchasePage}/>
     <Route exact path="/profile" component={Profile}/>
     </Switch>

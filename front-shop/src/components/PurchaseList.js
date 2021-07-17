@@ -7,7 +7,7 @@ import placeholder from '../images/placeholder2.jpg'
 
 
 
-function OrderList({history}){
+function PurchaseList({history}){
     var products = []
     const [orders, setOrders] = useState([]) 
     const {isLoggedIn, userData} = useSelector(state =>({
@@ -19,9 +19,8 @@ function OrderList({history}){
 
     const fetchOrders= async()=>{
             await axios.get('/apis/v1/order/' + userData.user_id).then(res=> {
-                console.log(res.data.payload.payload)
-                let tmp_orders = res.data.payload.payload.filter(order=> order.sales_stage!='SO')
-                let orderlist = tmp_orders.map((order, index) => {
+                let tmp_order = res.data.payload.payload.filter(order=> order.sales_stage == 'SO')
+                let orderlist = tmp_order.map((order, index) => {
                     return (
                             
                              <ListGroup.Item key={index}>
@@ -43,10 +42,6 @@ function OrderList({history}){
                             </p>
                             <p>
                             주문 날짜: {order.created_at}
-                            </p>
-                            <p>
-                            주문 상태: {order.sales_stage=='S'?
-                            <span style={{color:'red'}}>판매자의 확인을 기다려주세요</span>:<span style={{color:'green'}}>예약 중인 상품입니다.</span>}
                             </p>
                             </div>
                             
@@ -86,7 +81,7 @@ function OrderList({history}){
     
 
     return (<div>
-        <Title title="주문 목록" set_middle={false}></Title>
+        <Title title="구매 목록" set_middle={false}></Title>
         <Container>
           
         <ListGroup>
@@ -98,4 +93,4 @@ function OrderList({history}){
     </div>)
 }
 
-export default OrderList;
+export default PurchaseList;
