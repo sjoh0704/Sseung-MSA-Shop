@@ -12,10 +12,13 @@ import Top from './components/Top'
 import Banner from './components/Banner'
 import CategoryBanner from './components/CategoryBanner';
 import ProductDetail from './components/ProductDetail'
-import PurchaseList from './components/PurchaseList';
+
 import OrderList from './components/OrderList';
 import PurchasePage from './components/PurchasePage';
 import Profile from './components/Profile';
+import MySales from './components/MySales'
+import PurchaseList from './components/PurchaseList';
+import MySalesDetail from './components/MySalesDetail';
 
 function App() {
   return (
@@ -44,6 +47,8 @@ function App() {
     <Route exact path="/purchaselist" component={PurchaseList}/>
     <Route exact path="/purchase" component={PurchasePage}/>
     <Route exact path="/profile" component={Profile}/>
+    <Route exact path="/mysales" component={MySales}/>
+    <Route exact path="/mysales/:number" component={MySalesDetail}/>
     </Switch>
    
     

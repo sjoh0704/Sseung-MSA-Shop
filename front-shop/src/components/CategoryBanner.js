@@ -45,7 +45,7 @@ function CategoryBanner(){
                             <Col>
                             <Nav className="mr-auto">
                             <Item path={"/product/register"} pathname={'판매하기'}/>
-                            <Item path={"/orderlist"} pathname={'내 상품 목록'}/>
+                            <Item path={"/mysales"} pathname={'내 상품 목록'}/>
                             <Item path={"/orderlist"} pathname={'주문 목록'}/>
                             <Item path={"/purchaselist"} pathname={'구매 목록'}/>
                             <Item path={"/register"} pathname={'장바구니'}/>
