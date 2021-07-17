@@ -77,6 +77,22 @@ class UserAPIView(BaseView):
     def dispatch(self, request, *args, **kargs):
         return super(UserAPIView, self).dispatch(request, *args, **kargs)
 
+    def get(self, request):
+        try: 
+            users_list = []
+            users = User.objects.all()
+            for user in users:
+                data = {
+                    'user_id': user.id,
+                    'username': user.username,
+                    "useremail": user.email
+                    }
+                users_list.append(data)
+
+        except Exception as e:
+            return self.response(message = 'get all users info fails', status=400)
+
+        return self.response(data = users_list, message="get all user info success")
 
     def post(self, request):
         print(request.body)

@@ -31,7 +31,6 @@ class ProductNonParam(BaseView):
 
     
     def post(self, request):
-     
         try:
             data = json.loads(request.body)
           
@@ -94,5 +93,26 @@ class ProductStatusView(BaseView):
         if response.status_code == 200:
             return self.response(message='delete product success')
         return self.response(message='delete product fails', status=400)
+
+    
+class ProductByUser(BaseView):
+    
+    
+    @method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kargs):
+        return super(ProductByUser, self).dispatch(request, *args, **kargs)
+    
+    def get(self, request, pk):
+      
+                
+        response = requests.get('{}/apis/v1/product/user/{}'.format(PRODUCT_SERVICE_URL, pk))
+        
+        if response.status_code == 200:
+            data = json.loads(response.content)
+            print(data)
+            return self.response(data = data, message='get product by user success')
+        return self.response(message='get product by user fails', status=400)
+
+ 
 
         

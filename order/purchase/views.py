@@ -92,7 +92,6 @@ class OrderView(BaseView):
             for order in orders:
                 for product in products:
                     if order.product_id == product.get('pk'):
-                        print(order.product_id)
                         data = {}
                         data['product_id'] = product.get('pk', None)
                         data['seller_id'] = product.get('seller_id', None)
@@ -108,6 +107,7 @@ class OrderView(BaseView):
                         data['created_at'] = product.get('created_at', None)
                         data['updated_at'] = product.get('updated_at', None)
                         data['base64_image_url'] = product.get('base64_image_url', None)
+                        data['sales_stage'] = product.get("sales_stage", None)
                         order_by_user.append(data)
                         break
           
@@ -156,3 +156,5 @@ class OrderView(BaseView):
             return self.response(message='create order success', status=200)
         return self.response(message='create order fails', status=400)
         
+
+

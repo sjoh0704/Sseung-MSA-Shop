@@ -112,6 +112,7 @@ class ProductNonParam(BaseView):
                 product_list[i]['price'] = product.price
                 product_list[i]['created_at'] = product.created_at
                 product_list[i]['updated_at'] = product.updated_at
+                product_list[i]['sales_stage'] = product.sales_stage
                 if product.productimage_set.first():
                     product_list[i]['base64_image_url'] = product.productimage_set.first().base64_image_url
                 else:
@@ -146,6 +147,7 @@ class ProductStatusView(BaseView):
                 "created_at": product.created_at,
                 "updated_at": product.updated_at,
                 "seller_id": product.seller_id,
+                "sales_stage": product.sales_stage,
                 "image":[]
             }
             tmp = product.productimage_set.all()
@@ -183,6 +185,9 @@ class ProductStatusView(BaseView):
             description = data.get('description', '')
             if description:
                 product.description = description 
+            sales_stage = data.get('sales_stage', '')
+            if description:
+                product.sales_stage = sales_stage 
             product.save()  
         except Exception as e:
             return self.response(message=e, status=400)
@@ -234,6 +239,8 @@ class GetProductByCategory(BaseView):
                 product_list[i]['price'] = product.price
                 product_list[i]['created_at'] = product.created_at
                 product_list[i]['updated_at'] = product.updated_at
+                product_list[i]['sales_stage'] = product.sales_stage
+                
                 if product.productimage_set.first():
                     product_list[i]['base64_image_url'] = product.productimage_set.first().base64_image_url
                 else:
@@ -242,18 +249,42 @@ class GetProductByCategory(BaseView):
         except Exception as e:
             print(e)
             return self.response(status=400)
-        return self.response(data = product_list, message=200)
+        return self.response(data = product_list, message="get product by category success")
 
 
 
 
-class DeleteProductCascadingUser(BaseView):
+class ProductByUser(BaseView):
     
     
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kargs):
-        return super(DeleteProductCascadingUser, self).dispatch(request, *args, **kargs)
+        return super(ProductByUser, self).dispatch(request, *args, **kargs)
     
+    def get(self, request, pk):
+        try:
+                
+            products = Product.objects.filter(seller_id=pk)
+            product_list = [{}for _ in range(len(products))]
+            for i, product in enumerate(products):
+                product_list[i]['pk'] = product.id
+                product_list[i]['category'] = product.category.id
+                product_list[i]['name'] = product.name
+                product_list[i]['description'] = product.description
+                product_list[i]['quantity'] = product.quantity
+                product_list[i]['price'] = product.price
+                product_list[i]['created_at'] = product.created_at
+                product_list[i]['updated_at'] = product.updated_at
+                product_list[i]['sales_stage'] = product.sales_stage
+                if product.productimage_set.first():
+                    product_list[i]['base64_image_url'] = product.productimage_set.first().base64_image_url
+                else:
+                    product_list[i]['base64_image_url'] = None
+
+        except Exception as e:
+            return self.response(message="get product by user fails. ServerError:" + e, status=400)
+        return self.response(data = product_list, message="get product by user success")
+
     
     def delete(self, request, pk):
         products = Product.objects.filter(seller_id=pk)
@@ -261,4 +292,5 @@ class DeleteProductCascadingUser(BaseView):
         print(products)
         products.delete()
         return self.response(message="deleting product created by user_id={} successes".format(pk), status=200)
+    
         

@@ -86,4 +86,22 @@ class OrderView(BaseView):
             return self.response(message='delete order success')
         return self.response(message='delete order fails', status=400)
 
+
+
+class SaleView(BaseView):
+    @method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kargs):
+        return super(SaleView, self).dispatch(request, *args, **kargs)
+    
+    
+    # 구매 기록 리스트 
+    def get(self, request, pk):
+        response = requests.get('{}/apis/v1/order/sale/{}'.format(ORDER_SERVICE_URL, pk))
+        if response.status_code == 200:
+            data = json.loads(response.content)
+            print(data)
+            return self.response(data = data, message='get order list success')
+        return self.response(message='get order list fails', status=400)
+
+
         
