@@ -34,7 +34,7 @@ function PurchasePage({location, history}){
         await axios.post('/apis/v1/order/', body).then(res=> {
             
             alert('주문 성공')
-            history.replace('/purchaselist')
+            history.replace('/orderlist')
         })
         .catch(e => {
             // 정보가 없을 때 처리

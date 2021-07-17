@@ -7,7 +7,7 @@ import placeholder from '../images/placeholder2.jpg'
 
 
 
-function MySalesDetail({history}){
+function MySalesDetail({history, match}){
     var products = []
     const [orders, setOrders] = useState([]) 
     const {isLoggedIn, userData} = useSelector(state =>({
@@ -18,7 +18,7 @@ function MySalesDetail({history}){
 
 
     const fetchOrders= async()=>{
-            await axios.get('/apis/v1/order/' + userData.user_id).then(res=> {
+            await axios.get('/apis/v1/order/sale/' + match.params.number).then(res=> {
                 console.log(res.data.payload.payload)
                 let tmp_orders = res.data.payload.payload.filter(order=> order.sales_stage!='SO')
                 let orderlist = tmp_orders.map((order, index) => {
