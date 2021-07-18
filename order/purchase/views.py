@@ -46,9 +46,7 @@ class OrderNonParam(BaseView):
         email_address = data.get('email_address')
         address = data.get('address')
         demand_amount = data.get('demand_amount')
-        print(seller_id, buyer_id, product_id, quantity, email_address, address,demand_amount)
         if not (buyer_id and product_id and quantity and email_address and address and seller_id and demand_amount):
-            print("여기")
             return self.response(message="not sufficent info", status=400)
 
         data_dict = data.dict()
@@ -104,10 +102,9 @@ class OrderView(BaseView):
                         data["email_address"] = order.email_address
                         data["address"] = order.address
                         data['price'] = product.get('price', None)
-                        data['created_at'] = product.get('created_at', None)
-                        data['updated_at'] = product.get('updated_at', None)
+                        data['created_at'] = order.created_at
                         data['base64_image_url'] = product.get('base64_image_url', None)
-                        data['sales_stage'] = product.get("sales_stage", None)
+                        data['sales_stage'] = order.sales_stage
                         order_by_user.append(data)
                         break
           
@@ -134,6 +131,9 @@ class OrderView(BaseView):
         if address:
             order.address = address
         order.save()
+        sales_stage = data.get('sales_stage')
+        if sales_stage:
+            order.sales_stage = sales_stage 
 
         return self.response(message='edit order success', status=200)
 
