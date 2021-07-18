@@ -11,11 +11,7 @@ class Category(models.Model):
 
 
 class Product(models.Model):
-    SALES_STAGE = [
-    ('S', 'Sale'),
-    ('SR', "Sales Reservation"),
-    ('SO', 'Sold out'),
-]
+
 
     seller_id = IntegerField()
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='product_category')
@@ -25,13 +21,13 @@ class Product(models.Model):
     description = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    sales_stage = models.CharField(max_length=2, choices = SALES_STAGE, default='S')
+
 
     class Meta:
         ordering = ['-created_at' ]
 
     def __str__(self):
-        return "상품 id: {}/판매자 id: {} /상품명: {} /상품 등록일: {} 판매 상태: {}".format(self.pk, self.seller_id ,self.name, self.created_at, self.sales_stage)
+        return "상품 id: {}/판매자 id: {} /상품명: {} /상품 등록일: {}".format(self.pk, self.seller_id ,self.name, self.created_at)
 
 class ProductImage(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)

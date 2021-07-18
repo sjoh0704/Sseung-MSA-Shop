@@ -112,7 +112,7 @@ class ProductNonParam(BaseView):
                 product_list[i]['price'] = product.price
                 product_list[i]['created_at'] = product.created_at
                 product_list[i]['updated_at'] = product.updated_at
-                product_list[i]['sales_stage'] = product.sales_stage
+     
                 if product.productimage_set.first():
                     product_list[i]['base64_image_url'] = product.productimage_set.first().base64_image_url
                 else:
@@ -147,7 +147,6 @@ class ProductStatusView(BaseView):
                 "created_at": product.created_at,
                 "updated_at": product.updated_at,
                 "seller_id": product.seller_id,
-                "sales_stage": product.sales_stage,
                 "image":[]
             }
             tmp = product.productimage_set.all()
@@ -185,9 +184,7 @@ class ProductStatusView(BaseView):
             description = data.get('description', '')
             if description:
                 product.description = description 
-            sales_stage = data.get('sales_stage', '')
-            if description:
-                product.sales_stage = sales_stage 
+
             product.save()  
         except Exception as e:
             return self.response(message=e, status=400)
@@ -239,7 +236,7 @@ class GetProductByCategory(BaseView):
                 product_list[i]['price'] = product.price
                 product_list[i]['created_at'] = product.created_at
                 product_list[i]['updated_at'] = product.updated_at
-                product_list[i]['sales_stage'] = product.sales_stage
+      
                 
                 if product.productimage_set.first():
                     product_list[i]['base64_image_url'] = product.productimage_set.first().base64_image_url
@@ -275,7 +272,7 @@ class ProductByUser(BaseView):
                 product_list[i]['price'] = product.price
                 product_list[i]['created_at'] = product.created_at
                 product_list[i]['updated_at'] = product.updated_at
-                product_list[i]['sales_stage'] = product.sales_stage
+          
                 if product.productimage_set.first():
                     product_list[i]['base64_image_url'] = product.productimage_set.first().base64_image_url
                 else:
