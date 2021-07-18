@@ -130,10 +130,11 @@ class OrderView(BaseView):
         address = data.get('address')
         if address:
             order.address = address
-        order.save()
+       
         sales_stage = data.get('sales_stage')
         if sales_stage:
             order.sales_stage = sales_stage 
+        order.save()
 
         return self.response(message='edit order success', status=200)
 

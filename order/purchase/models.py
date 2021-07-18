@@ -21,4 +21,4 @@ class Order(models.Model):
         ordering = ['-created_at']
 
     def __str__(self) -> str:
-        return "구매자 ID: " + str(self.buyer_id) + ' /  구매 아이템 ID:' + str(self.product_id) + '  /  구매 상태:' + str(self.sales_stage)+'  /  구매 일시:' + str(self.created_at)[:16] 
+        return "주문 ID: " + str(self.id) +" / 구매자 ID: " + str(self.buyer_id) + ' /  구매 아이템 ID:' + str(self.product_id) + '  /  구매 상태:' + str(self.sales_stage)+'  /  구매 일시:' + str(self.created_at)[:16] 
