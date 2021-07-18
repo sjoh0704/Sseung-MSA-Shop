@@ -46,7 +46,7 @@ function OrderList({history}){
                             </p>
                             <p>
                             주문 상태: {order.sales_stage=='S'?
-                            <span style={{color:'red'}}>판매자의 확인을 기다려주세요</span>:<span style={{color:'green'}}>예약 중인 상품입니다.</span>}
+                            <span style={{color:'red'}}>판매자의 확인을 기다려주세요</span>:<span style={{color:'green'}}>예약되었습니다! 판매자와 거래하세요</span>}
                             </p>
                             </div>
                             

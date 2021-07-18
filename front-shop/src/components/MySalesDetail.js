@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useMemo} from 'react'
 import axios from 'axios'
 import {ListGroup, Container, Row, Col, Dropdown, DropdownButton} from 'react-bootstrap'
 import Title from './Title'
@@ -52,12 +52,13 @@ function MySalesDetail({history, match}){
                 
                 console.log(tmp_orders)
                 let orderlist = tmp_orders.map((order, index) => {
+                let sale_status = ''
                     if(order.sales_stage == 'S')
-                        setBtnValue('판매 중')
+                        sale_status='판매 중'
                     else if(order.sales_stage == 'SR')
-                        setBtnValue('예약 중')
+                        sale_status='예약 중'
                     else
-                        setBtnValue('판매 완료')
+                        sale_status='판매 완료'
 
                     return (
                             
@@ -82,11 +83,11 @@ function MySalesDetail({history, match}){
                             <p>
                             주문 날짜: {order.created_at}
                             </p>
-                            <DropdownButton id="dropdown-basic-button" name="btnValue" title={btnValue}>
-                            <Dropdown.Item onClick={onClickHandler} name='판매 중'>판매 중</Dropdown.Item>
-                            <Dropdown.Item onClick={onClickHandler} name='예약 중'>예약 중</Dropdown.Item>
-                            <Dropdown.Item onClick={onClickHandler} name='판매 완료'>판매 완료</Dropdown.Item>
-                            <Dropdown.Item onClick={onClickHandler} name='거래 취소'>거래 취소</Dropdown.Item>
+                            <DropdownButton id="dropdown-basic-button" title={btnValue?btnValue:sale_status}>
+                            <Dropdown.Item onClick={(e) => {onClickHandler(order.order_id, e)}} name='판매 중'>판매 중</Dropdown.Item>
+                            <Dropdown.Item onClick={(e) => {onClickHandler(order.order_id, e)}} name='예약 중'>예약 중</Dropdown.Item>
+                            <Dropdown.Item onClick={(e) => {onClickHandler(order.order_id, e)}} name='판매 완료'>판매 완료</Dropdown.Item>
+                            <Dropdown.Item onClick={(e) => {onClickHandler(order.order_id, e)}} name='거래 취소'>거래 취소</Dropdown.Item>
                             </DropdownButton>
                             
                             </div>
@@ -112,11 +113,45 @@ function MySalesDetail({history, match}){
         fetchProduct()
         fetchOrders()
     },[userData.user_id, btnValue])
+    
 
-    const onClickHandler = async(e)=>{
+    const onClickHandler = async(order_id, e)=>{
         console.log(e.target.name)
+        console.log(e.target.value)
+     
+        if(e.target.name  === '거래 완료'){
+            
+            alert('거래가 완료되셨습니까?')
+            let data = {sales_stage: "SO"}
+            await axios.post('/apis/v1/order/' + order_id, data).then(res=> {
+                alert('성공')
+            })
+            .catch(e=>{
+                alert('실패')
+            })
+      
+        }
+        else if(e.target.name  === '예약 중'){
+            alert('거래를 예약하시겠습니까?')
+            let data = {sales_stage: "SR"}
+            await axios.post('/apis/v1/order/' + order_id, data).then(res=> {
+                console.log(res)
+                alert('성공')
+            })
+            .catch(e=>{
+                alert('실패')
+            })
+        }
+        else{
+            alert('주문 요청을 취소하시겠습니까?')
+            let data = {sales_stage: "SO"}
+        }
+        
+
+        
         
         setBtnValue(e.target.name)
+
 
         // await axios.post()
     }

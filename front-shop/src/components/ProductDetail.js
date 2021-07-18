@@ -56,11 +56,7 @@ function ProductDetail({match, history}){
             e.preventDefault()
             
         }
-        else if(product.sales_stage != 'S'){
-            alert("판매 중일때만 주문 가능합니다!")
-            e.preventDefault()
-           
-        }
+    
         
 
     }
@@ -95,7 +91,7 @@ function ProductDetail({match, history}){
             <ListGroup.Item>상품 수량: {product.quantity}</ListGroup.Item>
             <ListGroup.Item>상품 설명: {product.description}</ListGroup.Item>
             <ListGroup.Item>상품 등록일:{product.created_at}</ListGroup.Item>
-            <ListGroup.Item>판매 상태: {product.sales_stage=="S"?"판매 중":product.sales_stage=="SR"?"예약 중":"판매완료"}</ListGroup.Item>
+
             <ListGroup.Item >{images}</ListGroup.Item>
             </ListGroup>
         <br/>
