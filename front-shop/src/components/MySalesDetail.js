@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import axios from 'axios'
-import {ListGroup, Container, Row, Col} from 'react-bootstrap'
+import {ListGroup, Container, Row, Col, Dropdown, DropdownButton} from 'react-bootstrap'
 import Title from './Title'
 import {useSelector} from 'react-redux'
 import placeholder from '../images/placeholder2.jpg'
@@ -8,6 +8,7 @@ import placeholder from '../images/placeholder2.jpg'
 
 
 function MySalesDetail({history, match}){
+    const [btnValue, setBtnValue] = useState('')
     const [orders, setOrders] = useState([]) 
     const {isLoggedIn, userData} = useSelector(state =>({
         isLoggedIn: state.user.isLoggedIn,
@@ -51,6 +52,13 @@ function MySalesDetail({history, match}){
                 
                 console.log(tmp_orders)
                 let orderlist = tmp_orders.map((order, index) => {
+                    if(order.sales_stage == 'S')
+                        setBtnValue('판매 중')
+                    else if(order.sales_stage == 'SR')
+                        setBtnValue('예약 중')
+                    else
+                        setBtnValue('판매 완료')
+
                     return (
                             
                              <ListGroup.Item key={index}>
@@ -74,10 +82,13 @@ function MySalesDetail({history, match}){
                             <p>
                             주문 날짜: {order.created_at}
                             </p>
-                            <p>
-                            주문 상태: {order.sales_stage=='S'?
-                            <span style={{color:'red'}}>판매자의 확인을 기다려주세요</span>:<span style={{color:'green'}}>예약 중인 상품입니다.</span>}
-                            </p>
+                            <DropdownButton id="dropdown-basic-button" name="btnValue" title={btnValue}>
+                            <Dropdown.Item onClick={onClickHandler} name='판매 중'>판매 중</Dropdown.Item>
+                            <Dropdown.Item onClick={onClickHandler} name='예약 중'>예약 중</Dropdown.Item>
+                            <Dropdown.Item onClick={onClickHandler} name='판매 완료'>판매 완료</Dropdown.Item>
+                            <Dropdown.Item onClick={onClickHandler} name='거래 취소'>거래 취소</Dropdown.Item>
+                            </DropdownButton>
+                            
                             </div>
                             
                             </Col>
@@ -100,20 +111,16 @@ function MySalesDetail({history, match}){
     useEffect(()=>{
         fetchProduct()
         fetchOrders()
-    },[userData.user_id])
-    // console.log(orders.length)
-    // if(orders.length == 0)
-    // (<div>
-    //     <Title title="구매 목록" set_middle={false}></Title>
-    //     <Container>
-    //     <Row>
-    //         <Col>
-    //         <h2>상품이 없습니다.</h2>
-    //         </Col>
-    //     </Row>
-    //     </Container>
+    },[userData.user_id, btnValue])
 
-    // </div>)
+    const onClickHandler = async(e)=>{
+        console.log(e.target.name)
+        
+        setBtnValue(e.target.name)
+
+        // await axios.post()
+    }
+  
     
 
     return (<div>
