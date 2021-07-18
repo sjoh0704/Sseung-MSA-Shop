@@ -160,7 +160,7 @@ class ProductStatusView(BaseView):
             return self.response(status=400)
         return self.response(data=data, message="product data", status=200)
 
-
+    # 상품 정보 업데이트 
     def post(self, request, pk):
     
         try:

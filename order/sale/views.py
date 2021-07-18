@@ -99,7 +99,6 @@ class SalesView(BaseView):
             for order in orders:
                 for user in user_list:
                     if order.buyer_id == user.get('user_id'):
-                        print("fff")
                         data = {}
                         data['user_name'] = user.get('username', None)
                         data['user_email'] = user.get('useremail', None)
@@ -114,7 +113,7 @@ class SalesView(BaseView):
                         data['price'] = product.get('price', None)
                         data['created_at'] = order.created_at
                         # data['updated_at'] = order.updated_at
-                        # data['base64_image_url'] = product.get('base64_image_url', None)
+               
                         data['sales_stage'] = product.get("sales_stage", None)
                         order_list.append(data)
                         break
