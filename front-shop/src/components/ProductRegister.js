@@ -126,17 +126,18 @@ function ProductRegister({history}){
 
 
     const onClickHandler = (e)=>{
-        let category_id = kind.findIndex((k) => k.kind === category) + 1
+        let category_number = kind.findIndex((k) => k.kind === category) + 1
         let image_list = images.map((img, index) => (img.data_url))
+        console.log(image_list)
         e.preventDefault();
-        let body = {
+        const body = {
             seller_id: userData.user_id,
             name: name,
-            category_id: category_id,
+            category_id: category_number,
             price: price,
             quantity: quantity,
             description: description,
-            ...image_list
+            ...image_list  // 용량이 크면 안넘어가
         };
         console.log(body)
   
@@ -146,6 +147,7 @@ function ProductRegister({history}){
             alert("상품 등록 성공")
             history.replace('/')
         }).catch(e =>{
+            console.log(e)
             alert("상품 등록 실패")
      
         })

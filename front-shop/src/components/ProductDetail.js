@@ -49,11 +49,15 @@ function ProductDetail({match, history}){
         if(isLoggedIn === false || userData == null){
             alert("로그인 후 이용하세요.")
             history.replace('/login')
+           
         }
-        if(amount < 1 || amount > product.quantity){
+        else if(amount < 1 || amount > product.quantity){
             alert("수량이 올바르지 않습니다.")
             e.preventDefault()
+            
         }
+    
+        
 
     }
 
@@ -87,6 +91,7 @@ function ProductDetail({match, history}){
             <ListGroup.Item>상품 수량: {product.quantity}</ListGroup.Item>
             <ListGroup.Item>상품 설명: {product.description}</ListGroup.Item>
             <ListGroup.Item>상품 등록일:{product.created_at}</ListGroup.Item>
+
             <ListGroup.Item >{images}</ListGroup.Item>
             </ListGroup>
         <br/>

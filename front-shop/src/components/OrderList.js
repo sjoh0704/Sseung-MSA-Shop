@@ -20,15 +20,16 @@ function OrderList({history}){
     const fetchOrders= async()=>{
             await axios.get('/apis/v1/order/' + userData.user_id).then(res=> {
                 console.log(res.data.payload.payload)
-                let orderlist = res.data.payload.payload.map((order, index) => {
+                let tmp_orders = res.data.payload.payload.filter(order=> order.sales_stage!='SO')
+                let orderlist = tmp_orders.map((order, index) => {
                     return (
                             
-                             <ListGroup.Item>
-                            <Row>
-                            <Col xs={6} md={6} lg={4}>
-                            <img style={{ height: '15rem', width:'24.7rem'}} src={order.base64_image_url?order.base64_image_url:placeholder}></img>
+                             <ListGroup.Item key={index}>
+                            <Row style={{margin:20}}>
+                            <Col md={4}>
+                            <img style={{ height: '12vw', width:'18vw'}} src={order.base64_image_url?order.base64_image_url:placeholder}></img>
                             </Col>
-                            <Col xs={6} md={6} lg={8}>
+                            <Col md={8}>
                            <div>
                             
                             <p>
@@ -42,6 +43,10 @@ function OrderList({history}){
                             </p>
                             <p>
                             주문 날짜: {order.created_at}
+                            </p>
+                            <p>
+                            주문 상태: {order.sales_stage=='S'?
+                            <span style={{color:'red'}}>판매자의 확인을 기다려주세요</span>:<span style={{color:'green'}}>예약되었습니다! 판매자와 거래하세요</span>}
                             </p>
                             </div>
                             
@@ -65,23 +70,23 @@ function OrderList({history}){
     useEffect(()=>{
         fetchOrders()
     },[userData.user_id])
+    // console.log(orders.length)
+    // if(orders.length == 0)
+    // (<div>
+    //     <Title title="구매 목록" set_middle={false}></Title>
+    //     <Container>
+    //     <Row>
+    //         <Col>
+    //         <h2>상품이 없습니다.</h2>
+    //         </Col>
+    //     </Row>
+    //     </Container>
 
-    if(orders.length == 0)
-    (<div>
-        <Title title="구매 목록" set_middle={false}></Title>
-        <Container>
-        <Row>
-            <Col>
-            <h2>상품이 없습니다.</h2>
-            </Col>
-        </Row>
-        </Container>
-
-    </div>)
+    // </div>)
     
 
     return (<div>
-        <Title title="구매 목록" set_middle={false}></Title>
+        <Title title="주문 목록" set_middle={false}></Title>
         <Container>
           
         <ListGroup>

@@ -3,6 +3,7 @@ import placeholder from '../images/placeholder2.jpg'
 import {Link} from 'react-router-dom'
 // id가 필요하다!!
 const DisplayProducts = ({products}) =>{
+    products = products.filter(product => product.quantity > 0)
     products = products.map((product, index) => {
         let path = '/product/' + product.id
         return (
