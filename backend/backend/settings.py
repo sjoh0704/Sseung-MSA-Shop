@@ -91,19 +91,17 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
+    },
+    'userdb': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': os.environ.get('MYSQL_USER_DB', 'data'), # DB명
+        'USER': os.environ.get('MYSQL_ROOT_USER', 'root'), # 데이터베이스 계정
+        'PASSWORD': os.environ.get('MYSQL_ROOT_PASSWORD', 'root'), # 계정 비밀번호
+        'HOST': os.environ.get('USER_DB_HOST', 'mysql-0.mysql-service'),
+        'PORT': '3306', # 데이터베이스 포트(보통은 3306)
     }
 }
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': os.environ.get('MYSQL_USER_DB', 'data'), # DB명
-#         'USER': os.environ.get('MYSQL_ROOT_USER', 'root'), # 데이터베이스 계정
-#         'PASSWORD': os.environ.get('MYSQL_ROOT_PASSWORD', 'root'), # 계정 비밀번호
-#         'HOST': os.environ.get('USER_DB_HOST', 'mysql-0.mysql-service'),
-#         'PORT': '3306', # 데이터베이스 포트(보통은 3306)
-#     }
-# }
 
 
 # Password validation
