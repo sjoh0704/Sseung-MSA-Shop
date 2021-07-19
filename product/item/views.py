@@ -1,3 +1,4 @@
+from os import name
 from django.core import serializers
 from django.http import JsonResponse 
 import json
@@ -29,8 +30,7 @@ class ProductNonParam(BaseView):
 
     # product 생성하기 
     def post(self, request):
-        print(request.body)
-     
+        # print(request.body)
         try:
             data = json.loads(request.body)     
         except:
@@ -72,9 +72,7 @@ class ProductNonParam(BaseView):
             i = 0
             image_list = []
             while True:
-
                 try:
- 
                     base64 = data['{}'.format(i)]
                     productImage = ProductImage(product = product, base64_image_url=base64)
                     image_list.append(productImage)
@@ -84,7 +82,6 @@ class ProductNonParam(BaseView):
                 
                     break
             if i == 0:
-                print('fails')
                 return self.response(message="uploading image fail", status=400)
 
             
@@ -227,6 +224,7 @@ class GetProductByCategory(BaseView):
             products = Product.objects.filter(category=category)
             product_list = [{}for _ in range(len(products))]
             for i, product in enumerate(products):
+
                 product_list[i]['pk'] = product.id
                 product_list[i]['seller_id'] = product.seller_id
                 product_list[i]['category'] = product.category.id

@@ -83,11 +83,38 @@ class OrderView(BaseView):
         # pk = buyer_id
     def get(self, request, pk):
         
-        orders = Order.objects.filter(buyer_id=pk)
-        json_orders = serializers.serialize('json', orders)
-        print(json_orders)
-        return HttpResponse(json_orders, content_type="text/json-comment-filtered")
+        try:
+                
+            orders = Order.objects.filter(buyer_id=pk)
+            response = requests.get('{}/apis/v1/product'.format(PRODUCT_SERIVCE_URL))
+            products = json.loads(response.content)["payload"]
+            order_by_user = []
+            for order in orders:
+                for product in products:
+                    if order.product_id == product.get('pk'):
+                        print(order.product_id)
+                        data = {}
+                        data['product_id'] = product.get('pk', None)
+                        data['seller_id'] = product.get('seller_id', None)
+                        data['category_id'] = product.get('category', None)
+                        data['name'] = product.get('name', None)
+                        data['description'] = product.get('description', None)
+                        data['total_quantity'] = product.get('quantity', None)
+                        data['demand_quantity'] = order.quantity
+                        data["buyer_id"] = order.buyer_id
+                        data["email_address"] = order.email_address
+                        data["address"] = order.address
+                        data['price'] = product.get('price', None)
+                        data['created_at'] = product.get('created_at', None)
+                        data['updated_at'] = product.get('updated_at', None)
+                        data['base64_image_url'] = product.get('base64_image_url', None)
+                        order_by_user.append(data)
+                        break
+          
+        except Exception as e:
+            return self.response(message="get order fails Error: "+e, status=400)
 
+        return self.response(data=order_by_user, message="get order success")
 
         # 주문 편집
         # pk = order_id

@@ -25,7 +25,7 @@ class Product(models.Model):
         ordering = ['-created_at' ]
 
     def __str__(self):
-        return '판매자 id: {} /상품명: {} /상품 등록일: {}'.format(self.seller_id ,self.name, self.created_at)
+        return "상품 id: {}/판매자 id: {} /상품명: {} /상품 등록일: {}".format(self.pk, self.seller_id ,self.name, self.created_at)
 
 class ProductImage(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
