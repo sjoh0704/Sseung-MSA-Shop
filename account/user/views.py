@@ -56,7 +56,8 @@ class UserLoginView(BaseView):
         data = {
             'user_id': user.id,
             'username': user.username,
-            "useremail": user.email
+            "useremail": user.email,
+            "phone_number": user.phoneNumber
         }
         return self.response(data=data, message="login success")   
 
@@ -187,7 +188,7 @@ class UserAPIViewParam(BaseView):
             if someone:
                 return self.response(message='존재하는 username입니다. ', status=400)
 
-        email = data.get("email", "")
+        email = data.get("useremail", "")
         if not email:
             return self.response(message='not email', status=400)
         phoneNumber = data.get("phone_number", "")
