@@ -37,7 +37,7 @@ pipeline {
             sh 'docker build -t ${DOCKER_ID}/${FRONT_IMAGE}:${TAG}${BUILD_NUMBER} .'
             }
                 
-            dir('backend'){
+            dir('account'){
             
             sh 'docker build -t ${DOCKER_ID}/${USER_IMAGE}:${TAG}${BUILD_NUMBER} .'
 
@@ -56,6 +56,7 @@ pipeline {
             dir('dev-manifest'){
           
             sh 'mv manifest.yaml ..'
+            sh 'mv database_manifest.yaml ..'
             }
             
             
@@ -87,6 +88,7 @@ pipeline {
             steps{
             git([url: 'https://github.com/sjoh0704/react-django-shop.git', branch: 'manifest', credentialsId: 'github-credential'])
             sh 'cp manifest.yaml ./manifestfiles'
+            sh 'cp database_manifest.yaml ./manifestfiles'
             dir('manifestfiles'){
            
             echo "update yamls"
