@@ -30,10 +30,10 @@ function MySales({history}){
                              <ListGroup.Item key={index}>
                             <Row style={{margin:20}}>
                             <Col md={4}>
-                            <img style={{ height: '12vw', width:'18vw'}} src={product.base64_image_url?product.base64_image_url:placeholder}></img>
+                            <img style={{width:'22rem'}} src={product.base64_image_url?product.base64_image_url:placeholder}></img>
                             </Col>
                             <Col md={8}>
-                           <div>
+                           <div style={{marginLeft:20}}>
                             
                             <p>
                             상품명: {product.name}

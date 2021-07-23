@@ -26,7 +26,7 @@ function PurchaseList({history}){
                              <ListGroup.Item key={index}>
                             <Row style={{margin:20}}>
                             <Col md={4}>
-                            <img style={{ height: '12vw', width:'18vw'}} src={order.base64_image_url?order.base64_image_url:placeholder}></img>
+                            <img style={{width:'22rem'}} src={order.base64_image_url?order.base64_image_url:placeholder}></img>
                             </Col>
                             <Col md={8}>
                            <div>

@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import axios from 'axios'
-import {ListGroup, Container, Row, Col} from 'react-bootstrap'
+import {ListGroup, Container, Row, Col, Button} from 'react-bootstrap'
 import Title from './Title'
 import {useSelector} from 'react-redux'
 import placeholder from '../images/placeholder2.jpg'
@@ -27,10 +27,10 @@ function OrderList({history}){
                              <ListGroup.Item key={index}>
                             <Row style={{margin:20}}>
                             <Col md={4}>
-                            <img style={{ height: '12vw', width:'18vw'}} src={order.base64_image_url?order.base64_image_url:placeholder}></img>
+                            <img style={{width:'22rem'}} src={order.base64_image_url?order.base64_image_url:placeholder}></img>
                             </Col>
                             <Col md={8}>
-                           <div>
+                           <div style={{marginLeft:20}}>
                             
                             <p>
                             상품명: {order.name}
@@ -44,6 +44,10 @@ function OrderList({history}){
                             <p>
                             주문 날짜: {order.created_at}
                             </p>
+                     
+                            <Button onClick={()=>{
+                                connectSeller(order.seller_id)
+                            }}>판매자 연락처 보기</Button>
                             <p>
                             주문 상태: {order.sales_stage=='S'?
                             <span style={{color:'red'}}>판매자의 확인을 기다려주세요</span>:<span style={{color:'green'}}>예약되었습니다! 판매자와 거래하세요</span>}
@@ -66,23 +70,16 @@ function OrderList({history}){
         
     }
 
-
     useEffect(()=>{
         fetchOrders()
     },[userData.user_id])
-    // console.log(orders.length)
-    // if(orders.length == 0)
-    // (<div>
-    //     <Title title="구매 목록" set_middle={false}></Title>
-    //     <Container>
-    //     <Row>
-    //         <Col>
-    //         <h2>상품이 없습니다.</h2>
-    //         </Col>
-    //     </Row>
-    //     </Container>
+    
 
-    // </div>)
+    const connectSeller = async(seller_id) => {
+        let res = await axios.get(`/apis/v1/user/${seller_id}`)
+        console.log(res)
+        alert(res.data.payload.payload.phone_number)
+    }
     
 
     return (<div>
