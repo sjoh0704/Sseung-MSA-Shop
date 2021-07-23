@@ -12,7 +12,8 @@ import requests
 from django.conf import settings
 from .models import Order
 import os
-PRODUCT_SERIVCE_URL = os.environ.get('PRODUCT_SERVICE_URL', 'http://localhost:8100')
+PRODUCT_SERVICE_URL = os.environ.get('PRODUCT_SERVICE_URL', 'http://localhost:8100')
+# USER_SERVICE_URL = os.environ.get('USER_SERVICE_URL', 'http://localhost:8200')
 
 class BaseView(View):
     @staticmethod
@@ -52,7 +53,7 @@ class OrderNonParam(BaseView):
         data_dict = data.dict()
         data_dict["quantity"] = int(quantity) - int(demand_amount)
         
-        response = requests.post('{}/apis/v1/product/{}'.format(PRODUCT_SERIVCE_URL, product_id), data_dict)
+        response = requests.post('{}/apis/v1/product/{}'.format(PRODUCT_SERVICE_URL, product_id), data_dict)
         if response.status_code == 200:
         
             order = Order(
@@ -84,7 +85,7 @@ class OrderView(BaseView):
         try:
                 
             orders = Order.objects.filter(buyer_id=pk)
-            response = requests.get('{}/apis/v1/product'.format(PRODUCT_SERIVCE_URL))
+            response = requests.get('{}/apis/v1/product'.format(PRODUCT_SERVICE_URL))
             products = json.loads(response.content)["payload"]
             order_by_user = []
             for order in orders:
@@ -93,7 +94,7 @@ class OrderView(BaseView):
                         data = {}
                         data['product_id'] = product.get('pk', None)
                         data['seller_id'] = product.get('seller_id', None)
-                        data['category_id'] = product.get('category', None)
+                        data['category_id'] = product.get('category', None)    
                         data['name'] = product.get('name', None)
                         data['description'] = product.get('description', None)
                         data['total_quantity'] = product.get('quantity', None)
@@ -146,10 +147,10 @@ class OrderView(BaseView):
         order = get_object_or_404(Order, pk=pk)
         product_id = order.product_id
         quantity = order.quantity
-        get_response = requests.get('{}/apis/v1/product/{}'.format(PRODUCT_SERIVCE_URL, product_id))
+        get_response = requests.get('{}/apis/v1/product/{}'.format(PRODUCT_SERVICE_URL, product_id))
         dic_response = json.loads(get_response.content)['payload']
         dic_response["quantity"] += int(quantity)
-        post_response = requests.post('{}/apis/v1/product/{}'.format(PRODUCT_SERIVCE_URL, product_id), dic_response)
+        post_response = requests.post('{}/apis/v1/product/{}'.format(PRODUCT_SERVICE_URL, product_id), dic_response)
 
         if post_response.status_code == 200:
             order.delete()

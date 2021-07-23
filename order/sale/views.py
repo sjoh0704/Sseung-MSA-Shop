@@ -85,6 +85,7 @@ class SalesView(BaseView):
         try:
                 
             orders = Order.objects.filter(product_id=pk)
+      
             product_response = requests.get('{}/apis/v1/product/{}'.format(PRODUCT_SERIVCE_URL, pk))
           
             product = json.loads(product_response.content)["payload"]
@@ -98,11 +99,14 @@ class SalesView(BaseView):
 
             for order in orders:
                 for user in user_list:
+                    print(user)
                     if order.buyer_id == user.get('user_id'):
                         data = {}
+                        print(user)
                         data['order_id'] = order.id
                         data['user_name'] = user.get('username', None)
                         data['user_email'] = user.get('useremail', None)
+                        data['phone_number'] = user.get('phone_number', None)
                         data['category_id'] = product.get('category', None)
                         data['product_name'] = product.get('name', None)
                         data['description'] = product.get('description', None)
