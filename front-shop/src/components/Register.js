@@ -10,9 +10,10 @@ function Register({history}){
     const [userData, setUserData] = useState({
         username: "",
         password: "",
-        email: ""
+        email: "",
+        phone_number: ""
     })
-    const {username, password, email} = userData;
+    const {username, password, email, phone_number} = userData;
 
     const onChangeHandler = (e) => {
         const {name, value} = e.target;
@@ -27,7 +28,8 @@ function Register({history}){
         let body = {
             username: username,
             password: password,
-            email: email
+            email: email,
+            phone_number:phone_number
         };
         axios.post('/apis/v1/user/', body)
         .then(response => {
@@ -42,7 +44,8 @@ function Register({history}){
         setUserData({
             username: "",
             password: "",
-            email: ""
+            email: "",
+            phone_number: ""
         })
     }
     return (
@@ -82,6 +85,16 @@ function Register({history}){
                 placeholder="비밀번호를 입력해주세요" />
             </Form.Group>
             <br/>
+            <Form.Group controlId="exampleForm.ControlInput1">
+                <Form.Label>PHONE NUMBER</Form.Label>
+                <Form.Control
+                name = 'phone_number'
+                value = {phone_number} 
+                onChange={onChangeHandler}
+                placeholder="전화번호를 입력해주세요" />
+            </Form.Group>
+            <br/>
+           
            
             <Button type="submit">Register</Button>
             </Form>

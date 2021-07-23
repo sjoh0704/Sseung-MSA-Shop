@@ -18,12 +18,12 @@ function MySalesDetail({history, match}){
     const[product,setProduct]= useState({})
     const fetchProduct= async ()=>{
         let res = await axios.get('/apis/v1/product/' + match.params.number)
-            console.log(res.data)
+           
             setProduct({
             ...res.data.payload.payload,
             product_id: match.params.number
             });
-            let image_list = res.data.payload.payload.image.map(img => (<div >
+            let image_list = await res.data.payload.payload.image.map(img => (<div >
                 <br/>
                 <img style = {{  
                     width: "60rem",
@@ -43,6 +43,7 @@ function MySalesDetail({history, match}){
 
     const fetchOrders= async()=>{
         let res = await axios.get('/apis/v1/order/sale/' + match.params.number)
+        console.log(res)
         let tmp_orders = res.data.payload.payload.filter(order=> order.sales_stage!='SO')
         console.log(tmp_orders)
         let orderlist = tmp_orders.map((order, index) => {

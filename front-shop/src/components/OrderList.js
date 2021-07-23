@@ -44,14 +44,16 @@ function OrderList({history}){
                             <p>
                             주문 날짜: {order.created_at}
                             </p>
-                     
-                            <Button onClick={()=>{
-                                connectSeller(order.seller_id)
-                            }}>판매자 연락처 보기</Button>
                             <p>
                             주문 상태: {order.sales_stage=='S'?
                             <span style={{color:'red'}}>판매자의 확인을 기다려주세요</span>:<span style={{color:'green'}}>예약되었습니다! 판매자와 거래하세요</span>}
                             </p>
+                            <Button onClick={()=>{
+                                connectSeller(order.seller_id)
+                            }}>판매자에게 연락하기</Button>
+            
+                            <br/>
+                            
                             </div>
                             
                             </Col>
@@ -77,8 +79,9 @@ function OrderList({history}){
 
     const connectSeller = async(seller_id) => {
         let res = await axios.get(`/apis/v1/user/${seller_id}`)
-        console.log(res)
-        alert(res.data.payload.payload.phone_number)
+        let tmp = res.data.payload.payload.phone_number
+        let phone_number = tmp.slice(0,3) + '-'+tmp.slice(3,7) + '-'+tmp.slice(7,11) 
+        alert(`[${phone_number}]로 연락해주세요!`)
     }
     
 
