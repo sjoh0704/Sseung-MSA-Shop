@@ -21,6 +21,7 @@ function MySales({history}){
     const fetchOrders= async()=>{
             let res = await axios.get('/apis/v1/product/user/' + userData.user_id)
             let productlist = await res.data.payload.payload.map((product, index) => {
+                
                 let path = '/mysales/' + product.pk
                 return (
                         <Link style={{textDecoration:'none', color:'inherit'}} key={index} to={path}>
@@ -44,6 +45,10 @@ function MySales({history}){
                         </p>
                         <p>
                         주문 날짜: {product.created_at}
+                        </p>
+
+                        <p style={{color:'green'}}>
+                        주문한 사람이 있는지 확인해주세요!
                         </p>
                         
                         </div>

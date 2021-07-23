@@ -26,7 +26,7 @@ function MySalesDetail({history, match}){
             let image_list = await res.data.payload.payload.image.map(img => (<div >
                 <br/>
                 <img style = {{  
-                    width: "60rem",
+                    width: "60rem"
                     }} src={img}></img>
                 <br/>
                 <br/>
@@ -111,26 +111,27 @@ function MySalesDetail({history, match}){
     },[userData.user_id, btnValue])
     
 
-    const onClickHandler = async(order_id, e)=>{
+    const onClickHandler = (order_id, e)=>{
         console.log(e.target.name)
         console.log(e.target.value)
      
-        if(e.target.name  === '거래 완료'){
+        if(e.target.name  === '판매 완료'){
             
             alert('거래가 완료되셨습니까?')
             let data = {sales_stage: "SO"}
-            await axios.post('/apis/v1/order/' + order_id, data).then(res=> {
-                alert('성공')
+            axios.post('/apis/v1/order/' + order_id, data).then(res=> {
+                alert('거래가 성사되었습니다.')
+                
             })
             .catch(e=>{
-                alert('실패')
+                alert('잘못되었습니다.')
             })
       
         }
         else if(e.target.name  === '예약 중'){
             alert('거래를 예약하시겠습니까?')
             let data = {sales_stage: "SR"}
-            await axios.post('/apis/v1/order/' + order_id, data).then(res=> {
+            axios.post('/apis/v1/order/' + order_id, data).then(res=> {
                 console.log(res)
                 alert('성공')
             })
@@ -140,16 +141,17 @@ function MySalesDetail({history, match}){
         }
         else{
             alert('주문 요청을 취소하시겠습니까?')
-            let data = {sales_stage: "SO"}
-        }
-        
+ 
+            axios.delete('/apis/v1/order/' + order_id).then(res=> {
+                
+                alert('주문이 취소되었습니다.')
+            })
+            .catch(e=>{
+                alert('Error')
+            })
 
-        
-        
+        }      
         setBtnValue(e.target.name)
-
-
-        // await axios.post()
     }
   
     

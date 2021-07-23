@@ -51,6 +51,10 @@ function ProductDetail({match, history}){
             history.replace('/login')
            
         }
+        else if(userData.user_id == product.seller_id){
+            alert("판매자가 구매할 수 없습니다.")
+            e.preventDefault()
+        }
         else if(amount < 1 || amount > product.quantity){
             alert("수량이 올바르지 않습니다.")
             e.preventDefault()

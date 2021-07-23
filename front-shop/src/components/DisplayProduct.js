@@ -10,8 +10,8 @@ const DisplayProducts = ({products}) =>{
             <Col md={4} xs={6} key={index}>
                 <Link style={{textDecoration:'none', color:'inherit'}} key={index} to={path}>
                 
-                    <Card style={{ height: '22rem', width:'25rem' }}>
-                    <Card.Img variant="top" style={{ height: '15rem', width:'24.7rem'}} src={product.base64_image_url ? product.base64_image_url: placeholder} />
+                    <Card style={{ height: '27rem', width:'25rem' }}>
+                    <Card.Img variant="top" style={{ height: '20rem', width:'24.7rem'}} src={product.base64_image_url ? product.base64_image_url: placeholder} />
                     <Card.Body style={{marginTop:15}}>
                     
                         <Card.Title>{product.name}</Card.Title>
