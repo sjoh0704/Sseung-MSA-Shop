@@ -19,48 +19,48 @@ function MySales({history}){
 
 
     const fetchOrders= async()=>{
-            await axios.get('/apis/v1/product/user/' + userData.user_id).then(res=> {
-                console.log(res.data.payload.payload)
-             
-                let productlist = res.data.payload.payload.map((product, index) => {
-                let path = '/mysales/' + product.pk
-                    return (
-                            <Link style={{textDecoration:'none', color:'inherit'}} key={index} to={path}>
-                           
-                             <ListGroup.Item key={index}>
-                            <Row style={{margin:20}}>
-                            <Col md={4}>
-                            <img style={{ height: '12vw', width:'18vw'}} src={product.base64_image_url?product.base64_image_url:placeholder}></img>
-                            </Col>
-                            <Col md={8}>
-                           <div>
-                            
-                            <p>
-                            상품명: {product.name}
-                            </p>
-                            <p>
-                            수량: {product.quantity}
-                            </p>
-                            <p>
-                            지불 금액: {product.price}
-                            </p>
-                            <p>
-                            주문 날짜: {product.created_at}
-                            </p>
-                            
-                            </div>
-                            
-                            </Col>
-                            </Row>
-                            </ListGroup.Item>
-                            </Link>
-                        
-                  );
-                })
-                setProducts(productlist);  
-        
+            let res = await axios.get('/apis/v1/product/user/' + userData.user_id)
+            let productlist = await res.data.payload.payload.map((product, index) => {
                 
+                let path = '/mysales/' + product.pk
+                return (
+                        <Link style={{textDecoration:'none', color:'inherit'}} key={index} to={path}>
+                        
+                            <ListGroup.Item key={index}>
+                        <Row style={{margin:20}}>
+                        <Col md={4}>
+                        <img style={{width:'22rem'}} src={product.base64_image_url?product.base64_image_url:placeholder}></img>
+                        </Col>
+                        <Col md={8}>
+                        <div style={{marginLeft:20}}>
+                        
+                        <p>
+                        상품명: {product.name}
+                        </p>
+                        <p>
+                        수량: {product.quantity}
+                        </p>
+                        <p>
+                        지불 금액: {product.price}
+                        </p>
+                        <p>
+                        주문 날짜: {product.created_at}
+                        </p>
+
+                        <p style={{color:'green'}}>
+                        주문한 사람이 있는지 확인해주세요!
+                        </p>
+                        
+                        </div>
+                        
+                        </Col>
+                        </Row>
+                        </ListGroup.Item>
+                        </Link>
+                    
+                );
             })
+            setProducts(productlist);  
             
             
         
@@ -70,19 +70,6 @@ function MySales({history}){
     useEffect(()=>{
         fetchOrders()
     },[userData.user_id])
-    // console.log(orders.length)
-    // if(orders.length == 0)
-    // (<div>
-    //     <Title title="구매 목록" set_middle={false}></Title>
-    //     <Container>
-    //     <Row>
-    //         <Col>
-    //         <h2>상품이 없습니다.</h2>
-    //         </Col>
-    //     </Row>
-    //     </Container>
-
-    // </div>)
     
 
     return (<div>

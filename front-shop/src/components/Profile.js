@@ -3,7 +3,7 @@ import {Container, Row, Col, Form, Button} from 'react-bootstrap'
 import Title from './Title'
 import {useDispatch, useSelector} from 'react-redux'
 import axios from 'axios'
-import { logoutAction } from '../modules/user'
+import { loginAction, logoutAction } from '../modules/user'
 
 function Profile({history}){
     const dispatch = useDispatch()
@@ -16,9 +16,10 @@ function Profile({history}){
     
     const [user, setUser] = useState({
         username: userData.username,
-        email: userData.useremail
+        email: userData.useremail,
+        phone_number:userData.phone_number
     })
-    const {username, email} = user
+    const {username, email, phone_number} = user
     const user_id = userData.user_id
 
     const onChangeHandler = (e) => {
@@ -32,12 +33,18 @@ function Profile({history}){
     const onClickEditHandler = async(e)=>{
         e.preventDefault();
         let body = {
+            user_id: user_id,
             username: username,
-            email: email
+            useremail: email,
+            phone_number: phone_number,
+           
         };
         await axios.post(`/apis/v1/user/${user_id}`, body)
         .then(response => {
             alert("사용자 정보 수정 완료")
+            dispatch(loginAction(body))
+            
+
         }).catch(e =>{
             alert("사용자 정보 수정 실패")
         })
@@ -88,6 +95,15 @@ function Profile({history}){
                 value = {email}
                 onChange={onChangeHandler}
                 placeholder="email을 입력해주세요" />
+            </Form.Group>
+            <br/>
+            <Form.Group controlId="exampleForm.ControlInput1">
+                <Form.Label>PHONE NUMBER</Form.Label>
+                <Form.Control 
+                name = 'phone_number'
+                value = {phone_number}
+                onChange={onChangeHandler}
+                placeholder="전화번호를 입력해주세요" />
             </Form.Group>
             <br/>
             

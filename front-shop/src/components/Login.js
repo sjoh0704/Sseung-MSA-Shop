@@ -33,7 +33,7 @@ function Login({history}){
             history.replace('/')
             console.log("login")
             dispatch(loginAction(response.data.payload.payload))
-            alert("로그인 성공")
+            alert("환영합니다!")
         }).catch(e =>{
             alert("로그인 실패")
             console.log("로그인 실패")
