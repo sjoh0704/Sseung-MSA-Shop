@@ -55,8 +55,8 @@ pipeline {
             }
             dir('dev-manifest'){
           
-            sh 'mv manifest.yaml ..'
-            sh 'mv database_manifest.yaml ..'
+            sh 'cp -r . ..'
+
             }
             
             
