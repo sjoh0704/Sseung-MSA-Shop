@@ -293,12 +293,12 @@ metadata:
   name: app-db-setting
 data:
   MYSQL_ROOT_PASSWORD: 'root'
-  MYSQL_USER_DB: 'database'
+  MYSQL_USER_DB: 'db'
   MYSQL_USER_ID: 'root'
-  MYSQL_PRODUCT_DB: 'database'
+  MYSQL_PRODUCT_DB: 'db'
   MYSQL_PRODUCT_ID: 'root'
-  MYSQL_ORDER_DB: 'database'
+  MYSQL_ORDER_DB: 'db'
   MYSQL_ORDER_ID: 'root'
-  MYSQL_USER_HOST: 'mysql-user-service:3306'
-  MYSQL_PRODUCT_HOST: 'mysql-product-service:3306'
-  MYSQL_ORDER_HOST: 'mysql-order-service:3306'
+  MYSQL_USER_HOST: 'mysql-user-service'
+  MYSQL_PRODUCT_HOST: 'mysql-product-service'
+  MYSQL_ORDER_HOST: 'mysql-order-service'
