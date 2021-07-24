@@ -11,6 +11,10 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+import os
+import pymysql
+pymysql.install_as_MySQLdb()
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -83,6 +87,14 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
+    },
+    'orderdb': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': os.environ.get('MYSQL_ORDER_DB', 'database'),
+        'USER': os.environ.get('MYSQL_ORDER_ID', 'root'),
+        'PASSWORD': os.environ.get('MYSQL_ORDER_PASSWORD', 'root'), 
+        'HOST': os.environ.get('MYSQL_ORDER_HOST', 'mysql-0.mysql-service'),
+        'PORT': '3306',
     }
 }
 
