@@ -93,7 +93,7 @@ DATABASES = {
         'NAME': os.environ.get('MYSQL_ORDER_DB', 'database'),
         'USER': os.environ.get('MYSQL_ORDER_ID', 'root'),
         'PASSWORD': os.environ.get('MYSQL_ROOT_PASSWORD', 'root'), 
-        'HOST': os.environ.get('MYSQL_ORDER_HOST', 'mysql-0.mysql-service'),
+        'HOST': os.environ.get('MYSQL_ORDER_HOST', ''),
         'PORT': '3306',
     }
 }

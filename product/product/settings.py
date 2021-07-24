@@ -90,7 +90,7 @@ DATABASES = {
         'NAME': os.environ.get('MYSQL_PRODUCT_DB', 'database'),
         'USER': os.environ.get('MYSQL_PRODUCT_ID', 'root'),
         'PASSWORD': os.environ.get('MYSQL_ROOT_PASSWORD', 'root'), 
-        'HOST': os.environ.get('MYSQL_PRODUCT_HOST', 'mysql-0.mysql-service'),
+        'HOST': os.environ.get('MYSQL_PRODUCT_HOST', ''),
         'PORT': '3306',
     }
 }
