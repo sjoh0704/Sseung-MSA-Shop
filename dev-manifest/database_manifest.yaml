@@ -5,38 +5,72 @@ kind: ConfigMap
 metadata:
   name: database
 data:
-  MYSQL_ROOT_PASSWORD: 'root'
+  MYSQL_USER_DB: 'database'
+  MYSQL_USER_ID: 'root'
+  MYSQL_USER_PASSWORD: 'root'
+  MYSQL_USER_HOST: 'mysql-user-service:3306'
 
+  MYSQL_PRODUCT_DB: 'database'
+  MYSQL_PRODUCT_ID: 'root'
+  MYSQL_PRODUCT_PASSWORD: 'root'
+  MYSQL_PRODUCT_HOST: 'mysql-product-service:3306'
+
+  MYSQL_ORDER_DB: 'database'
+  MYSQL_ORDER_ID: 'root'
+  MYSQL_ORDER_PASSWORD: 'root'
+  MYSQL_ORDER_HOST: 'mysql-order-service:3306'
+  
 ---
-# database
+# db-service
 apiVersion: v1
 kind: Service
 metadata:
-  name: mysql-service
+  name: mysql-user-service
 spec:
   ports:
   - port: 3306
+    targetPort: 3306
   selector:
-    app: mysql
-  clusterIP: None
+    db: mysql-user
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-product-service
+spec:
+  ports:
+  - port: 3306
+    targetPort: 3306
+  selector:
+    db: mysql-product
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-order-service
+spec:
+  ports:
+  - port: 3306
+    targetPort: 3306
+  selector:
+    db: mysql-order
 
 ---
 
-# database statefulset 
+# database deployment
 apiVersion: apps/v1
-kind: StatefulSet
+kind: Deployment
 metadata:
-  name: mysql
+  name: mysql-user
 spec:
-  serviceName: mysql-service
   replicas: 1
   selector:
     matchLabels:
-      app: mysql
+      db: mysql-user
   template:
     metadata:
       labels:
-        app: mysql
+        db: mysql-user
     spec:
       containers:
       - image: mysql:5.6
@@ -50,39 +84,165 @@ spec:
         volumeMounts:
         - name: mysql-persistent-storage
           mountPath: /var/lib/mysql
-          # mountPath: /test
       volumes:
       - name: mysql-persistent-storage
         persistentVolumeClaim:
-          claimName: my-nfs-pvc
-    
-        # persistentVolumeClaim:
-        #   claimName: mysql-pv-claim
+          claimName: nfs-user-pvc
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql-product
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      db: mysql-product
+  template:
+    metadata:
+      labels:
+        db: mysql-product
+    spec:
+      containers:
+      - image: mysql:5.6
+        name: mysql
+        envFrom: 
+        - configMapRef:
+            name: database
+        ports:
+        - containerPort: 3306
+          name: mysql
+        volumeMounts:
+        - name: mysql-persistent-storage
+          mountPath: /var/lib/mysql
+      volumes:
+      - name: mysql-persistent-storage
+        persistentVolumeClaim:
+          claimName: nfs-product-pvc
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql-order
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      db: mysql-order
+  template:
+    metadata:
+      labels:
+        db: mysql-order
+    spec:
+      containers:
+      - image: mysql:5.6
+        name: mysql
+        envFrom: 
+        - configMapRef:
+            name: database
+        ports:
+        - containerPort: 3306
+          name: mysql
+        volumeMounts:
+        - name: mysql-persistent-storage
+          mountPath: /var/lib/mysql
+      volumes:
+      - name: mysql-persistent-storage
+        persistentVolumeClaim:
+          claimName: nfs-order-pvc
 ---
 
 # persistentvolume 
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: nfs-pv
+  name: nfs-user-pvc
+  labels:
+    db: user
 spec:
   capacity:
-    storage: 2Gi
+    storage: 3Gi
   volumeMode: Filesystem
   accessModes: 
   - ReadWriteMany
   nfs:
-    path: "/data/mysql"
+    path: "/data/mysql-user"
     server: 172.31.6.27
+---
+
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: nfs-product-pvc
+  labels:
+    db: product
+spec:
+  capacity:
+    storage: 3Gi
+  volumeMode: Filesystem
+  accessModes: 
+  - ReadWriteMany
+  nfs:
+    path: "/data/mysql-product"
+    server: 172.31.6.27
+---
+
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: nfs-order-pv
+  labels:
+    db: order
+spec:
+  capacity:
+    storage: 3Gi
+  volumeMode: Filesystem
+  accessModes: 
+  - ReadWriteMany
+  nfs:
+    path: "/data/mysql-order"
+    server: 172.31.6.27
+
 ---
 # persistentVolumeClaim
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: my-nfs-pvc
+  name: nfs-user-pvc
 spec:
   accessModes:
   - ReadWriteMany
   resources:
     requests:
-      storage: 2Gi
+      storage: 3Gi
+  selector: 
+    matchLabels: 
+      db: user
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: nfs-product-pvc
+spec:
+  accessModes:
+  - ReadWriteMany
+  resources:
+    requests:
+      storage: 3Gi
+  selector: 
+    matchLabels: 
+      db: product
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: nfs-order-pvc
+spec:
+  accessModes:
+  - ReadWriteMany
+  resources:
+    requests:
+      storage: 3Gi
+  selector: 
+    matchLabels: 
+      db: order
