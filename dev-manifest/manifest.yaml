@@ -183,7 +183,9 @@ spec:
         envFrom: 
         - configMapRef:
             name: service-url
-
+        envFrom:
+        - configMapRef:
+            name: database
         livenessProbe:
           httpGet:
             path: /health
@@ -237,6 +239,9 @@ spec:
         envFrom: 
         - configMapRef:
             name: service-url
+        envFrom:
+        - configMapRef:
+            name: database
         
         livenessProbe:
           httpGet:
