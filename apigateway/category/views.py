@@ -38,7 +38,7 @@ class GetCategory(BaseView):
         response = requests.get('{}/apis/v1/category'.format(PRODUCT_SERVICE_URL))
         if response.status_code == 200:
             data = json.loads(response.content)
-            print(data)
+
             return self.response(data = data, message='get category success')
         return self.response(message='get category fails', status=400)
 
@@ -52,7 +52,7 @@ class GetProductByCategory(BaseView):
         response = requests.get('{}/apis/v1/category/{}'.format(PRODUCT_SERVICE_URL, pk))
         if response.status_code == 200:
             data = json.loads(response.content)
-            print(data)
+
             return self.response(data = data, message='get product by category success')
         return self.response(message='get product by category fails', status=400)
 

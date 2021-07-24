@@ -30,13 +30,13 @@ class ProductNonParam(BaseView):
 
     # product 생성하기 
     def post(self, request):
-        # print(request.body)
+
         try:
             data = json.loads(request.body)     
         except:
             data = request.POST
         try:
-            print(data)
+  
             seller_id = data.get('seller_id', '')
             if not seller_id:
                 return self.response(message="seller_id 없음", status=400)
@@ -78,7 +78,7 @@ class ProductNonParam(BaseView):
                     image_list.append(productImage)
                     i += 1
                 except Exception as e:
-                    print(e)
+              
                 
                     break
             if i == 0:
@@ -86,7 +86,7 @@ class ProductNonParam(BaseView):
 
             
         except Exception as e:
-            print(e)
+         
             return self.response(message=e, status=400)
         
         product.save()
@@ -119,7 +119,7 @@ class ProductNonParam(BaseView):
                     product_list[i]['base64_image_url'] = None
 
         except Exception as e:
-            print(e)
+      
             return self.response(status=400)
         return self.response(data = product_list, message=200)
 
@@ -153,9 +153,9 @@ class ProductStatusView(BaseView):
             for i in range(len(tmp)):
                 data['image'].append(tmp[i].base64_image_url)
                 # data['image' + str(i)] = tmp[i].base64_image_url
-            print(data)
+       
         except Exception as e:
-            print(e)
+     
             return self.response(status=400)
         return self.response(data=data, message="product data", status=200)
 
@@ -244,7 +244,7 @@ class GetProductByCategory(BaseView):
                     product_list[i]['base64_image_url'] = None
 
         except Exception as e:
-            print(e)
+ 
             return self.response(status=400)
         return self.response(data = product_list, message="get product by category success")
 
@@ -285,8 +285,7 @@ class ProductByUser(BaseView):
     
     def delete(self, request, pk):
         products = Product.objects.filter(seller_id=pk)
-        # products = category.product_set.all()
-        print(products)
+ 
         products.delete()
         return self.response(message="deleting product created by user_id={} successes".format(pk), status=200)
     

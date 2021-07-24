@@ -47,12 +47,12 @@ class UserLoginView(BaseView):
         user = authenticate(username=username, password=password)
 
         if user is None:
-            print("정보 없음")
+     
             return self.response(message="입력 정보를 확인해주세요", status=400)
             # return JsonResponse({'data':{}, 'message': "입력정보를 확인해주세요"}, status=400)
   
         login(request, user)
-        print(user)
+ 
         data = {
             'user_id': user.id,
             'username': user.username,
@@ -98,7 +98,7 @@ class UserAPIView(BaseView):
 
     # 회원가입 
     def post(self, request):
-        print(request.body)
+
         try:
             
             data = json.loads(request.body)
@@ -151,7 +151,7 @@ class UserAPIViewParam(BaseView):
 # 이 부분은 유의 
     def delete(self, request, pk):
         response = requests.delete("{}/apis/v1/product/user/{}".format(PRODUCT_SERIVCE_URL, pk))  # product-service url
-        print(response)
+
         if response.status_code == 200:
             user = get_object_or_404(User, id=pk)
             user.delete()
@@ -177,7 +177,7 @@ class UserAPIViewParam(BaseView):
             data = json.loads(request.body)
         except Exception as e:
             data = request.POST
-        print(data)
+     
         user = get_object_or_404(User, id=pk)
         username = data.get("username", "")
         if not username:

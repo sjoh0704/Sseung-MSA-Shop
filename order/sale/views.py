@@ -81,7 +81,7 @@ class SalesView(BaseView):
         # 판매자 입장에서 상품 별 주문 정보 얻기 
         # pk = product_id
     def get(self, request, pk):
-        print('here')
+
         try:
                 
             orders = Order.objects.filter(product_id=pk)
@@ -94,15 +94,13 @@ class SalesView(BaseView):
   
             order_list = []
         
-         
-            print(orders)
-
+        
             for order in orders:
                 for user in user_list:
-                    print(user)
+          
                     if order.buyer_id == user.get('user_id'):
                         data = {}
-                        print(user)
+            
                         data['order_id'] = order.id
                         data['user_name'] = user.get('username', None)
                         data['user_email'] = user.get('useremail', None)
@@ -123,9 +121,9 @@ class SalesView(BaseView):
              
                         order_list.append(data)
                         break
-            print(order_list)
+ 
         except Exception as e:
-            print(e)
+    
             return self.response(message="get order fails Error: "+ str(e), status=400)
 
         return self.response(data=order_list, message="get order success")

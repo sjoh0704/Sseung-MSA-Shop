@@ -36,7 +36,7 @@ class ProductNonParam(BaseView):
           
         except:
             data = request.POST
-        print(data)
+ 
         response = requests.post('{}/apis/v1/product'.format(PRODUCT_SERVICE_URL), data)
         if response.status_code == 200:
             return self.response(message='create product success')
@@ -50,7 +50,7 @@ class ProductNonParam(BaseView):
         response = requests.get('{}/apis/v1/product'.format(PRODUCT_SERVICE_URL))
         if response.status_code == 200:
             data = json.loads(response.content)
-            print(data)
+       
             return self.response(data = data, message='get product success')
         return self.response(message='get product fails', status=400)
  
@@ -66,7 +66,7 @@ class ProductStatusView(BaseView):
         response = requests.get('{}/apis/v1/product/{}'.format(PRODUCT_SERVICE_URL, pk))
         if response.status_code == 200:
             data = json.loads(response.content)
-            print(data)
+   
             return self.response(data = data, message='get product success')
         return self.response(message='get product fails', status=400)
 
@@ -79,7 +79,7 @@ class ProductStatusView(BaseView):
           
         except:
             data = request.POST
-        print(data)
+
         response = requests.post('{}/apis/v1/product/{}'.format(PRODUCT_SERVICE_URL, pk), data)
         if response.status_code == 200:
             return self.response(message='edit product success')
@@ -109,7 +109,7 @@ class ProductByUser(BaseView):
         
         if response.status_code == 200:
             data = json.loads(response.content)
-            print(data)
+   
             return self.response(data = data, message='get product by user success')
         return self.response(message='get product by user fails', status=400)
 

@@ -39,7 +39,7 @@ class OrderNonParam(BaseView):
           
         except:
             data = request.POST
-        print(data)
+
         seller_id = data.get('seller_id')
         buyer_id = data.get('buyer_id')
         product_id = data.get('product_id')
@@ -123,7 +123,7 @@ class OrderView(BaseView):
             data = json.loads(request.body)
         except:
             data = request.POST
-        print(data)
+
        
         email_address = data.get('email_address')
         if email_address:
