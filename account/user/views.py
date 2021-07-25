@@ -12,9 +12,10 @@ from django.contrib.auth import login, authenticate, logout
 import requests
 import os
 
-PRODUCT_SERIVCE_URL = os.environ.get("PRODUCT_SERIVCE_URL", 'http://localhost:8100')
-DB = os.environ.get('MYSQL_USER_HOST', 'default'),
-
+PRODUCT_SERIVCE_URL = os.environ.get("PRODUCT_SERIVCE_URL", 'http://localhost:8100') 
+DB = 'default'
+if os.environ.get('MYSQL_USER_HOST', None):
+    DB = 'userdb'
 
 class BaseView(View):
     @staticmethod
