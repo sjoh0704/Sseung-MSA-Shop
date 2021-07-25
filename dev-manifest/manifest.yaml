@@ -126,7 +126,6 @@ spec:
         envFrom: 
         - configMapRef:
             name: service-url
-        envFrom:
         - configMapRef:
             name: app-db-setting
 
@@ -183,9 +182,9 @@ spec:
         envFrom: 
         - configMapRef:
             name: service-url
-        envFrom:
         - configMapRef:
             name: app-db-setting
+
         livenessProbe:
           httpGet:
             path: /health
@@ -239,7 +238,6 @@ spec:
         envFrom: 
         - configMapRef:
             name: service-url
-        envFrom:
         - configMapRef:
             name: app-db-setting
         
