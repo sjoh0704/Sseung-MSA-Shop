@@ -8,6 +8,7 @@ pipeline {
     ORDER_IMAGE = 'order-service'    
     GATEWAY_IMAGE = 'gateway-service'
     TAG = 'test'
+    VERSION = 'test${BUILD_NUMBER}'
     }
     
 
