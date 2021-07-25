@@ -13,6 +13,8 @@ import requests
 import os
 
 PRODUCT_SERIVCE_URL = os.environ.get("PRODUCT_SERIVCE_URL", 'http://localhost:8100')
+DB = os.environ.get('MYSQL_USER_HOST', 'default'),
+
 
 class BaseView(View):
     @staticmethod
@@ -81,7 +83,7 @@ class UserAPIView(BaseView):
     def get(self, request):
         try: 
             users_list = []
-            users = User.objects.all()
+            users = User.objects.using(DB).all()
             for user in users:
                 data = {
                     'user_id': user.id,
@@ -124,7 +126,7 @@ class UserAPIView(BaseView):
             return self.response(message="전화번호를 입력해주세요", status=400)
 
         try:
-            user = User.objects.create_user(username, email, password,phoneNumber=phoneNumber)
+            user = User.objects.using(DB).create_user(username, email, password,phoneNumber=phoneNumber)
             #  friend = KakaoFriend(name = request.POST['name'],
             #                      type = request.POST['type'],
             #                      job = request.POST['job'],
@@ -153,8 +155,10 @@ class UserAPIViewParam(BaseView):
         response = requests.delete("{}/apis/v1/product/user/{}".format(PRODUCT_SERIVCE_URL, pk))  # product-service url
 
         if response.status_code == 200:
-            user = get_object_or_404(User, id=pk)
-            user.delete()
+            
+            # user = get_object_or_404(User, id=pk, using=DB)
+            user = User.objects.using(DB).get(id=pk)
+            user.delete(using=DB)
             return self.response(message='deleting user success', status=200)
         
         return self.response(message='deleting user fails', status=400)
@@ -162,7 +166,7 @@ class UserAPIViewParam(BaseView):
         
 
     def get(self, request, pk):
-        user = get_object_or_404(User, id=pk)
+        user = User.objects.using(DB).get(id=pk)
         data = {
             "id": user.id,
             "username": user.username,
@@ -178,13 +182,13 @@ class UserAPIViewParam(BaseView):
         except Exception as e:
             data = request.POST
      
-        user = get_object_or_404(User, id=pk)
+        user = User.objects.using(DB).get(id=pk)
         username = data.get("username", "")
         if not username:
             return self.response(message='not username', status=400)
         # 중복 username 방지
         if username != user.username:
-            someone = User.objects.filter(username=username)
+            someone = User.objects.using(DB).filter(username=username)
             if someone:
                 return self.response(message='존재하는 username입니다. ', status=400)
 
@@ -197,7 +201,7 @@ class UserAPIViewParam(BaseView):
         user.username = username
         user.email = email
         user.phoneNumber = phoneNumber
-        user.save()
+        user.save(using=DB)
         return self.response(message='edit user success')
         
  
