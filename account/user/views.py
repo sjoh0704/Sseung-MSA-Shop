@@ -12,7 +12,8 @@ from django.contrib.auth import login, authenticate, logout
 import requests
 import os
 
-PRODUCT_SERIVCE_URL = os.environ.get("PRODUCT_SERIVCE_URL", 'http://localhost:8100')
+PRODUCT_SERIVCE_URL = os.environ.get("PRODUCT_SERIVCE_URL", 'http://localhost:8100') 
+
 
 class BaseView(View):
     @staticmethod
@@ -153,7 +154,9 @@ class UserAPIViewParam(BaseView):
         response = requests.delete("{}/apis/v1/product/user/{}".format(PRODUCT_SERIVCE_URL, pk))  # product-service url
 
         if response.status_code == 200:
+            
             user = get_object_or_404(User, id=pk)
+            # user = User.objects.get(id=pk)
             user.delete()
             return self.response(message='deleting user success', status=200)
         
