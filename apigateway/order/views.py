@@ -37,7 +37,7 @@ class OrderNonParam(BaseView):
           
         except:
             data = request.POST
-        print(data)
+
         response = requests.post('{}/apis/v1/order'.format(ORDER_SERVICE_URL), data)
         if response.status_code == 200:
             return self.response(message='create order success')
@@ -57,7 +57,7 @@ class OrderView(BaseView):
         response = requests.get('{}/apis/v1/order/{}'.format(ORDER_SERVICE_URL, pk))
         if response.status_code == 200:
             data = json.loads(response.content)
-            print(data)
+ 
             return self.response(data = data, message='get order list success')
         return self.response(message='get order list fails', status=400)
 
@@ -71,7 +71,7 @@ class OrderView(BaseView):
           
         except:
             data = request.POST
-        print(data)
+
         response = requests.post('{}/apis/v1/order/{}'.format(ORDER_SERVICE_URL, pk), data)
         if response.status_code == 200:
             return self.response(message='edit order success')
@@ -99,7 +99,7 @@ class SaleView(BaseView):
         response = requests.get('{}/apis/v1/order/sale/{}'.format(ORDER_SERVICE_URL, pk))
         if response.status_code == 200:
             data = json.loads(response.content)
-            print(data)
+
             return self.response(data = data, message='get order list success')
         return self.response(message='get order list fails', status=400)
 

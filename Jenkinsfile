@@ -53,11 +53,6 @@ pipeline {
           
             sh 'docker build -t ${DOCKER_ID}/${GATEWAY_IMAGE}:${TAG}${BUILD_NUMBER} .'
             }
-            dir('dev-manifest'){
-          
-            sh 'cp -r . ..'
-
-            }
             
             
             
@@ -86,18 +81,16 @@ pipeline {
         
         stage("update manifest"){
             steps{
-            git([url: 'https://github.com/sjoh0704/react-django-shop.git', branch: 'manifest', credentialsId: 'github-credential'])
-            sh 'cp manifest.yaml ./manifestfiles'
-            sh 'cp database_manifest.yaml ./manifestfiles'
-            dir('manifestfiles'){
+            git([url: 'https://github.com/sjoh0704/MSA-Shop-Helm-Chart.git', branch: 'master', credentialsId: 'github-credential'])
+            dir('version'){
            
             echo "update yamls"
 
-            sh "sed 's/${TAG}/${TAG}${BUILD_NUMBER}/' manifest.yaml > manifest${BUILD_NUMBER}.yaml" 
+            sh "sed 's/${TAG}/${TAG}${BUILD_NUMBER}/' values_demo.yaml > values_ver${BUILD_NUMBER}.yaml" 
             sh 'git add . '
             sh 'git commit -m "commit manifest${BUILD_NUMBER}"'
             withCredentials([usernamePassword(credentialsId: 'github-credential', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
-                        sh('git push https://${GIT_USERNAME}:${GIT_PASSWORD::-1}%40@github.com/sjoh0704/react-django-shop.git manifest')
+                        sh('git push https://${GIT_USERNAME}:${GIT_PASSWORD::-1}%40@github.com/sjoh0704/MSA-Shop-Helm-Chart.git master')
                     }
             
              }

@@ -12,6 +12,7 @@ itypes==1.2.0
 Jinja2==3.0.1
 MarkupSafe==2.0.1
 packaging==20.9
+PyMySQL==1.0.2
 pyparsing==2.4.7
 pytz==2021.1
 requests==2.25.1
