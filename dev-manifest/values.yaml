@@ -1,0 +1,26 @@
+image:
+  repository: "tmdwn0704"
+  pullPolicy: Always
+  tag: "test70"
+
+app:
+  frontend:
+    replicaCount: 1
+  user:
+    replicaCount: 2
+  product:
+    replicaCount: 2
+  order:
+    replicaCount: 2
+  apiGateWay:
+    replicaCount: 2
+
+database:
+  user:
+    replicaCount: 1
+  product:
+    replicaCount: 1
+  order:
+    replicaCount: 1
+
+
