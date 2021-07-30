@@ -53,11 +53,6 @@ pipeline {
           
             sh 'docker build -t ${DOCKER_ID}/${GATEWAY_IMAGE}:${TAG}${BUILD_NUMBER} .'
             }
-            dir('dev-manifest'){
-          
-            sh 'cp -r . ..'
-
-            }
             
             
             
