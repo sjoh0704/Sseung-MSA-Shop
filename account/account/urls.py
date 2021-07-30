@@ -22,6 +22,6 @@ def healthCheck(request):
 
 urlpatterns = [
     path('health/', healthCheck),
-    path('admin/', admin.site.urls),
+    path('admin/user/', admin.site.urls),
     path('apis/v1/user/', include('user.urls')),
 ]

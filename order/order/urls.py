@@ -24,7 +24,7 @@ def healthCheck(request):
 
 urlpatterns = [
     path('health/', healthCheck),
-    path('admin/', admin.site.urls),
+    path('admin/order/', admin.site.urls),
     path('apis/v1/order/<int:pk>', OrderView.as_view()),
     path('apis/v1/order', OrderNonParam.as_view()),
     path('apis/v1/order/sale/<int:pk>', SalesView.as_view())
