@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Cart = require('../schemas/cart');
 
+
 const existValid = async (name, tmp, res) =>{
     if(tmp == null || tmp == undefined ){
         await res.status(400).send({errorMessage: `${name} doesn't exist`});
@@ -12,9 +13,12 @@ const existValid = async (name, tmp, res) =>{
 
 // get all carts 
 router.get('/carts', async(req, res)=> {
+
     const carts = await Cart.find({}).exec();
+
     res.send({payload: carts,
         message: 'get carts success'});
+
 })
 
 // create cart 
@@ -45,12 +49,7 @@ router.get('/carts/users/:buyerId', async(req, res)=> {
     const {buyerId} = req.params;
     const cartsByUser = await Cart.find({buyerId}).exec();
     console.log(cartsByUser);
-    if(cartsByUser.length === 0){
-        res.status(400).send({
-            message: "cart lists doesn't exist"
-        })
-        return;
-    }get
+
     res.send({
         payload: cartsByUser,
         message: 'get carts by user success'});
@@ -62,14 +61,16 @@ router.post('/carts/check', async(req, res)=> {
     const cartCheck = await Cart.find({$and: [{productId: product_id},{buyerId: buyer_id}, {sellerId: seller_id}]}).exec(); 
     console.log(cartCheck);
     if(cartCheck.length === 0){
-        res.status(400).send({
-            message: "not checked"
+        res.send({
+            message: "cart item doesn't exist",
+            checked: false
         })
         return;
     }
     res.send({
         payload: cartCheck,
-        message: 'checked'});
+        checked: true,
+        message: 'cart item exist'});
 })
 
 
@@ -79,6 +80,10 @@ router.delete('/carts/:cartId', async(req, res)=> {
     let cart = null;
     try{
         cart = await Cart.findById(cartId).exec();
+
+    // console.log(cart);  
+        await cart.delete();
+        res.send({message: 'delete cart success'});
     }
     catch{
         res.status(400).send({
@@ -86,9 +91,6 @@ router.delete('/carts/:cartId', async(req, res)=> {
         });
     }
 
-    // console.log(cart);  
-    await cart.delete();
-    res.send({message: 'delete cart success'});
 })
 
 
