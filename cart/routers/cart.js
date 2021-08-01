@@ -24,6 +24,14 @@ router.post('/carts', async(req, res)=> {
     existValid('product_id', product_id, res);
     existValid('seller_id', seller_id, res);
     existValid('buyer_id', buyer_id, res);
+    
+    const cartExist = await Cart.find({$and: [{productId: product_id},{buyerId: buyer_id}, {sellerId: seller_id}]}).exec(); 
+    console.log(cartExist);
+    if(cartExist.length){
+        res.status(400).send({message: 'carts already exists'});
+        return ;
+    }
+
     const cart = new Cart({productId:product_id, 
                         sellerId: seller_id,
                         buyerId: buyer_id});
@@ -42,11 +50,28 @@ router.get('/carts/users/:buyerId', async(req, res)=> {
             message: "cart lists doesn't exist"
         })
         return;
-    }
+    }get
     res.send({
         payload: cartsByUser,
         message: 'get carts by user success'});
 })
+
+// cart check 
+router.post('/carts/check', async(req, res)=> {
+    const {product_id, buyer_id, seller_id} = req.body;
+    const cartCheck = await Cart.find({$and: [{productId: product_id},{buyerId: buyer_id}, {sellerId: seller_id}]}).exec(); 
+    console.log(cartCheck);
+    if(cartCheck.length === 0){
+        res.status(400).send({
+            message: "not checked"
+        })
+        return;
+    }
+    res.send({
+        payload: cartCheck,
+        message: 'checked'});
+})
+
 
 //cart delete 
 router.delete('/carts/:cartId', async(req, res)=> {
