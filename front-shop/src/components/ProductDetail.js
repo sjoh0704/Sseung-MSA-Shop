@@ -137,9 +137,8 @@ function ProductDetail({match, history}){
         
         <br/>
         <br/>
-        {/* <Button style ={like.checked?{color:"red"}: {color:'blue'}}onClick={onClickCart}>장바구니</Button>{' '} */}
-        {/* <img src={xxx} onClick={onClickCart}>장바구니</img>{' '} */}
-        {/* <img src={xxx} onClick={onClickCart}>장바구니</img>{' '} */}
+     
+        <img style = {{width:'2rem', marginRight:15}} src={like.checked?HeartImg:EmptyHeartImg} onClick={onClickCart}></img>
         <Link to={isLoggedIn?{
             pathname: `/purchase`,
             state: {
