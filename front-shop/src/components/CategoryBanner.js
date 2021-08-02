@@ -48,7 +48,7 @@ function CategoryBanner(){
                             <Item path={"/mysales"} pathname={'내 상품 목록'}/>
                             <Item path={"/orderlist"} pathname={'주문 목록'}/>
                             <Item path={"/purchaselist"} pathname={'구매 목록'}/>
-                            <Item path={"/register"} pathname={'장바구니'}/>
+                            <Item path={"/likes"} pathname={'찜 목록'}/>
                             <Item path={"/profile"} pathname={'내정보'}/>
                         
                             </Nav>
