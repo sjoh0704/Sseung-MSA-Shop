@@ -9,7 +9,7 @@ function Logout({history}) {
 
     const onClickHandler = () => {
         axios.get('/apis/v1/user/logout')
-        .then(response => {
+        .then(res => {
             console.log('로그아웃 합니다.')
             dispatch(logoutAction())
             alert('로그아웃 합니다.')
