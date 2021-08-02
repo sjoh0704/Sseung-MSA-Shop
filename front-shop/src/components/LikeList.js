@@ -4,6 +4,7 @@ import {ListGroup, Container, Row, Col, Button} from 'react-bootstrap'
 import Title from './Title'
 import {useSelector} from 'react-redux'
 import EmptyCheck from './EmptyCheck'
+import { Link } from 'react-router-dom'
 
 
 
@@ -29,8 +30,11 @@ function Likes({history}){
             cartList = cartList.map((cart, index) => {
                 
                 const tmp_product = productList.find((product) => product.pk == cart.productId);
+                let path = `/product/${tmp_product.pk}`
                 return (
                     <div>
+                        <Link to={path} style={{textDecoration:'none', color:'inherit'}}>
+                    
                         <ListGroup.Item key={index}>
                         <Row style={{margin:20}}>
                         <Col md={4}>
@@ -66,6 +70,7 @@ function Likes({history}){
                         </Col>
                         </Row>
                         </ListGroup.Item>
+                        </Link>
                     </div>
                     
                 );
