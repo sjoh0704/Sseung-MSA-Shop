@@ -28,10 +28,6 @@ function Likes({history}){
             cartList = cartList.map((cart, index) => {
                 
                 const tmp_product = productList.find((product) => product.pk == cart.productId);
-                
-                console.log('tmp임')
-                console.log(tmp_product);
-
                 return (
                     <div>
                         <ListGroup.Item key={index}>
