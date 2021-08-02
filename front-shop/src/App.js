@@ -19,6 +19,7 @@ import Profile from './components/Profile';
 import MySales from './components/MySales'
 import PurchaseList from './components/PurchaseList';
 import MySalesDetail from './components/MySalesDetail';
+import Likes from './components/likes';
 
 function App() {
   return (
@@ -49,6 +50,8 @@ function App() {
     <Route exact path="/profile" component={Profile}/>
     <Route exact path="/mysales" component={MySales}/>
     <Route exact path="/mysales/:number" component={MySalesDetail}/>
+    <Route exact path="/likes" component={Likes}/>
+    
     </Switch>
    
     
