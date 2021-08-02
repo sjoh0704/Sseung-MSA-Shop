@@ -99,13 +99,28 @@ function Likes({history}){
     // }
     
 
+    
+    const result =() => {
+
+        if(carts.length == 0){
+            return(<Row>
+                    <Col>
+                        <h2>찜한 상품이 없습니다.</h2>
+                    </Col>
+                </Row>)
+        }
+        else{
+            return(  <ListGroup>
+                        {carts}
+                </ListGroup>);
+        }
+
+    }
+
     return (<div>
         <Title title="찜 목록" set_middle={false}></Title>
         <Container>
-          
-        <ListGroup>
-            {carts}
-        </ListGroup>
+          {result()}
         </Container>
         
 
