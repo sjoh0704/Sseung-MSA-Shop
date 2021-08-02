@@ -3,6 +3,7 @@ import axios from 'axios'
 import {ListGroup, Container, Row, Col, Button} from 'react-bootstrap'
 import Title from './Title'
 import {useSelector} from 'react-redux'
+import EmptyCheck from './EmptyCheck'
 
 
 
@@ -89,40 +90,13 @@ function Likes({history}){
     useEffect(()=>{
         fetchCarts()
     },[userData.user_id])
-    
 
-    // const connectSeller = async(seller_id) => {
-    //     let res = await axios.get(`/apis/v1/user/${seller_id}`)
-    //     let tmp = res.data.payload.payload.phone_number
-    //     let phone_number = tmp.slice(0,3) + '-'+tmp.slice(3,7) + '-'+tmp.slice(7,11) 
-    //     alert(`[${phone_number}]로 연락해주세요!`)
-    // }
-    
-
-    
-    const result =() => {
-
-        if(carts.length == 0){
-            return(<Row>
-                    <Col>
-                        <h2>찜한 상품이 없습니다.</h2>
-                    </Col>
-                </Row>)
-        }
-        else{
-            return(  <ListGroup>
-                        {carts}
-                </ListGroup>);
-        }
-
-    }
 
     return (<div>
         <Title title="찜 목록" set_middle={false}></Title>
         <Container>
-          {result()}
+        <EmptyCheck text={"찜한 상품이 없습니다"} items={carts}></EmptyCheck>
         </Container>
-        
 
     </div>)
 }
