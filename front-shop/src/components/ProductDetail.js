@@ -25,15 +25,7 @@ function ProductDetail({match, history}){
             ...res.data.payload.payload,
             product_id: match.params.number
             });
-            let image_list = res.data.payload.payload.image.map(img => (<div >
-                <br/>
-                <img style = {{  
-                    width: "40vw",
-                    }} src={img}></img>
-                <br/>
-                <br/>
-                
-            </div>))
+            let image_list = res.data.payload.payload.image;
             setImages(image_list);
             
             // check likes
@@ -101,35 +93,92 @@ function ProductDetail({match, history}){
         const {value} = e.target
         setAmount(parseInt(value))
     }
+
+    const displayImages = () =>{
+        return(
+            images.map(img => (<div >
+            <br/>
+            <img style = {{  
+                width: "40vw",
+                }} src={img}></img>
+            <br/>
+            <br/>
+            
+        </div>)))
+    }
     
   
 
 
     return(
         <div>
-        <Title title= {product.name}></Title>
+        <Title title= {product.name} set_middle={false}></Title>
         <Container>
+
+            <Row>
+                <Col>
+                <img style={{
+                    width:600,
+                    height:600
+                }}src={images[0]}>
+                </img>
+         
+                </Col>
+                <Col>
+                <Row style={{marginTop: 20}}>
+                    <Col sm={10} >
+                    <p style = {{fontSize:"2.2rem"}}>{product.name}</p>
+                    </Col>
+                    <Col sm={2}>
+                    <img style = {{width:'2rem', marginRight:15}} src={like.checked?HeartImg:EmptyHeartImg} onClick={onClickCart}></img>
+                    </Col>
+
+                </Row>
+                <hr/>
+              
+                <p style = {{fontSize:"2rem"}}>{product.price?product.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','):product.price} 원</p>
+                <p style = {{fontSize:"2rem"}}>남은 수량: {product.quantity}</p>
+                <p style = {{fontSize:"2rem", marginTop:30}}>{product.description}</p>
+                <Row>
+                    <Col md={3}>
+                    <Form style = {{fontSize:"2rem"}}>
+                    <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                    <Form.Control type='number' onChange={onChangeHandler} value={amount} />
+                    </Form.Group>
+                    </Form>
+                    
+                    </Col>
+ 
+                    <Col>
+                    <Link to={isLoggedIn?{
+                        pathname: `/purchase`,
+                        state: {
+                            product:product,
+                            demand_amount:amount,
+                        }}:'/product/' + match.params.number}>
+                            <Button onClick={onClickOrder}>구매하기</Button>
+                    </Link>
+                    
+                    </Col>
+                </Row>
+                <p style = {{fontSize:"2rem"}}>
+                    {product.price?(product.price*amount).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','):product.price*amount} 원</p>
+                
+                </Col>
+                
+
+            </Row>
+            
             <Row className="justify-content-md-center">
                 <Col lg={10}>
-                <ListGroup>
-            <ListGroup.Item>상품 카테고리: {product.category}</ListGroup.Item>
-            <ListGroup.Item>상품명: {product.name}</ListGroup.Item>
-            <ListGroup.Item>상품 가격: {product.price}</ListGroup.Item>
-            <ListGroup.Item>상품 수량: {product.quantity}</ListGroup.Item>
-            <ListGroup.Item>상품 설명: {product.description}</ListGroup.Item>
-            <ListGroup.Item>상품 등록일:{product.created_at}</ListGroup.Item>
+                
+            
 
-            <ListGroup.Item >{images}</ListGroup.Item>
-            </ListGroup>
+        
         <br/>
         <Row>
             <Col xs lg="2">
-            <Form>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-            <Form.Label>구매 수량</Form.Label>
-            <Form.Control type='number' onChange={onChangeHandler} value={amount} />
-            </Form.Group>
-            </Form>
+            
             
             </Col>
         </Row>
@@ -138,14 +187,8 @@ function ProductDetail({match, history}){
         <br/>
         <br/>
      
-        <img style = {{width:'2rem', marginRight:15}} src={like.checked?HeartImg:EmptyHeartImg} onClick={onClickCart}></img>
-        <Link to={isLoggedIn?{
-            pathname: `/purchase`,
-            state: {
-                product:product,
-                demand_amount:amount,
-            }
-          }:'/product/' + match.params.number}><Button onClick={onClickOrder}>구매하기</Button></Link>
+       
+
                 </Col>
             </Row>
             
