@@ -63,13 +63,17 @@ router.post('/carts/check', async(req, res)=> {
     if(cartCheck.length === 0){
         res.send({
             message: "cart item doesn't exist",
-            checked: false
+            payload:{
+                checked: false
+            }
         })
         return;
     }
     res.send({
-        payload: cartCheck,
-        checked: true,
+        payload: {
+        ...cartCheck,
+        checked: true
+        },
         message: 'cart item exist'});
 })
 

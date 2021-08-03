@@ -4,19 +4,22 @@ import {useEffect, useState} from 'react'
 import {useSelector} from 'react-redux'
 import Title from './Title'
 import { Link } from 'react-router-dom'
-import PurchasePage from './PurchasePage'
+import EmptyHeartImg from "../images/heart.png"; 
+import HeartImg from "../images/heart_pressed.png";
+import xxx from '../images/placeholder.jpg'
 
 function ProductDetail({match, history}){
     const [amount, setAmount] = useState(1)
     const {isLoggedIn, userData} = useSelector(state =>({
         isLoggedIn: state.user.isLoggedIn,
         userData: state.user.payload
-    }))
+    }));
+    const [like, setLike] = useState({checked: false});
 
-    const[images,setImages]= useState([])
-    const[product,setProduct]= useState({})
+    const[images,setImages]= useState([]);
+    const[product,setProduct]= useState({});
     const fetchProduct= async ()=>{
-        await axios.get('/apis/v1/product/' + match.params.number).then(res=> {
+            let res = await axios.get('/apis/v1/product/' + match.params.number);
             console.log(res.data)
             setProduct({
             ...res.data.payload.payload,
@@ -33,17 +36,21 @@ function ProductDetail({match, history}){
             </div>))
             setImages(image_list);
             
-        })
-        .catch(e => {
-            // 정보가 없을 때 처리
-            alert('없는 상품 정보')
-        })
+            // check likes
+            let body = {
+                seller_id: res.data.payload.payload.seller_id,
+                buyer_id: userData.user_id,
+                product_id: parseInt(match.params.number)
+            };
+            let res_likes = await axios.post('/apis/v1/carts/check', body);
+            setLike(res_likes.data.payload.payload);
     }
+    
     useEffect(()=>{
         
-            fetchProduct()
+            fetchProduct();
         
-    },[match.params.number])
+    },[match.params.number, like.checked])
 
     const onClickOrder = (e) => {
         if(isLoggedIn === false || userData == null){
@@ -65,13 +72,29 @@ function ProductDetail({match, history}){
 
     }
 
-    const onClickWishList = () => {
+    const onClickCart = async() => {
         if(isLoggedIn === false){
             alert("로그인 후 이용하세요.")
             return;
         }
+        console.log(like)
 
+        if(like.checked){
+   
+            await axios.delete(`/apis/v1/carts/${like[0]._id}`);
+            setLike({checked: false});
+        }
+        else{
+            let body = {
+                seller_id: product.seller_id,
+                buyer_id: userData.user_id,
+                product_id: parseInt(product.product_id)
+            };
+            await axios.post('/apis/v1/carts/', body);
+            setLike({checked:true});
 
+        }
+        console.log(like)
     }
 
     const onChangeHandler = (e) => {
@@ -114,8 +137,8 @@ function ProductDetail({match, history}){
         
         <br/>
         <br/>
-        <Button onClick={onClickWishList}>장바구니</Button>{' '}
-        
+     
+        <img style = {{width:'2rem', marginRight:15}} src={like.checked?HeartImg:EmptyHeartImg} onClick={onClickCart}></img>
         <Link to={isLoggedIn?{
             pathname: `/purchase`,
             state: {
