@@ -1,4 +1,4 @@
-import {ListGroup, Container, Button, Form, Row, Col} from 'react-bootstrap'
+import {ListGroup, Container, Button, Form, Row, Col, ListGroupItem} from 'react-bootstrap'
 import axios from 'axios'
 import {useEffect, useState} from 'react'
 import {useSelector} from 'react-redux'
@@ -95,11 +95,19 @@ function ProductDetail({match, history}){
     }
 
     const displayImages = () =>{
+        console.log(images)
+        if(images.length == 1){
+            return(
+                <p style = {{margin: 20, fontSize:"1.3rem"}}>
+                    추가 이미지가 없습니다 
+                </p>
+            )
+        }
         return(
-            images.map(img => (<div >
+            images.slice(1).map(img => (<div >
             <br/>
             <img style = {{  
-                width: "40vw",
+                width: "60vw",
                 }} src={img}></img>
             <br/>
             <br/>
@@ -112,8 +120,10 @@ function ProductDetail({match, history}){
 
     return(
         <div>
-        <Title title= {product.name} set_middle={false}></Title>
         <Container>
+        <p style={{marginTop:100, marginBottom:30, fontSize:'1.3rem'}}>
+            홈 > {product.category} > {product.name}
+        </p>
 
             <Row>
                 <Col>
@@ -127,7 +137,7 @@ function ProductDetail({match, history}){
                 <Col>
                 <Row style={{marginTop: 20}}>
                     <Col sm={10} >
-                    <p style = {{fontSize:"2.2rem"}}>{product.name}</p>
+                    <p style = {{fontSize:"2.2rem", fontWeight: 'bolder'}}>{product.name}</p>
                     </Col>
                     <Col sm={2}>
                     <img style = {{width:'2rem', marginRight:15}} src={like.checked?HeartImg:EmptyHeartImg} onClick={onClickCart}></img>
@@ -138,12 +148,11 @@ function ProductDetail({match, history}){
               
                 <p style = {{fontSize:"2rem"}}>{product.price?product.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','):product.price} 원</p>
                 <p style = {{fontSize:"2rem"}}>남은 수량: {product.quantity}</p>
-                <p style = {{fontSize:"2rem", marginTop:30}}>{product.description}</p>
                 <Row>
                     <Col md={3}>
                     <Form style = {{fontSize:"2rem"}}>
                     <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                    <Form.Control type='number' onChange={onChangeHandler} value={amount} />
+                    <Form.Control size='lg' type='number' onChange={onChangeHandler} value={amount} />
                     </Form.Group>
                     </Form>
                     
@@ -156,12 +165,12 @@ function ProductDetail({match, history}){
                             product:product,
                             demand_amount:amount,
                         }}:'/product/' + match.params.number}>
-                            <Button onClick={onClickOrder}>구매하기</Button>
+                            <Button size="lg" onClick={onClickOrder}>구매하기</Button>
                     </Link>
                     
                     </Col>
                 </Row>
-                <p style = {{fontSize:"2rem"}}>
+                <p style = {{fontSize:"3em", paddingBottom:50}}>
                     {product.price?(product.price*amount).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','):product.price*amount} 원</p>
                 
                 </Col>
@@ -175,20 +184,26 @@ function ProductDetail({match, history}){
             
 
         
-        <br/>
-        <Row>
-            <Col xs lg="2">
-            
-            
-            </Col>
-        </Row>
-        
-        
-        <br/>
-        <br/>
      
        
 
+                </Col>
+            </Row>
+
+            <Row style ={{marginTop:80}}>
+                <Col>
+                <ListGroup>
+                    <ListGroupItem>
+                    <p style = {{margin: 10, fontSize:"2rem"}}>상품 상세 </p>
+                    </ListGroupItem>
+                    <ListGroupItem>
+                    {displayImages()}
+                    </ListGroupItem>
+                    <ListGroupItem>
+                    <p style = {{margin:20, fontSize:"2rem"}}>{product.description}</p>
+                
+                    </ListGroupItem> 
+                </ListGroup>
                 </Col>
             </Row>
             
