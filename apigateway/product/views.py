@@ -38,9 +38,11 @@ class ProductNonParam(BaseView):
             data = request.POST
  
         response = requests.post('{}/apis/v1/product'.format(PRODUCT_SERVICE_URL), data)
+        data = json.loads(response.content)
         if response.status_code == 200:
-            return self.response(message='create product success')
-        return self.response(message='create product fails', status=400)
+            return self.response(data=data, message='success')
+
+        return self.response(data=data, message='fail', status=400)
         
 
 
@@ -51,24 +53,25 @@ class ProductNonParam(BaseView):
         if response.status_code == 200:
             data = json.loads(response.content)
        
-            return self.response(data = data, message='get product success')
-        return self.response(message='get product fails', status=400)
+            return self.response(data = data, message='success')
+        return self.response(message='fails', status=400)
  
 
+
+# localhost:8000/apis/v1/product/1
 
 class ProductStatusView(BaseView):
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kargs):
         return super(ProductStatusView, self).dispatch(request, *args, **kargs)
     
-    
+
     def get(self, request, pk):
         response = requests.get('{}/apis/v1/product/{}'.format(PRODUCT_SERVICE_URL, pk))
+        data = json.loads(response.content)
         if response.status_code == 200:
-            data = json.loads(response.content)
-   
-            return self.response(data = data, message='get product success')
-        return self.response(message='get product fails', status=400)
+            return self.response(data = data, message='success')
+        return self.response(data=data, message='fails', status=400)
 
 
         
@@ -81,37 +84,38 @@ class ProductStatusView(BaseView):
             data = request.POST
 
         response = requests.post('{}/apis/v1/product/{}'.format(PRODUCT_SERVICE_URL, pk), data)
+        res_data = json.loads(response.content)
         if response.status_code == 200:
-            return self.response(message='edit product success')
-        return self.response(message='edit product fails', status=400)
+            return self.response(data= res_data, message='success')
+        return self.response(data=res_data, message='fails', status=400)
 
 
     
     
     def delete(self, request, pk):
         response = requests.delete('{}/apis/v1/product/{}'.format(PRODUCT_SERVICE_URL, pk))
+        res_data = json.loads(response.content)
         if response.status_code == 200:
-            return self.response(message='delete product success')
-        return self.response(message='delete product fails', status=400)
+            return self.response(data=res_data, message='success')
+        return self.response(data=res_data, message='fails', status=400)
 
     
+
+# localhost:8000/apis/v1/product/user/1
+
 class ProductByUser(BaseView):
-    
-    
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kargs):
         return super(ProductByUser, self).dispatch(request, *args, **kargs)
     
     def get(self, request, pk):
-      
                 
         response = requests.get('{}/apis/v1/product/user/{}'.format(PRODUCT_SERVICE_URL, pk))
-        
+        data = json.loads(response.content)
         if response.status_code == 200:
-            data = json.loads(response.content)
-   
-            return self.response(data = data, message='get product by user success')
-        return self.response(message='get product by user fails', status=400)
+            
+            return self.response(data = data, message='success')
+        return self.response(data=data, message='fails', status=400)
 
  
 

@@ -39,9 +39,10 @@ class OrderNonParam(BaseView):
             data = request.POST
 
         response = requests.post('{}/apis/v1/order'.format(ORDER_SERVICE_URL), data)
+        res_data = json.loads(response.content)
         if response.status_code == 200:
-            return self.response(message='create order success')
-        return self.response(message='create order fails', status=400)
+            return self.response(data = res_data, message='create order success')
+        return self.response(data = res_data, message='create order fails', status=400)
         
  
 
@@ -73,18 +74,20 @@ class OrderView(BaseView):
             data = request.POST
 
         response = requests.post('{}/apis/v1/order/{}'.format(ORDER_SERVICE_URL, pk), data)
+        res_data = json.loads(response.content)
         if response.status_code == 200:
-            return self.response(message='edit order success')
-        return self.response(message='edit order fails', status=400)
+            return self.response(data = res_data, message='edit order success')
+        return self.response(data = res_data, message='edit order fails', status=400)
 
 
     
     # 주문 취소 
     def delete(self, request, pk):
         response = requests.delete('{}/apis/v1/order/{}'.format(ORDER_SERVICE_URL, pk))
+        res_data = json.loads(response.content)
         if response.status_code == 200:
-            return self.response(message='delete order success')
-        return self.response(message='delete order fails', status=400)
+            return self.response(data=res_data, message='delete order success')
+        return self.response(data=res_data, message='delete order fails', status=400)
 
 
 

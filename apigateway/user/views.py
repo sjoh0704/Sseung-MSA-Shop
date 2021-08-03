@@ -99,15 +99,16 @@ class UserAPIViewParam(BaseView):
 
 
 
+# /apis/v1/user/1
     def get(self, request, pk):
         response = requests.get('{}/apis/v1/user/{}'.format(USER_SERVICE_URL, pk))
         dic_response = json.loads(response.content)
         print(response)
         print(dic_response)
-        if response.status_code == 200:
-            return self.response(data = dic_response, message='get user success', status=200)
-        else:
-            return self.response(message='get user fails', status=400)
+        
+        return self.response(data = dic_response, message='success', status=200)
+        # else:
+        #     return self.response(message='get user fails', status=400)
 
 
         

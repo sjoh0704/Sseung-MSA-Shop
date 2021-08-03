@@ -8,7 +8,7 @@ from django.views.decorators.csrf import csrf_exempt
 import requests
 from django.conf import settings
 import os 
-CART_SERVICE_URL = os.environ.get("CART_SERVICE_URL",'http://172.30.1.34:8080')
+CART_SERVICE_URL = os.environ.get("CART_SERVICE_URL",'http://192.168.11.122:8080')
 
 class BaseView(View):
     @staticmethod
@@ -31,17 +31,13 @@ class CartNonParam(BaseView):
     def post(self, request):
         try:
             data = json.loads(request.body)
-          
         except:
             data = request.POST
- 
         response = requests.post('{}/apis/v1/carts'.format(CART_SERVICE_URL), data)
+        data = json.loads(response.content)
         if response.status_code == 200:
-            data = json.loads(response.content)
             return self.response(data=data, message='success')
-        else:
-            data = json.loads(response.content)
-            return self.response(data=data, message='fails', status=400)
+        return self.response(data=data, message='fails', status=400)
         
 
 
@@ -49,12 +45,10 @@ class CartNonParam(BaseView):
     def get(self, request):
   
         response = requests.get('{}/apis/v1/carts'.format(CART_SERVICE_URL))
-
+        data = json.loads(response.content)
         if response.status_code == 200:
-            data = json.loads(response.content)
-       
             return self.response(data = data, message='success')
-        return self.response(message='fails', status=400)
+        return self.response(data=data, message='fails', status=400)
  
 
 
@@ -65,10 +59,31 @@ class CartParams(BaseView):
         return super(CartParams, self).dispatch(request, *args, **kargs)    
     
 
-    def delete(self, request, pk):
-        response = requests.delete('{}/apis/v1/carts/{}'.format(CART_SERVICE_URL, pk))
+    def delete(self, request, word):
+        response = requests.delete('{}/apis/v1/carts/{}'.format(CART_SERVICE_URL, word))
+
+        data = json.loads(response.content)
         if response.status_code == 200:
-            return self.response(message='success')
+            return self.response(data=data, message='success')
+        return self.response(data=data, message='fails', status=400)
+    
+
+    # check
+    def post(self, request, word):
+        if word != 'check':
+            return self.response(message='잘못된 경로', status=400)
+
+        try:
+            data = json.loads(request.body)
+          
+        except:
+            data = request.POST
+ 
+        response = requests.post('{}/apis/v1/carts/check'.format(CART_SERVICE_URL), data)
+        data = json.loads(response.content)
+        if response.status_code == 200:
+            return self.response(data = data, message='success')
+
         return self.response(message='fails', status=400)
 
 
@@ -88,24 +103,4 @@ class CartByUser(BaseView):
 
 
 
-     # cart check
-class CartCheck(BaseView):
-    @method_decorator(csrf_exempt)
-    def dispatch(self, request, *args, **kargs):
-        return super(CartCheck, self).dispatch(request, *args, **kargs)
-
-
-    def post(self, request):
-        try:
-            data = json.loads(request.body)
-          
-        except:
-            data = request.POST
- 
-        response = requests.post('{}/apis/v1/carts/check'.format(CART_SERVICE_URL), data)
-        if response.status_code == 200:
-            data = json.loads(response.content)
-            return self.response(data = data, message='success')
-
-        return self.response(message='fails', status=400)
         
