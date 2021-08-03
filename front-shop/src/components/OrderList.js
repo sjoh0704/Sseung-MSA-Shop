@@ -4,6 +4,7 @@ import {ListGroup, Container, Row, Col, Button} from 'react-bootstrap'
 import Title from './Title'
 import {useSelector} from 'react-redux'
 import placeholder from '../images/placeholder2.jpg'
+import EmptyCheck from './EmptyCheck'
 
 
 
@@ -84,14 +85,30 @@ function OrderList({history}){
         alert(`[${phone_number}]로 연락해주세요!`)
     }
     
+    const result = () => {
+        if(orders.length == 0){
+            return(<Row>
+                <Col>
+                    <h2>주문한 상품이 없습니다.</h2>
+                </Col>
+            </Row>);
+        }
+        else{
+            return (
+                <ListGroup>
+                {orders}
+                </ListGroup>
+            );
+
+        }
+    }
+
 
     return (<div>
         <Title title="주문 목록" set_middle={false}></Title>
         <Container>
           
-        <ListGroup>
-            {orders}
-        </ListGroup>
+        <EmptyCheck text={"주문한 상품이 없습니다"} items={orders}></EmptyCheck>
         </Container>
         
 

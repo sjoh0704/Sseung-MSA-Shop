@@ -5,6 +5,7 @@ import Title from './Title'
 import {useSelector} from 'react-redux'
 import placeholder from '../images/placeholder2.jpg'
 import { Link } from 'react-router-dom'
+import EmptyCheck from './EmptyCheck'
 
 
 
@@ -72,13 +73,12 @@ function MySales({history}){
     },[userData.user_id])
     
 
+    
+
     return (<div>
         <Title title="내 상품 목록" set_middle={false}></Title>
         <Container>
-          
-        <ListGroup>
-            {products}
-        </ListGroup>
+        <EmptyCheck text={"구매한 상품이 없습니다"} items={products}></EmptyCheck>
         </Container>
         
 

@@ -19,7 +19,7 @@ import Profile from './components/Profile';
 import MySales from './components/MySales'
 import PurchaseList from './components/PurchaseList';
 import MySalesDetail from './components/MySalesDetail';
-import Likes from './components/likes';
+import Likes from './components/LikeList';
 
 function App() {
   return (

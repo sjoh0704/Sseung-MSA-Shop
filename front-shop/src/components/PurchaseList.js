@@ -4,6 +4,7 @@ import {ListGroup, Container, Row, Col} from 'react-bootstrap'
 import Title from './Title'
 import {useSelector} from 'react-redux'
 import placeholder from '../images/placeholder2.jpg'
+import EmptyCheck from './EmptyCheck'
 
 
 
@@ -68,18 +69,7 @@ function PurchaseList({history}){
 
 
 
-    if(orders.length == 0)
-        return(<div>
-            <Title title="구매 목록" set_middle={false}></Title>
-            <Container>
-            <Row>
-                <Col>
-                <h2>상품이 없습니다.</h2>
-                </Col>
-            </Row>
-            </Container>
-
-            </div>)
+ 
 
     
     
@@ -87,10 +77,7 @@ function PurchaseList({history}){
     return (<div>
         <Title title="구매 목록" set_middle={false}></Title>
         <Container>
-          
-        <ListGroup>
-            {orders}
-        </ListGroup>
+        <EmptyCheck text={"구매한 상품이 없습니다"} items={orders}></EmptyCheck>
         </Container>
         
 

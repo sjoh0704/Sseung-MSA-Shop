@@ -156,7 +156,7 @@ function ProductRegister({history}){
 
     
     return(<div>
-        <Title title="REGISTER PRODUCT"></Title>
+        <Title title="판매하기"></Title>
         <Container>
             <Row className="justify-content-md-center">
                 <Col lg={10}>

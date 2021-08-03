@@ -72,7 +72,7 @@ function Profile({history}){
     return(
         <div>
         
-        <Title title="PROFILE"/>
+        <Title title="내정보 관리"/>
         <Container>
             <Row className="justify-content-md-center"> 
                 <Col xs lg={10}>

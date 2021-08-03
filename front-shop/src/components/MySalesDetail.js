@@ -57,7 +57,7 @@ function MySalesDetail({history, match}){
 
             return (
                     
-                        <ListGroup.Item key={index}>
+                    <ListGroup.Item key={index}>
                     <Row style={{margin:20}}>
                     <Col>
                     <div>
