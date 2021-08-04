@@ -2,11 +2,10 @@ import {ListGroup, Container, Button, Form, Row, Col, ListGroupItem} from 'react
 import axios from 'axios'
 import {useEffect, useState} from 'react'
 import {useSelector} from 'react-redux'
-import Title from './Title'
 import { Link } from 'react-router-dom'
 import EmptyHeartImg from "../images/heart.png"; 
 import HeartImg from "../images/heart_pressed.png";
-import xxx from '../images/placeholder.jpg'
+import { CategoryDirection } from './CategoryBanner'
 
 function ProductDetail({match, history}){
     const [amount, setAmount] = useState(1)
@@ -107,7 +106,7 @@ function ProductDetail({match, history}){
             images.slice(1).map(img => (<div >
             <br/>
             <img style = {{  
-                width: "60vw",
+                width: "60rem",
                 }} src={img}></img>
             <br/>
             <br/>
@@ -121,10 +120,7 @@ function ProductDetail({match, history}){
     return(
         <div>
         <Container>
-        <p style={{marginTop:100, marginBottom:30, fontSize:'1.3rem'}}>
-            홈 > {product.category} > {product.name}
-        </p>
-
+        <CategoryDirection tag1={product.category} tag2={product.name}/>
             <Row>
                 <Col>
                 <img style={{
@@ -137,7 +133,7 @@ function ProductDetail({match, history}){
                 <Col>
                 <Row style={{marginTop: 20}}>
                     <Col sm={10} >
-                    <p style = {{fontSize:"2.2rem", fontWeight: 'bolder'}}>{product.name}</p>
+                    <p style = {{fontSize:"2.2rem", fontWeight: 'bolder', marginLeft:20}}>{product.name}</p>
                     </Col>
                     <Col sm={2}>
                     <img style = {{width:'2rem', marginRight:15}} src={like.checked?HeartImg:EmptyHeartImg} onClick={onClickCart}></img>
@@ -146,9 +142,10 @@ function ProductDetail({match, history}){
                 </Row>
                 <hr/>
               
-                <p style = {{fontSize:"2rem"}}>{product.price?product.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','):product.price} 원</p>
-                <p style = {{fontSize:"2rem"}}>남은 수량: {product.quantity}</p>
-                <Row>
+                
+                <p style = {{fontSize:"2rem", margin:20}}>{product.price?product.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','):product.price} 원</p>
+                <p style = {{fontSize:"2rem", margin:20}}>남은 수량: {product.quantity}</p>
+                <Row style={{margin:20, marginTop:40}}>   
                     <Col md={3}>
                     <Form style = {{fontSize:"2rem"}}>
                     <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
@@ -170,25 +167,17 @@ function ProductDetail({match, history}){
                     
                     </Col>
                 </Row>
-                <p style = {{fontSize:"3em", paddingBottom:50}}>
+                <p style = {{fontSize:"3em", margin:20}}>
                     {product.price?(product.price*amount).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','):product.price*amount} 원</p>
+      
+
                 
                 </Col>
                 
 
             </Row>
+          
             
-            <Row className="justify-content-md-center">
-                <Col lg={10}>
-                
-            
-
-        
-     
-       
-
-                </Col>
-            </Row>
 
             <Row style ={{marginTop:80}}>
                 <Col>

@@ -2,6 +2,25 @@ import React from 'react'
 import {useSelector} from 'react-redux'
 import {Container, Navbar, Nav, NavDropdown, Col, Row} from 'react-bootstrap'
 import {Link} from 'react-router-dom'
+
+
+export function CategoryDirection({tag1, tag2, tag3, tag4, tag5}){
+    let expression = '홈'
+
+    if(tag1) expression += ` > ${tag1}`;
+    if(tag2) expression += ` > ${tag2}`;
+    if(tag3) expression += ` > ${tag3}`;
+    if(tag4) expression += ` > ${tag4}`;
+    if(tag5) expression += ` > ${tag5}`;
+    
+    return(
+    <p style={{marginTop:100, marginBottom:30, fontSize:'1.3rem'}}>
+        {expression}
+        </p>
+    );
+}
+
+
 function CategoryBanner(){
 
     const{isLoggedIn} = useSelector(state=>({
@@ -16,7 +35,7 @@ function CategoryBanner(){
         
         let  path = '/category/' + (index + 1)
         return (
-            <NavDropdown.Item key={index}><Link to={path} style={{textDecoration:'none', color:'inherit'}}>{k.kind}</Link></NavDropdown.Item>
+            <NavDropdown.Item key={index}><Link to={path} style={{fontSize:20, textDecoration:'none', color:'inherit'}}>{k.kind}</Link></NavDropdown.Item>
            
         );
     }

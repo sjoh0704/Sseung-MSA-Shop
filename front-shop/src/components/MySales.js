@@ -20,8 +20,8 @@ function MySales({history}){
 
 
     const fetchOrders= async()=>{
-            let res = await axios.get('/apis/v1/product/user/' + userData.user_id)
-            let productlist = await res.data.payload.payload.map((product, index) => {
+            const res = await axios.get('/apis/v1/product/user/' + userData.user_id);
+            let productlist = res.data.payload.payload.map((product, index) => {
                 
                 let path = '/mysales/' + product.pk
                 return (
@@ -30,7 +30,7 @@ function MySales({history}){
                             <ListGroup.Item key={index}>
                         <Row style={{margin:20}}>
                         <Col md={4}>
-                        <img style={{width:'22rem'}} src={product.base64_image_url?product.base64_image_url:placeholder}></img>
+                        <img style={{width:'22rem', height:'22rem'}} src={product.base64_image_url?product.base64_image_url:placeholder}></img>
                         </Col>
                         <Col md={8}>
                         <div style={{marginLeft:20}}>
@@ -48,7 +48,7 @@ function MySales({history}){
                         주문 날짜: {product.created_at}
                         </p>
 
-                        <p style={{color:'green'}}>
+                        <p style={{color:'green', fontSize:20, fontWeight:'bold'}}>
                         주문한 사람이 있는지 확인해주세요!
                         </p>
                         
