@@ -37,21 +37,21 @@ function MySales({history}){
                         <Col md={8}>
                         <div style={{marginLeft:20}}>
                         
-                        <p style = {{fontSize:"2.2rem", fontWeight: 'bold', marginLeft:20}}>
+                        <p style = {{fontSize:"1.5rem", fontWeight: 'bold', marginLeft:20}}>
                        {product.name}
                         </p>
-                        <p style = {{fontSize:"1.5rem", marginLeft:20}}>
+                        <p style = {{fontSize:"1.3rem", marginLeft:20}}>
                         총 수량: {product.quantity}
                         </p>
-                        <p style = {{fontSize:"1.5rem", marginLeft:20}}>
+                        <p style = {{fontSize:"1.3rem", marginLeft:20}}>
                         가격: {setMoney(product.price)} 원
                         </p>
-                        <p style = {{fontSize:"1.5rem", marginLeft:20}}>
+                        <p style = {{fontSize:"1.3rem", marginLeft:20}}>
                         등록 날짜: {setDate(product.created_at)}
                     
                         </p>
 
-                        <p style={{fontSize:"1.5rem", marginLeft:20,color:'green', fontSize:20, fontWeight:'bold'}}>
+                        <p style={{fontSize:"1.3rem", marginLeft:20,color:'green', fontSize:20, fontWeight:'bold'}}>
                         주문한 사람이 있는지 확인해주세요!
                         </p>
                         

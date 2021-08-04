@@ -12,11 +12,23 @@ export function CategoryDirection({tag1, tag2, tag3, tag4, tag5}){
     if(tag3) expression += ` > ${tag3}`;
     if(tag4) expression += ` > ${tag4}`;
     if(tag5) expression += ` > ${tag5}`;
-    
-    return(
-    <p style={{marginTop:100, marginBottom:30, fontSize:'1.3rem'}}>
+    let tags = expression.split(' > ')
+    let last = tags[tags.length-1]
+    expression = expression.substring(0, expression.length-last.length)
+    // console.log(expression)
+    return(<div style={{marginTop:100, marginBottom:30, fontSize:'1.4rem'}}>
+   
+    <span>
+        <Link to='/' style={{textDecoration:'none', color:'inherit'}}>
         {expression}
-        </p>
+        </Link>
+        
+        </span>
+        <span style={{fontWeight:'bolder'}}>
+        {last}
+        </span>
+     
+        </div>
     );
 }
 
@@ -56,7 +68,7 @@ function CategoryBanner(){
                     <Container>
                         <Row>
                             <Col xs lg={3}>
-                            <NavDropdown title="Category" id="navbarScrollingDropdown">
+                            <NavDropdown title="Category" id="navbarScrollingDropdown" >
                             {display_category}
                             </NavDropdown>
                             </Col>

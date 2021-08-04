@@ -171,7 +171,7 @@ function MySalesDetail({history, match}){
             {orders.length==0?
             <div>
             <br/>
-            <p style={{fontSize:"2rem", }}>아직 주문한 사람이 없네요...</p>
+            <p style={{fontSize:"1.7rem", }}>아직 주문한 사람이 없네요...</p>
             <img style={{width:600, height:600}}src={EmptyBox}></img>
             </div>
             :<div>
@@ -184,7 +184,7 @@ function MySalesDetail({history, match}){
         <Accordion style={{marginTop:100}}>
                 <Card>
                     <Accordion.Toggle as={Card.Header} eventKey="0" >
-                        <p style={{fontSize:'2rem', margin:15}}>
+                        <p style={{fontSize:'1.7rem', margin:15}}>
                             내 상품 확인하기 
                         </p>
                 

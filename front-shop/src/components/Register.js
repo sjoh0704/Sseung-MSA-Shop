@@ -82,6 +82,7 @@ function Register({history}){
             <Form.Group controlId="exampleForm.ControlInput1">
                 <Form.Label>PASSWORD</Form.Label>
                 <Form.Control
+                type="password"
                 name = 'password'
                 value = {password} 
                 onChange={onChangeHandler}
