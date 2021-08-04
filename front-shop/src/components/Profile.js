@@ -4,6 +4,7 @@ import Title from './Title'
 import {useDispatch, useSelector} from 'react-redux'
 import axios from 'axios'
 import { loginAction, logoutAction } from '../modules/user'
+import { CategoryDirection } from './CategoryBanner'
 
 function Profile({history}){
     const dispatch = useDispatch()
@@ -72,10 +73,12 @@ function Profile({history}){
     return(
         <div>
         
-        <Title title="내정보 관리"/>
+        
         <Container>
+            <CategoryDirection tag1={'내정보 관리'}></CategoryDirection>
+            <br/>
             <Row className="justify-content-md-center"> 
-                <Col xs lg={10}>
+                <Col xs lg={12}>
                 <Form>
 
 

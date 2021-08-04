@@ -4,6 +4,7 @@ import {useSelector, useDispatch} from 'react-redux'
 import {Form, Container, Button, Row, Col} from 'react-bootstrap'
 import Banner from './Banner'
 import Title from './Title'
+import { CategoryDirection } from './CategoryBanner'
 
 
 function Register({history}){
@@ -51,10 +52,12 @@ function Register({history}){
     return (
         <div>
         
-        <Title title="REGISTER"/>
         <Container>
+        <CategoryDirection tag1={'회원가입'}></CategoryDirection>
+        <br/>
+        
             <Row className="justify-content-md-center"> 
-                <Col xs lg={10}>
+                <Col xs lg={12}>
                 <Form onSubmit={onClickHandler} >
 
 
@@ -96,7 +99,7 @@ function Register({history}){
             <br/>
            
            
-            <Button type="submit">Register</Button>
+            <Button size='lg' type="submit">Register</Button>
             </Form>
                 
                 </Col>

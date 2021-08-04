@@ -83,7 +83,7 @@ function MySales({history}){
        <CategoryDirection tag1={'내 상품 목록'}></CategoryDirection>
         
 
-        <EmptyCheck text={"구매한 상품이 없습니다"} items={products}></EmptyCheck>
+        <EmptyCheck text={"등록한 상품이 없습니다"} items={products}></EmptyCheck>
         </Container>
         
 

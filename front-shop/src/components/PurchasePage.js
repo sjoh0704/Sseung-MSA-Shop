@@ -2,7 +2,8 @@ import {ListGroup, Container, Button, Form, Row, Col} from 'react-bootstrap'
 import axios from 'axios'
 import {useEffect, useState} from 'react'
 import {useSelector} from 'react-redux'
-import Title from './Title'
+import { CategoryDirection } from './CategoryBanner'
+import {setMoney, setDate} from './Convenient'
 
 function PurchasePage({location, history}){
     const {product, demand_amount} = location.state
@@ -69,28 +70,31 @@ function PurchasePage({location, history}){
 
     return(
         <div>
-        <Title title= {product.name}></Title>
-        <Container>
+         <Container>
+         <CategoryDirection tag1={product.category} tag2={product.name} tag3={'구매하기'}></CategoryDirection> 
+            <br/>
             <Row className="justify-content-md-center">
-                <Col xs lg="8">
+                <Col xs lg="12">
                 <ListGroup>
-            <ListGroup.Item>{product.category}</ListGroup.Item>
-            <ListGroup.Item>상품명 / {product.name}</ListGroup.Item>
-            <ListGroup.Item>상품 가격 / {product.price}</ListGroup.Item>
-            <ListGroup.Item>상품 수량 / {product.quantity}</ListGroup.Item>
-            <ListGroup.Item>{product.description}</ListGroup.Item>
-            <ListGroup.Item>{product.created_at}</ListGroup.Item>
+            <ListGroup.Item style={{fontSize:'1.3rem', padding:15}}>{product.category}</ListGroup.Item>
+            <ListGroup.Item style={{fontSize:'1.3rem', padding:15}}>{product.name}</ListGroup.Item>
+            <ListGroup.Item style={{fontSize:'1.3rem', padding:15}}>가격: {setMoney(product.price)} 원</ListGroup.Item>
+            <ListGroup.Item style={{fontSize:'1.3rem', padding:15}}>수량: {product.quantity}</ListGroup.Item>
+            <ListGroup.Item style={{fontSize:'1.3rem', padding:15}}>{product.description}</ListGroup.Item>
+            <ListGroup.Item style={{fontSize:'1.3rem', padding:15}}>{setDate(product.created_at)}</ListGroup.Item>
             </ListGroup>
             
+        
         <br/>
         <br/>
         <br/>
-        <h3>구매 정보를 입력하세요</h3>
+        <br/>
+        <p style={{fontSize:'1.6rem', fontWeight:'bold', margin:15}}>구매 정보를 입력하세요</p>
         <hr/>
 
         <Form>
             <Form.Group controlId="exampleForm.ControlInput1">
-                <Form.Label>구매 수량</Form.Label>
+                <Form.Label style={{fontSize:'1.3rem', margin:10}}>구매 수량</Form.Label>
                 <Form.Control 
                 name = 'demand_amount'
                 value = {demand_amount}
@@ -99,7 +103,7 @@ function PurchasePage({location, history}){
             </Form.Group>
 
             <Form.Group controlId="exampleForm.ControlInput1">
-                <Form.Label>Email address</Form.Label>
+                <Form.Label style={{fontSize:'1.3rem', margin:10}}>Email address</Form.Label>
                 <Form.Control 
                 name = 'email_address'
                 value = {email_address}
@@ -108,7 +112,7 @@ function PurchasePage({location, history}){
             </Form.Group>
 
             <Form.Group controlId="exampleForm.ControlInput1">
-                <Form.Label>Address</Form.Label>
+                <Form.Label style={{fontSize:'1.3rem', margin:10}}>Address</Form.Label>
                 <Form.Control
                 name = 'address'
                 value = {address} 
@@ -121,7 +125,7 @@ function PurchasePage({location, history}){
             <br/>
         <h1>총 가격: {product.price * demand_amount}원</h1>
             <br/>
-        <Button onClick={onClickOrder}>구매하기</Button>
+        <Button size='lg' onClick={onClickOrder}>구매하기</Button>
         
                 </Col>
             </Row>

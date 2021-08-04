@@ -5,6 +5,7 @@ import Title from './Title'
 import {useSelector} from 'react-redux'
 import placeholder from '../images/placeholder2.jpg'
 import EmptyCheck from './EmptyCheck'
+import { CategoryDirection } from './CategoryBanner'
 
 
 
@@ -75,8 +76,9 @@ function PurchaseList({history}){
     
 
     return (<div>
-        <Title title="구매 목록" set_middle={false}></Title>
+   
         <Container>
+        <CategoryDirection tag1={'구매 목록'}></CategoryDirection>
         <EmptyCheck text={"구매한 상품이 없습니다"} items={orders}></EmptyCheck>
         </Container>
         

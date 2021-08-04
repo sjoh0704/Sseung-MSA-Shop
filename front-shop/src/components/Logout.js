@@ -4,6 +4,7 @@ import {logoutAction} from '../modules/user'
 import {useDispatch} from 'react-redux'
 import {Container, Button, Col, Row} from 'react-bootstrap'
 import Title from './Title'
+import { CategoryDirection } from './CategoryBanner';
 function Logout({history}) {
     const dispatch = useDispatch();
 
@@ -23,14 +24,16 @@ function Logout({history}) {
     return (
         <div >
             <Container>
-            <Title title="LOGOUT"></Title>
+         
+            <CategoryDirection tag1={'로그아웃'}></CategoryDirection>
+            <br/>
             <Row className="justify-content-md-center"> 
-                    <Col xs lg="8">
+                    <Col xs lg="12">
                     <h3>정말 로그아웃 하시겠습니까?</h3>
                     <br/>
                     <br/>
                     
-                    <Button onClick = {onClickHandler}>로그아웃</Button>
+                    <Button size='lg' onClick = {onClickHandler}>로그아웃</Button>
                     <br/>
                     
                     </Col>

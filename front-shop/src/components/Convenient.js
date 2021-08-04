@@ -1,4 +1,6 @@
 export function setDate(time){
+    if(!time)
+        return time;
     let [date, tmp] = time.split('T');
     console.log(date);
     let [hour, min] = tmp.split(':');

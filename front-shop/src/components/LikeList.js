@@ -5,6 +5,7 @@ import Title from './Title'
 import {useSelector} from 'react-redux'
 import EmptyCheck from './EmptyCheck'
 import { Link } from 'react-router-dom'
+import { CategoryDirection } from './CategoryBanner'
 
 
 
@@ -98,8 +99,10 @@ function Likes({history}){
 
 
     return (<div>
-        <Title title="찜 목록" set_middle={false}></Title>
+        
         <Container>
+        <CategoryDirection tag1={'찜 목록'}></CategoryDirection>
+       
         <EmptyCheck text={"찜한 상품이 없습니다"} items={carts}></EmptyCheck>
         </Container>
 

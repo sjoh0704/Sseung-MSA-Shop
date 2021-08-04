@@ -29,13 +29,17 @@ function ProductDetail({match, history}){
             setImages(image_list);
             
             // check likes
-            let body = {
-                seller_id: res.data.payload.payload.seller_id,
-                buyer_id: userData.user_id,
-                product_id: parseInt(match.params.number)
-            };
-            let res_likes = await axios.post('/apis/v1/carts/check', body);
+            
+            if(isLoggedIn){
+                let body = {
+                    seller_id: res.data.payload.payload.seller_id,
+                    buyer_id: userData.user_id,
+                    product_id: parseInt(match.params.number)
+                };
+                let res_likes = await axios.post('/apis/v1/carts/check', body);
             setLike(res_likes.data.payload.payload);
+            }
+            
     }
     
     useEffect(()=>{
