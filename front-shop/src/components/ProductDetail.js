@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom'
 import EmptyHeartImg from "../images/heart.png"; 
 import HeartImg from "../images/heart_pressed.png";
 import { CategoryDirection } from './CategoryBanner'
+import { setMoney, setDate } from './Convenient'
 
 function ProductDetail({match, history}){
     const [amount, setAmount] = useState(1)
@@ -142,9 +143,8 @@ function ProductDetail({match, history}){
                 </Row>
                 <hr/>
               
-                
-                <p style = {{fontSize:"2rem", margin:20}}>{product.price?product.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','):product.price} 원</p>
-                <p style = {{fontSize:"2rem", margin:20}}>남은 수량: {product.quantity}</p>
+                <p style = {{fontSize:"2rem", margin:20}}>{setMoney(product.price)} 원 </p>
+                 <p style = {{fontSize:"2rem", margin:20}}>남은 수량: {product.quantity}</p>
                 <Row style={{margin:20, marginTop:40}}>   
                     <Col md={3}>
                     <Form style = {{fontSize:"2rem"}}>

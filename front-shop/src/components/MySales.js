@@ -6,6 +6,8 @@ import {useSelector} from 'react-redux'
 import placeholder from '../images/placeholder2.jpg'
 import { Link } from 'react-router-dom'
 import EmptyCheck from './EmptyCheck'
+import {setDate, setMoney} from './Convenient'
+import { CategoryDirection } from './CategoryBanner'
 
 
 
@@ -35,20 +37,21 @@ function MySales({history}){
                         <Col md={8}>
                         <div style={{marginLeft:20}}>
                         
-                        <p>
-                        상품명: {product.name}
+                        <p style = {{fontSize:"2.2rem", fontWeight: 'bold', marginLeft:20}}>
+                       {product.name}
                         </p>
-                        <p>
-                        수량: {product.quantity}
+                        <p style = {{fontSize:"1.5rem", marginLeft:20}}>
+                        총 수량: {product.quantity}
                         </p>
-                        <p>
-                        지불 금액: {product.price}
+                        <p style = {{fontSize:"1.5rem", marginLeft:20}}>
+                        가격: {setMoney(product.price)} 원
                         </p>
-                        <p>
-                        주문 날짜: {product.created_at}
+                        <p style = {{fontSize:"1.5rem", marginLeft:20}}>
+                        등록 날짜: {setDate(product.created_at)}
+                    
                         </p>
 
-                        <p style={{color:'green', fontSize:20, fontWeight:'bold'}}>
+                        <p style={{fontSize:"1.5rem", marginLeft:20,color:'green', fontSize:20, fontWeight:'bold'}}>
                         주문한 사람이 있는지 확인해주세요!
                         </p>
                         
@@ -76,8 +79,10 @@ function MySales({history}){
     
 
     return (<div>
-        <Title title="내 상품 목록" set_middle={false}></Title>
-        <Container>
+       <Container>
+       <CategoryDirection tag1={'내 상품 목록'}></CategoryDirection>
+        
+
         <EmptyCheck text={"구매한 상품이 없습니다"} items={products}></EmptyCheck>
         </Container>
         
