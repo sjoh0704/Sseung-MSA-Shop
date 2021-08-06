@@ -9,6 +9,7 @@ app.use(express.json())
 app.use(express.static('public'));
 
 app.get('/health', async(req, res) => {
+    console.log('health check')
     res.send({message: 'ok'});
 });
 

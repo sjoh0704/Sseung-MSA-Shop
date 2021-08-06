@@ -4,6 +4,7 @@ const connect = () => {
   let path = 'mongodb://172.17.0.3/db'
   if(process.env.MONGO_CART_HOST){
     path = `mongodb://${process.env.MONGO_CART_HOST}/db`
+    
   }
   
     mongoose
@@ -15,6 +16,7 @@ const connect = () => {
       })
       .then(()=>{
           console.log('Mongodb connection success')
+          console.log(path);
       })
       .catch(err => console.log(err))
   
