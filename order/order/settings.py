@@ -90,10 +90,10 @@ DATABASES = {
     # },
 'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.environ.get('MYSQL_USER_DB', "db"),
-        'USER': os.environ.get('MYSQL_USER_ID', "root"),
+        'NAME': os.environ.get('MYSQL_ORDER_DB', "db"),
+        'USER': os.environ.get('MYSQL_ORDER_ID', "root"),
         'PASSWORD': os.environ.get('MYSQL_ROOT_PASSWORD', "root"), 
-        'HOST': os.environ.get('MYSQL_USER_HOST', "172.17.0.4"),
+        'HOST': os.environ.get('MYSQL_ORDER_HOST', "172.17.0.4"),
         'PORT': '3306',
     }
 }
