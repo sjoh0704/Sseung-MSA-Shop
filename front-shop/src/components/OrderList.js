@@ -9,8 +9,9 @@ import { CategoryDirection } from './CategoryBanner'
 import {setMoney, setDate} from './Convenient'
 
 
-function OrderList({history}){
 
+function OrderList({history}){
+    const [flag, setFlag] = useState(true);
     const [orders, setOrders] = useState([]) 
     const {isLoggedIn, userData} = useSelector(state =>({
         isLoggedIn: state.user.isLoggedIn,
@@ -87,7 +88,7 @@ function OrderList({history}){
 
     useEffect(()=>{
         fetchOrders()
-    },[userData.user_id, orders])
+    },[userData.user_id, flag])
     
 
     const connectSeller = async(seller_id) => {
@@ -100,7 +101,7 @@ function OrderList({history}){
     const onDeleteOrder = (order_id) => {
         axios.delete(`/apis/v1/order/${order_id}`).then(res=>{
             alert('주문이 취소되었습니다.');
-            
+            setFlag(!flag)
         }).catch(e=>{
             alert('문제가 발생했습니다. 관리자에게 문의해주세요');
         });

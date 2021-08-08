@@ -12,7 +12,7 @@ import { CategoryDirection } from './CategoryBanner'
 
 
 function MySales({history}){
- 
+    const [flag, setFlag] = useState(true);
     const [products, setProducts] = useState([]) 
     const {isLoggedIn, userData} = useSelector(state =>({
         isLoggedIn: state.user.isLoggedIn,
@@ -80,7 +80,8 @@ function MySales({history}){
     const onDeleteProduct = async (product_id, e) => {
         e.preventDefault();
         axios.delete(`/apis/v1/product/${product_id}`).then(res=> {
-            alert('상품 등록을 취소합니다.');            
+            alert('상품 등록을 취소합니다.');    
+            setFlag(!flag) ;
         })
         .catch(e => {
             alert('문제가 발생했습니다. 관리자에게 문의하세요');
@@ -90,7 +91,7 @@ function MySales({history}){
 
     useEffect(()=>{
         fetchOrders()
-    },[userData.user_id, products])
+    },[userData.user_id, flag]);
     
 
     
