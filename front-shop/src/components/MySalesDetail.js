@@ -83,7 +83,6 @@ function MySalesDetail({history, match}){
                     구매 날짜: {setDate(order.created_at)}
                     </p>
                     <DropdownButton id="dropdown-basic-button" title={btnValue?btnValue:sale_status} size='lg'>
-                    <Dropdown.Item onClick={(e) => {onClickHandler({order, product_id:match.params.number}, e)}} name='판매 중'>판매 중</Dropdown.Item>
                     <Dropdown.Item onClick={(e) => {onClickHandler({order, product_id:match.params.number}, e)}} name='예약 중'>예약 중</Dropdown.Item>
                     <Dropdown.Item onClick={(e) => {onClickHandler({order, product_id:match.params.number}, e)}} name='판매 완료'>판매 완료</Dropdown.Item>
                     <Dropdown.Item onClick={(e) => {onClickHandler({order, product_id:match.params.number}, e)}} name='거래 취소'>거래 취소</Dropdown.Item>
@@ -116,7 +115,7 @@ function MySalesDetail({history, match}){
 
     const onClickHandler = async (orderData, e)=>{
         const {product_id, order} = orderData;
-    
+        
         if(e.target.name  === '판매 완료'){
             
             alert('거래가 완료되셨습니까?')
@@ -126,7 +125,7 @@ function MySalesDetail({history, match}){
             demand_quantity: order.demand_quantity,
             total_quantity: order.total_quantity
             };
-            
+
             axios.post('/apis/v1/order/' + order.order_id, data).then(res=> {
                 alert('거래가 성사되었습니다.')
                 
@@ -141,10 +140,10 @@ function MySalesDetail({history, match}){
             let data = {sales_stage: "SR"}
             axios.post('/apis/v1/order/' + order.order_id, data).then(res=> {
                 console.log(res)
-                alert('성공')
+                alert('거래가 예약되었습니다.')
             })
             .catch(e=>{
-                alert('실패')
+                alert('예약에 실패했습니다. 판매자에게 문의하세요')
             })
         }
         else{

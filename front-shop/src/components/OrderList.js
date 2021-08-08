@@ -10,7 +10,7 @@ import {setMoney, setDate} from './Convenient'
 
 
 function OrderList({history}){
-    var products = []
+
     const [orders, setOrders] = useState([]) 
     const {isLoggedIn, userData} = useSelector(state =>({
         isLoggedIn: state.user.isLoggedIn,
@@ -51,9 +51,19 @@ function OrderList({history}){
                             <span style={{color:'red',fontWeight:'bold'}}>판매자의 확인을 기다려주세요</span>:<span style={{color:'green', fontWeight:'bold'}}>예약되었습니다! 판매자와 거래하세요</span>}
                             </p>
                             <br/>
-                            <Button size='lg' onClick={()=>{
+
+                            
+                                <Button size='lg' onClick={()=>{
                                 connectSeller(order.seller_id)
                             }}>판매자에게 연락하기</Button>
+                           
+                          
+                                <Button size='lg' style={{marginLeft:10}}onClick={()=>{
+                                
+                                onDeleteOrder(order.order_id);
+                            }}>주문 취소하기</Button>
+                             
+                          
             
                             <br/>
                             
@@ -77,7 +87,7 @@ function OrderList({history}){
 
     useEffect(()=>{
         fetchOrders()
-    },[userData.user_id])
+    },[userData.user_id, orders])
     
 
     const connectSeller = async(seller_id) => {
@@ -86,25 +96,16 @@ function OrderList({history}){
         let phone_number = tmp.slice(0,3) + '-'+tmp.slice(3,7) + '-'+tmp.slice(7,11) 
         alert(`[${phone_number}]로 연락해주세요!`)
     }
-    
-    const result = () => {
-        if(orders.length == 0){
-            return(<Row>
-                <Col>
-                    <h2>주문한 상품이 없습니다.</h2>
-                </Col>
-            </Row>);
-        }
-        else{
-            return (
-                <ListGroup>
-                {orders}
-                </ListGroup>
-            );
 
-        }
+    const onDeleteOrder = (order_id) => {
+        axios.delete(`/apis/v1/order/${order_id}`).then(res=>{
+            alert('주문이 취소되었습니다.');
+            
+        }).catch(e=>{
+            alert('문제가 발생했습니다. 관리자에게 문의해주세요');
+        });
+       
     }
-
 
     return (<div>
          <Container>

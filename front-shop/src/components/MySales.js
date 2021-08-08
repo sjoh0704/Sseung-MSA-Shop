@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import axios from 'axios'
-import {ListGroup, Container, Row, Col} from 'react-bootstrap'
+import {ListGroup, Container, Row, Col, Button} from 'react-bootstrap'
 import Title from './Title'
 import {useSelector} from 'react-redux'
 import placeholder from '../images/placeholder2.jpg'
@@ -27,13 +27,15 @@ function MySales({history}){
                 
                 let path = '/mysales/' + product.pk
                 return (
-                        <Link style={{textDecoration:'none', color:'inherit'}} key={index} to={path}>
-                        
-                            <ListGroup.Item key={index}>
+                       
+                    <Link style={{textDecoration:'none', color:'inherit'}} key={index} to={path}>
+                       
+                        <ListGroup.Item key={index}>
                         <Row style={{margin:20}}>
                         <Col md={4}>
                         <img style={{width:'22rem', height:'22rem'}} src={product.base64_image_url?product.base64_image_url:placeholder}></img>
                         </Col>
+                      
                         <Col md={8}>
                         <div style={{marginLeft:20}}>
                         
@@ -54,6 +56,11 @@ function MySales({history}){
                         <p style={{fontSize:"1.3rem", marginLeft:20,color:'green', fontSize:20, fontWeight:'bold'}}>
                         주문한 사람이 있는지 확인해주세요!
                         </p>
+                        <Button style={{fontSize:"1rem", marginLeft:20, }} onClick={(e)=>onDeleteProduct(product.pk, e)}>
+                            상품 등록 취소
+                        </Button>
+                        
+                        
                         
                         </div>
                         
@@ -70,10 +77,20 @@ function MySales({history}){
         
     }
 
+    const onDeleteProduct = async (product_id, e) => {
+        e.preventDefault();
+        axios.delete(`/apis/v1/product/${product_id}`).then(res=> {
+            alert('상품 등록을 취소합니다.');            
+        })
+        .catch(e => {
+            alert('문제가 발생했습니다. 관리자에게 문의하세요');
+        })
+
+    }
 
     useEffect(()=>{
         fetchOrders()
-    },[userData.user_id])
+    },[userData.user_id, products])
     
 
     
