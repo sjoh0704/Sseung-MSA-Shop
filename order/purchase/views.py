@@ -50,24 +50,31 @@ class OrderNonParam(BaseView):
         if not (buyer_id and product_id and quantity and email_address and address and seller_id and demand_amount):
             return self.response(message="not sufficent info", status=400)
 
-        data_dict = data.dict()
-        data_dict["quantity"] = int(quantity) - int(demand_amount)
         
-        response = requests.post('{}/apis/v1/product/{}'.format(PRODUCT_SERVICE_URL, product_id), data_dict)
-        if response.status_code == 200:
-        
+
+        # data_dict = data.dict()
+        # data_dict["quantity"] = int(quantity) - int(demand_amount)
+        if int(quantity) - int(demand_amount) < 0:
+            return self.response(message='초과 주문 불과', status=400)
+        # response = requests.post('{}/apis/v1/product/{}'.format(PRODUCT_SERVICE_URL, product_id), data_dict)
+        # if response.status_code == 200:
+        try:
             order = Order(
-                        seller_id = seller_id,
-                        buyer_id = buyer_id,
-                        quantity = demand_amount,
-                        product_id = product_id,
-                        email_address = email_address,
-                        address = address
+                    seller_id = seller_id,
+                    buyer_id = buyer_id,
+                    quantity = demand_amount,
+                    product_id = product_id,
+                    email_address = email_address,
+                    address = address
             )
             order.save()
+            return self.response(message='create order success', status=200)
+     
+        
+        except Exception as e:
+            print(e)
+            return self.response(message='create order fails', status=400)
 
-            return self.response(message='delete order success', status=200)
-        return self.response(message='delete order fails', status=400)
         
 
  
@@ -123,18 +130,38 @@ class OrderView(BaseView):
             data = json.loads(request.body)
         except:
             data = request.POST
+        
+        sales_stage = data.get('sales_stage')
 
-       
+        if sales_stage:
+            order.sales_stage = sales_stage 
+
+        # 주문 완료 처리 
+        if sales_stage == 'SO':
+            try:
+                product_id = data.get('product_id')
+                demand_quantity = data.get('demand_quantity')
+                total_quantity = data.get('total_quantity')
+                tmp = {
+                    "quantity":  int(total_quantity) - int(demand_quantity)
+                }
+                response = requests.post('{}/apis/v1/product/{}'.format(PRODUCT_SERVICE_URL, product_id), tmp)
+                if response.status_code == 200:
+                    order.save()
+                    return self.response(message='판매완료')
+                return self.response(message='error', status=400)
+
+            except Exception as e:
+                print(e)
+                return self.response(message='fail', status=400)
+
         email_address = data.get('email_address')
         if email_address:
             order.email_address = email_address
         address = data.get('address')
         if address:
             order.address = address
-       
-        sales_stage = data.get('sales_stage')
-        if sales_stage:
-            order.sales_stage = sales_stage 
+
         order.save()
 
         return self.response(message='edit order success', status=200)

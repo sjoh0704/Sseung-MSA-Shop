@@ -8,7 +8,7 @@ from django.views.decorators.csrf import csrf_exempt
 import requests
 from django.conf import settings
 import os 
-CART_SERVICE_URL = os.environ.get("CART_SERVICE_URL",'http://192.168.11.122:8080')
+CART_SERVICE_URL = os.environ.get("CART_SERVICE_URL",'http://172.30.1.34:8080')
 
 class BaseView(View):
     @staticmethod
