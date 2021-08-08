@@ -99,6 +99,7 @@ class OrderView(BaseView):
                 for product in products:
                     if order.product_id == product.get('pk'):
                         data = {}
+                        data['order_id'] = order.pk
                         data['product_id'] = product.get('pk', None)
                         data['seller_id'] = product.get('seller_id', None)
                         data['category_id'] = product.get('category', None)    
