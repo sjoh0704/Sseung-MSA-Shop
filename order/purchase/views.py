@@ -155,8 +155,8 @@ class OrderView(BaseView):
         if post_response.status_code == 200:
             order.delete()
 
-            return self.response(message='create order success', status=200)
-        return self.response(message='create order fails', status=400)
+            return self.response(message='delete order success', status=200)
+        return self.response(message='delete order fails', status=400)
         
 
 

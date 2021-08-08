@@ -12,12 +12,13 @@ import {setMoney, setDate} from './Convenient'
 function MySalesDetail({history, match}){
     const [btnValue, setBtnValue] = useState('')
     const [orders, setOrders] = useState([]) 
+    const[images,setImages]= useState([])
+    const[product,setProduct]= useState({})
     const {isLoggedIn, userData} = useSelector(state =>({
         isLoggedIn: state.user.isLoggedIn,
         userData: state.user.payload
     }))
-    const[images,setImages]= useState([])
-    const[product,setProduct]= useState({})
+
     const fetchProduct= async ()=>{
         let res = await axios.get('/apis/v1/product/' + match.params.number)
            
@@ -82,10 +83,10 @@ function MySalesDetail({history, match}){
                     구매 날짜: {setDate(order.created_at)}
                     </p>
                     <DropdownButton id="dropdown-basic-button" title={btnValue?btnValue:sale_status} size='lg'>
-                    <Dropdown.Item onClick={(e) => {onClickHandler(order.order_id, e)}} name='판매 중'>판매 중</Dropdown.Item>
-                    <Dropdown.Item onClick={(e) => {onClickHandler(order.order_id, e)}} name='예약 중'>예약 중</Dropdown.Item>
-                    <Dropdown.Item onClick={(e) => {onClickHandler(order.order_id, e)}} name='판매 완료'>판매 완료</Dropdown.Item>
-                    <Dropdown.Item onClick={(e) => {onClickHandler(order.order_id, e)}} name='거래 취소'>거래 취소</Dropdown.Item>
+                    <Dropdown.Item onClick={(e) => {onClickHandler({order, product_id:match.params.number}, e)}} name='판매 중'>판매 중</Dropdown.Item>
+                    <Dropdown.Item onClick={(e) => {onClickHandler({order, product_id:match.params.number}, e)}} name='예약 중'>예약 중</Dropdown.Item>
+                    <Dropdown.Item onClick={(e) => {onClickHandler({order, product_id:match.params.number}, e)}} name='판매 완료'>판매 완료</Dropdown.Item>
+                    <Dropdown.Item onClick={(e) => {onClickHandler({order, product_id:match.params.number}, e)}} name='거래 취소'>거래 취소</Dropdown.Item>
                     </DropdownButton>
                     
                     </div>
@@ -113,15 +114,20 @@ function MySalesDetail({history, match}){
     },[userData.user_id, btnValue])
     
 
-    const onClickHandler = (order_id, e)=>{
-        console.log(e.target.name)
-        console.log(e.target.value)
-     
+    const onClickHandler = async (orderData, e)=>{
+        const {product_id, order} = orderData;
+    
         if(e.target.name  === '판매 완료'){
             
             alert('거래가 완료되셨습니까?')
-            let data = {sales_stage: "SO"}
-            axios.post('/apis/v1/order/' + order_id, data).then(res=> {
+
+            let data = {sales_stage: "SO", 
+            product_id,
+            demand_quantity: order.demand_quantity,
+            total_quantity: order.total_quantity
+            };
+            
+            axios.post('/apis/v1/order/' + order.order_id, data).then(res=> {
                 alert('거래가 성사되었습니다.')
                 
             })
@@ -133,7 +139,7 @@ function MySalesDetail({history, match}){
         else if(e.target.name  === '예약 중'){
             alert('거래를 예약하시겠습니까?')
             let data = {sales_stage: "SR"}
-            axios.post('/apis/v1/order/' + order_id, data).then(res=> {
+            axios.post('/apis/v1/order/' + order.order_id, data).then(res=> {
                 console.log(res)
                 alert('성공')
             })
@@ -144,7 +150,7 @@ function MySalesDetail({history, match}){
         else{
             alert('주문 요청을 취소하시겠습니까?')
  
-            axios.delete('/apis/v1/order/' + order_id).then(res=> {
+            axios.delete('/apis/v1/order/' + order.order_id).then(res=> {
                 
                 alert('주문이 취소되었습니다.')
             })
