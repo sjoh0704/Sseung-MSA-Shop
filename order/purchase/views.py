@@ -171,19 +171,15 @@ class OrderView(BaseView):
         # 주문 취소 
         # pk = order_id
     def delete(self, request, pk):
-        order = get_object_or_404(Order, pk=pk)
-        product_id = order.product_id
-        quantity = order.quantity
-        get_response = requests.get('{}/apis/v1/product/{}'.format(PRODUCT_SERVICE_URL, product_id))
-        dic_response = json.loads(get_response.content)['payload']
-        dic_response["quantity"] += int(quantity)
-        post_response = requests.post('{}/apis/v1/product/{}'.format(PRODUCT_SERVICE_URL, product_id), dic_response)
-
-        if post_response.status_code == 200:
+        try:
+            order = get_object_or_404(Order, pk=pk)
             order.delete()
-
-            return self.response(message='create order success', status=200)
-        return self.response(message='create order fails', status=400)
+    
+            return self.response(message='delete order success', status=200)
+        except Exception as e:
+            print(e)
+            return self.response(message='delete order fails', status=400)
+            
         
 
 
