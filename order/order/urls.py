@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from purchase.views import OrderView, OrderNonParam
+from purchase.views import OrderView, OrderNonParam, OrderByProduct
 from sale.views import SalesView
 from django.http.response import HttpResponse
 
@@ -27,6 +27,7 @@ urlpatterns = [
     path('admin/order/', admin.site.urls),
     path('apis/v1/order/<int:pk>', OrderView.as_view()),
     path('apis/v1/order', OrderNonParam.as_view()),
-    path('apis/v1/order/sale/<int:pk>', SalesView.as_view())
+    path('apis/v1/order/sale/<int:pk>', SalesView.as_view()),
+    path('apis/v1/product/<int:pk>/order', OrderByProduct.as_view())
     
 ]

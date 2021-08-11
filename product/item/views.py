@@ -1,4 +1,3 @@
-from os import name
 from django.core import serializers
 from django.http import JsonResponse 
 import json
@@ -8,8 +7,10 @@ from django.views import View
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from .models import Category, Product, ProductImage
-
-
+import requests
+import os
+ORDER_SERVICE_URL = os.environ.get('ORDER_SERVICE_URL', 'http://localhost:8300')
+CART_SERVICE_URL = os.environ.get('CART_SERVICE_URL', 'http://172.30.1.34:8080')
 
 class BaseView(View):
     @staticmethod
@@ -112,6 +113,8 @@ class ProductNonParam(BaseView):
                 product_list[i]['price'] = product.price
                 product_list[i]['created_at'] = product.created_at
                 product_list[i]['updated_at'] = product.updated_at
+                product_list[i]['valid'] = product.valid
+                
      
                 if product.productimage_set.first():
                     product_list[i]['base64_image_url'] = product.productimage_set.first().base64_image_url
@@ -133,7 +136,7 @@ class ProductStatusView(BaseView):
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kargs):
         return super(ProductStatusView, self).dispatch(request, *args, **kargs)
-
+    # pk = 상품 Id 
     def get(self, request, pk):
         try:
 
@@ -147,7 +150,9 @@ class ProductStatusView(BaseView):
                 "created_at": product.created_at,
                 "updated_at": product.updated_at,
                 "seller_id": product.seller_id,
-                "image":[]
+                'valid': product.valid,
+                "image":[],
+                
             }
             tmp = product.productimage_set.all()
             for i in range(len(tmp)):
@@ -193,8 +198,15 @@ class ProductStatusView(BaseView):
     
     
     def delete(self, request, pk):
+
         product = get_object_or_404(Product, id=pk)
-        product.delete()
+
+        cart_response = requests.delete('{}/apis/v1/product/{}/carts'.format(CART_SERVICE_URL, pk))
+        order_response = requests.delete('{}/apis/v1/product/{}/order'.format(ORDER_SERVICE_URL, pk))
+        if cart_response.status_code == 200 and order_response.status_code==200:
+            product.valid = False
+            product.save()
+
         return self.response(message='deleting product success', status=200)
 
     
@@ -272,6 +284,8 @@ class ProductByUser(BaseView):
                 product_list[i]['price'] = product.price
                 product_list[i]['created_at'] = product.created_at
                 product_list[i]['updated_at'] = product.updated_at
+                product_list[i]['valid'] = product.valid
+                
           
                 if product.productimage_set.first():
                     product_list[i]['base64_image_url'] = product.productimage_set.first().base64_image_url
