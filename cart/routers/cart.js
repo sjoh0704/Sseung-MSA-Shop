@@ -98,4 +98,21 @@ router.delete('/carts/:cartId', async(req, res)=> {
 })
 
 
+//cart by product
+router.delete('/product/:productId/carts', async(req, res)=> {
+    const {productId} = req.params;
+    let cart = null;
+    try{
+        cart = await Cart.deleteMany({productId}).exec();
+        res.send({message: 'delete cart success'});
+    }
+    catch{
+        res.status(400).send({
+            message: "cart delete fails"
+        });
+    }
+
+})
+
+
 module.exports = router;
