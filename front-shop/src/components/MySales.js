@@ -23,7 +23,8 @@ function MySales({history}){
 
     const fetchOrders= async()=>{
             const res = await axios.get('/apis/v1/product/user/' + userData.user_id);
-            let productlist = res.data.payload.payload.map((product, index) => {
+            let product_list = res.data.payload.payload.filter(p => p.valid=== true);
+            product_list = product_list.map((product, index) => {
                 
                 let path = '/mysales/' + product.pk
                 return (
@@ -71,7 +72,7 @@ function MySales({history}){
                     
                 );
             })
-            setProducts(productlist);  
+            setProducts(product_list);  
             
             
         

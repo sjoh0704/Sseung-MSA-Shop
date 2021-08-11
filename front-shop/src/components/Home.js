@@ -14,9 +14,7 @@ export default function Home(props){
 
     const fetchProducts= async ()=>{
         let res = await axios.get('/apis/v1/product');
-        console.log(res)
         let product_list = res.data.payload.payload.filter(p => p.valid=== true);
-        console.log(product_list);
         product_list = product_list.map(data=> {
                 return  {
                     ...data,
@@ -86,43 +84,43 @@ function ControlledCarousel() {
             <Carousel.Item>
                 <img
                     className="d-block w-100"
-                    src="https://images.unsplash.com/photo-1573612664822-d7d347da7b80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"
+                    src="https://media.istockphoto.com/vectors/used-electronics-trading-concept-banner-header-vector-id1159672629"
                     alt="First slide"
                     width="800"
                     height="400"
                 />
                 <Carousel.Caption>
-                    <h3>First slide label</h3>
-                    <p>First slide label ~~~~</p>
+                    {/* <h3>First slide label</h3>
+                    <p>First slide label ~~~~</p> */}
                 </Carousel.Caption>
             </Carousel.Item>
             <Carousel.Item>
                 <img
                     className="d-block w-100"
-                    src="https://i.pinimg.com/originals/b1/68/2d/b1682d7c5579f8ce81b8df8088db43a1.jpg"
+                    src="https://img.lovepik.com//back_pic/05/72/43/975bbd3c7e54c21.jpg_wh860.jpg"
                     alt="Second slide"
                     width="800"
                     height="400"
                 />
 
                 <Carousel.Caption>
-                    <h3>Second slide label</h3>
-                    <p>아무거나 적어 </p>
+                    {/* <h3>Second slide label</h3>
+                    <p>아무거나 적어 </p> */}
                 </Carousel.Caption>
             </Carousel.Item>
             <Carousel.Item>
                 <img
                     className="d-block w-100"
-                    src="https://img.freepik.com/free-vector/big-fashion-shop-super-market-male-clothes-shopping-mall-interior-banner-with-copy-space_48369-11918.jpg?size=626&ext=jpg"
+                    src="https://i.pinimg.com/originals/b9/42/dd/b942dd80ac8cba56dd90dc539d2040c0.jpg"
                     alt="Third slide"
                     width="800"
                     height="400"
                 />
                 <Carousel.Caption>
-                    <h3>Third slide label</h3>
+                    {/* <h3>Third slide label</h3>
                     <p>
                     세번째
-                    </p>
+                    </p> */}
                 </Carousel.Caption>
             </Carousel.Item>
         </Carousel>
