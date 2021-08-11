@@ -9,6 +9,7 @@ pipeline {
     GATEWAY_IMAGE = 'gateway-service'
     CART_IMAGE = 'cart-service'
     TAG = 'test'
+    VERSION = 'test${BUILD_NUMBER}'
     }
     
 
