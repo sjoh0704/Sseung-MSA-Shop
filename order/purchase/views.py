@@ -184,3 +184,23 @@ class OrderView(BaseView):
         
 
 
+
+# 상품에 따른 주문 
+class OrderByProduct(BaseView):
+    @method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kargs):
+        return super(OrderByProduct, self).dispatch(request, *args, **kargs)
+    
+
+        # pk = product_id
+    def delete(self, request, pk):
+        
+        try:    
+            orders = Order.objects.filter(product_id=pk)
+            orders.delete()
+            return self.response(message="order by product delete success")
+
+
+        except Exception as e:
+            print(e)
+            return self.response(message="order by product delete success", status=400)
