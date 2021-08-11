@@ -6,7 +6,7 @@ const EmptyCheck =({text, items}) => {
     if(items.length == 0){
         return(<Row>
                 <Col>
-                    <h2 style={{margin:30}}>{text}</h2>
+                    <p style={{fontSize:'1.6rem',margin:30}}>{text}</p>
                     <img style={{ margin:100}}src={EmptyBox}></img>
                 </Col>
             </Row>);

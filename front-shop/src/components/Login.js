@@ -4,6 +4,7 @@ import React, {useState} from 'react'
 import {useSelector, useDispatch} from 'react-redux'
 import {Form, Container, Button, Row, Col} from 'react-bootstrap'
 import Title from './Title'
+import { CategoryDirection } from './CategoryBanner'
 
 
 function Login({history}){
@@ -43,10 +44,12 @@ function Login({history}){
     return (
         <div>
     
-        <Title title="LOGIN"/>
+     
         <Container >
+            <CategoryDirection tag1={'로그인'}></CategoryDirection>
+            <br/>
             <Row className="justify-content-md-center">
-                <Col lg="10">
+                <Col lg="12">
                 <Form onSubmit={onClickHandler} >
 
 
@@ -62,6 +65,7 @@ function Login({history}){
             <Form.Group controlId="exampleForm.ControlInput1">
                 <Form.Label>PASSWORD</Form.Label>
                 <Form.Control
+                type="password"
                 name = 'password'
                 value = {password} 
                 onChange={onChangeHandler}
@@ -69,7 +73,7 @@ function Login({history}){
             </Form.Group>
             <br/>
            
-            <Button type="submit">Login</Button>
+            <Button type="submit" size='lg'>Login</Button>
             </Form>
                 </Col>
 

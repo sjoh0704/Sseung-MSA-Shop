@@ -5,6 +5,7 @@ import DisplayProducts from './DisplayProduct'
 import {Container} from 'react-bootstrap'
 import Title from './Title';
 import Loading from './Loading';
+import { CategoryDirection } from './CategoryBanner';
 
 function ProductByCategory({match}){
     console.log(match.params.number)
@@ -32,8 +33,12 @@ function ProductByCategory({match}){
     },[match.params.number])
 
     return(<div>
-        <Title title={kind[match.params.number-1].kind} set_middle={false}></Title>
+        
         <Container>
+        <CategoryDirection tag1={kind[match.params.number-1].kind}></CategoryDirection>
+       
+        
+       
         <Loading products={products}></Loading>
         </Container>
        

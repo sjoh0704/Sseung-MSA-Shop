@@ -7,6 +7,7 @@ pipeline {
     PRODUCT_IMAGE = 'product-service'
     ORDER_IMAGE = 'order-service'    
     GATEWAY_IMAGE = 'gateway-service'
+    CART_IMAGE = 'cart-service'
     TAG = 'test'
     }
     
@@ -53,6 +54,10 @@ pipeline {
           
             sh 'docker build -t ${DOCKER_ID}/${GATEWAY_IMAGE}:${TAG}${BUILD_NUMBER} .'
             }
+            dir('cart'){
+          
+            sh 'docker build -t ${DOCKER_ID}/${CART_IMAGE}:${TAG}${BUILD_NUMBER} .'
+            }
             
             
             
@@ -72,6 +77,7 @@ pipeline {
             sh 'docker push ${DOCKER_ID}/${PRODUCT_IMAGE}:${TAG}${BUILD_NUMBER}'
             sh 'docker push ${DOCKER_ID}/${GATEWAY_IMAGE}:${TAG}${BUILD_NUMBER}'
             sh 'docker push ${DOCKER_ID}/${ORDER_IMAGE}:${TAG}${BUILD_NUMBER}'
+            sh 'docker push ${DOCKER_ID}/${CART_IMAGE}:${TAG}${BUILD_NUMBER}'
 
            
 

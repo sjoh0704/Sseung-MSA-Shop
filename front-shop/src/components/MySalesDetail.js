@@ -1,11 +1,13 @@
 import React, {useState, useEffect, useMemo} from 'react'
 import axios from 'axios'
-import {ListGroup, Container, Row, Col, Dropdown, DropdownButton} from 'react-bootstrap'
+import {ListGroup, Container, Row, Col, Dropdown, DropdownButton, Card} from 'react-bootstrap'
+import Accordion from 'react-bootstrap/Accordion'
 import Title from './Title'
 import {useSelector} from 'react-redux'
 import placeholder from '../images/placeholder2.jpg'
-
-
+import { CategoryDirection } from './CategoryBanner'
+import EmptyBox from '../images/box.png'
+import {setMoney, setDate} from './Convenient'
 
 function MySalesDetail({history, match}){
     const [btnValue, setBtnValue] = useState('')
@@ -61,25 +63,25 @@ function MySalesDetail({history, match}){
                     <Row style={{margin:20}}>
                     <Col>
                     <div>
-                    <p>
-                    구매자: {order.user_name}
+                    <p style={{fontSize:'1.5rem'}}>
+                    ID: {order.user_name}
                     </p>
-                    <p>
-                    구매자 이메일: {order.user_email}
+                    <p style={{fontSize:'1.5rem'}}>
+                    이메일: {order.user_email}
                     </p>
-                    <p>
-                    구매자 연락처: {order.phone_number}
+                    <p style={{fontSize:'1.5rem'}}>
+                    연락처: {order.phone_number}
                     </p>
-                    <p>
+                    <p style={{fontSize:'1.5rem'}}>
                     구매량: {order.demand_quantity}
                     </p>
-                    <p>
-                    지불 금액: {order.price}
+                    <p style={{fontSize:'1.5rem'}}>
+                    지불 금액: {setMoney(order.price)} 원
                     </p>
-                    <p>
-                    주문 날짜: {order.created_at}
+                    <p style={{fontSize:'1.5rem'}}>
+                    구매 날짜: {setDate(order.created_at)}
                     </p>
-                    <DropdownButton id="dropdown-basic-button" title={btnValue?btnValue:sale_status}>
+                    <DropdownButton id="dropdown-basic-button" title={btnValue?btnValue:sale_status} size='lg'>
                     <Dropdown.Item onClick={(e) => {onClickHandler(order.order_id, e)}} name='판매 중'>판매 중</Dropdown.Item>
                     <Dropdown.Item onClick={(e) => {onClickHandler(order.order_id, e)}} name='예약 중'>예약 중</Dropdown.Item>
                     <Dropdown.Item onClick={(e) => {onClickHandler(order.order_id, e)}} name='판매 완료'>판매 완료</Dropdown.Item>
@@ -154,34 +156,68 @@ function MySalesDetail({history, match}){
         setBtnValue(e.target.name)
     }
   
-    
+
 
     return (<div>
-        <Title title="주문 목록" set_middle={false}></Title>
+        
+
         <Container>
-        <Row className="justify-content-md-center">
-                <Col>
-                <ListGroup>
-            <ListGroup.Item>상품 카테고리: {product.category}</ListGroup.Item>
-            <ListGroup.Item>상품명: {product.name}</ListGroup.Item>
-            <ListGroup.Item>상품 가격: {product.price}</ListGroup.Item>
-            <ListGroup.Item>상품 수량: {product.quantity}</ListGroup.Item>
-            <ListGroup.Item>상품 설명: {product.description}</ListGroup.Item>
-            <ListGroup.Item>상품 등록일:{product.created_at}</ListGroup.Item>
-           
-            <ListGroup.Item >{images}</ListGroup.Item>
-            </ListGroup>
-        <br/>
-        </Col>
-        </Row>
+        
+        
+              
+    
+        <CategoryDirection tag1={"내 상품 목록"} tag2={product.name}></CategoryDirection>
         <ListGroup>
             {orders.length==0?
             <div>
             <br/>
-            <p>구매한 사람이 없습니다.</p>
+            <p style={{fontSize:"1.7rem", }}>아직 주문한 사람이 없네요...</p>
+            <img style={{width:600, height:600}}src={EmptyBox}></img>
             </div>
-            :orders}
+            :<div>
+                <br/>
+                <p style={{fontSize:'1.6rem', fontWeight:'bold', margin:20}}>구매자 정보</p>
+                {orders}
+            </div>}
         </ListGroup>
+        
+        <Accordion style={{marginTop:100}}>
+                <Card>
+                    <Accordion.Toggle as={Card.Header} eventKey="0" >
+                        <p style={{fontSize:'1.7rem', margin:15}}>
+                            내 상품 확인하기 
+                        </p>
+                
+                    </Accordion.Toggle>
+
+                    <Accordion.Collapse eventKey="0">
+                        <Card.Body>
+                        <Row className="justify-content-md-center">
+                            <Col>
+                            <ListGroup>
+                            <ListGroup.Item style={{fontSize:'1.3rem'}}>카테고리: {product.category}</ListGroup.Item>
+                            <ListGroup.Item style={{fontSize:'1.3rem'}}>상품명: {product.name}</ListGroup.Item>
+                            <ListGroup.Item style={{fontSize:'1.3rem'}}>가격: {setMoney(product.price)} 원</ListGroup.Item>
+                            <ListGroup.Item style={{fontSize:'1.3rem'}}>수량: {product.quantity}</ListGroup.Item>
+                            <ListGroup.Item style={{fontSize:'1.3rem'}}>설명: {product.description}</ListGroup.Item>
+                            <ListGroup.Item style={{fontSize:'1.3rem'}}>등록일: {setDate(product.created_at)}</ListGroup.Item>
+                        
+                            <ListGroup.Item >{images}</ListGroup.Item>
+                            </ListGroup>
+                            <br/>
+                        </Col>
+                        </Row>
+
+                        </Card.Body>
+                    </Accordion.Collapse>
+                </Card>
+
+                
+        </Accordion>
+
+
+        
+       
         </Container>
         
 

@@ -52,7 +52,6 @@ export default function Home(props){
                 <br/>
                 <div style={{marginTop:30}}>
                 <Container>
-    
                 <ControlledCarousel/>
            
                 </Container>

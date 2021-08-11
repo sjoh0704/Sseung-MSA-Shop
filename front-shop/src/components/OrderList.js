@@ -5,7 +5,8 @@ import Title from './Title'
 import {useSelector} from 'react-redux'
 import placeholder from '../images/placeholder2.jpg'
 import EmptyCheck from './EmptyCheck'
-
+import { CategoryDirection } from './CategoryBanner'
+import {setMoney, setDate} from './Convenient'
 
 
 function OrderList({history}){
@@ -31,25 +32,26 @@ function OrderList({history}){
                             <img style={{width:'22rem'}} src={order.base64_image_url?order.base64_image_url:placeholder}></img>
                             </Col>
                             <Col md={8}>
-                           <div style={{marginLeft:20}}>
+                           <div style={{margin:20}}>
                             
-                            <p>
-                            상품명: {order.name}
+                            <p style={{fontSize:'1.3rem', fontWeight:'bold'}}>
+                            {order.name}
                             </p>
-                            <p>
+                            <p style={{fontSize:'1.3rem'}}>
                             수량: {order.demand_quantity}
                             </p>
-                            <p>
-                            지불 금액: {order.price}
+                            <p style={{fontSize:'1.3rem'}}>
+                            지불 금액: {setMoney(order.price)} 원
                             </p>
-                            <p>
-                            주문 날짜: {order.created_at}
+                            <p style={{fontSize:'1.3rem'}}>
+                            주문일: {setDate(order.created_at)}
                             </p>
-                            <p>
+                            <p style={{fontSize:'1.3rem'}}>
                             주문 상태: {order.sales_stage=='S'?
-                            <span style={{color:'red'}}>판매자의 확인을 기다려주세요</span>:<span style={{color:'green'}}>예약되었습니다! 판매자와 거래하세요</span>}
+                            <span style={{color:'red',fontWeight:'bold'}}>판매자의 확인을 기다려주세요</span>:<span style={{color:'green', fontWeight:'bold'}}>예약되었습니다! 판매자와 거래하세요</span>}
                             </p>
-                            <Button onClick={()=>{
+                            <br/>
+                            <Button size='lg' onClick={()=>{
                                 connectSeller(order.seller_id)
                             }}>판매자에게 연락하기</Button>
             
@@ -105,8 +107,9 @@ function OrderList({history}){
 
 
     return (<div>
-        <Title title="주문 목록" set_middle={false}></Title>
-        <Container>
+         <Container>
+         <CategoryDirection tag1={'주문 목록'}></CategoryDirection>
+       
           
         <EmptyCheck text={"주문한 상품이 없습니다"} items={orders}></EmptyCheck>
         </Container>

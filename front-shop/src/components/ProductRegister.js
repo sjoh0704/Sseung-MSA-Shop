@@ -4,6 +4,7 @@ import axios from 'axios'
 import {Form, Container, Button, Row, Col} from 'react-bootstrap'
 import Title from './Title'
 import ImageUploading from 'react-images-uploading';
+import { CategoryDirection } from './CategoryBanner'
 
 
 
@@ -156,10 +157,12 @@ function ProductRegister({history}){
 
     
     return(<div>
-        <Title title="판매하기"></Title>
+        
         <Container>
+            <CategoryDirection tag1={'판매하기'}></CategoryDirection>
+            <br/>
             <Row className="justify-content-md-center">
-                <Col lg={10}>
+                <Col lg={12}>
                 {/* <Form onSubmit={onClickHandler} > */}
                 <Form>
             <Form.Group controlId="exampleForm.ControlSelect1">
