@@ -38,14 +38,9 @@ const Banner = () => {
         
       </Row>
       </Container>
-    
-   
 </div>
-
-
-        
-     
     )
 }
+
 
 export default Banner;

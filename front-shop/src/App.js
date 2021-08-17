@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 import Login from './components/Login';
 import Logout from './components/Logout';
@@ -8,7 +7,7 @@ import Move from './components/Move';
 import ProductRegister from './components/ProductRegister';
 import { Route, Switch} from 'react-router-dom';
 import ProductByCategory from './components/ProductByCategory'
-import Top from './components/Top'
+import UserBanner from './components/UserBanner'
 import Banner from './components/Banner'
 import CategoryBanner from './components/CategoryBanner';
 import ProductDetail from './components/ProductDetail'
@@ -23,11 +22,10 @@ import Likes from './components/LikeList';
 
 function App() {
   return (
-
-  
-
+    <div>
+ 
+    <UserBanner/>
     <div style={{fontFamily:'twayair'}}>
-    <Top/>
     <Banner/>
     <CategoryBanner/>
     <Switch>
@@ -51,6 +49,8 @@ function App() {
     
     <Move/>
     </div>
+    </div>
+
     
   );
 }

@@ -70,25 +70,6 @@ function CategoryBanner(){
                 </Nav.Item>
                     
                 {display_category}
-        
-                <Nav.Item>
-                    <Nav.Link href="/product/register" style={{color:'white'}}>판매하기</Nav.Link>
-                </Nav.Item>
-                <Nav.Item>
-                    <Nav.Link href="/mysales" style={{color:'white'}}>내 상품 목록</Nav.Link>
-                </Nav.Item>
-                <Nav.Item>
-                    <Nav.Link href="/orderlist" style={{color:'white'}}>주문 목록</Nav.Link>
-                </Nav.Item>
-                <Nav.Item>
-                    <Nav.Link href="/purchaselist" style={{color:'white'}}>구매 목록</Nav.Link>
-                </Nav.Item>
-                <Nav.Item>
-                    <Nav.Link href="/likes" style={{color:'white'}}>찜 목록</Nav.Link>
-                </Nav.Item>
-                <Nav.Item>
-                    <Nav.Link href="/profile" style={{color:'white'}}>내정보</Nav.Link>
-                </Nav.Item>
 
                     </Row>
                 </Container>
