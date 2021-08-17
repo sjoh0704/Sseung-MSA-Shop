@@ -9,7 +9,9 @@ const Banner = () => {
   
   <Container>
       <Row>
-        <Col xs lg = {3}>
+        <Col lg = {{ span: 3, offset: 0}}
+            sm = {{ span: 3, offset: 0}}
+        >
         <Navbar.Brand href="#home">
           <Link to="/" style={{textDecoration:'none', color:'inherit'}}>
           <img src={bucket} style={{width:70}}>
@@ -21,14 +23,22 @@ const Banner = () => {
             
             </Navbar.Brand>
         </Col>
-        <Col xs lg={8} style={{paddingTop: 70}}>
+        <Col lg={{span: 8, offset: 1}}
+            sm={{span: 9, offset: 0}}
+         style={{paddingTop: 70}}>
         <Form>
   <Row className="align-items-center">
-    <Col lg={9} className="my-1">
-      <Form.Control id="inlineFormInputName" placeholder="검색어를 입력하세요" />
+    <Col lg={{span: 9}}
+    sm={{span: 9, offset: 0}}>
+      <Form.Control 
+      size='lg'
+      id="inlineFormInputName" 
+      placeholder="검색어를 입력하세요" />
     </Col>
-    <Col lg={3} className="my-1">
-      <Button variant="outline-light" style={{background: '#e85255', fontSize:'1.3rem'}}>Search</Button>
+    <Col lg={{span: 3}}
+    sm={{span: 3}}
+    >
+      <button className='emptyButton' style={{width: 100, height: 50, fontSize:'1.3rem'}}>Search</button>
     </Col>
   </Row>
 </Form>
