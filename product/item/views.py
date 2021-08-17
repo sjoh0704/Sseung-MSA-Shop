@@ -248,6 +248,8 @@ class GetProductByCategory(BaseView):
                 product_list[i]['price'] = product.price
                 product_list[i]['created_at'] = product.created_at
                 product_list[i]['updated_at'] = product.updated_at
+                product_list[i]['valid'] = product.valid
+                
       
                 
                 if product.productimage_set.first():

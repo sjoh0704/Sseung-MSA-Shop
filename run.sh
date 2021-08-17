@@ -1,3 +1,9 @@
+export CART_SERVICE_URL=172.30.1.34:8080
+export MYSQL_PRODUCT_HOST=172.17.0.2
+export MYSQL_ORDER_HOST=172.17.0.2
+export MYSQL_USER_HOST=172.17.0.2
+
+
 python3 ./apigateway/manage.py runserver 0.0.0.0:8000 &
 
 python3 ./product/manage.py migrate
