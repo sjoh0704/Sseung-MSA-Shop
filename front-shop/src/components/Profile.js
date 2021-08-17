@@ -77,45 +77,60 @@ function Profile({history}){
         <Container>
             <CategoryDirection tag1={'내정보 관리'}></CategoryDirection>
             <br/>
-            <Row className="justify-content-md-center"> 
-                <Col xs lg={12}>
-                <Form>
-
-
-            <Form.Group controlId="exampleForm.ControlInput1">
-                <Form.Label>ID</Form.Label>
+            <div style={{fontSize:'1.3rem', paddingLeft:100}}>
+            <Form>
+            <Form.Group as={Row} controlId="exampleForm.ControlInput1">
+                <Form.Label  column sm="2" lg='1'>
+                    아이디</Form.Label>
+                <Col sm ='8' lg='6'>
                 <Form.Control 
+                size='lg'
                 name = 'username'
                 value = {username}
                 onChange={onChangeHandler}
                 placeholder="ID를 입력해주세요" />
+                </Col>
+                
             </Form.Group>
             <br/>
-            <Form.Group controlId="exampleForm.ControlInput1">
-                <Form.Label>EMAIL</Form.Label>
+            <Form.Group as={Row} controlId="exampleForm.ControlInput1">
+                <Form.Label  column sm="2" lg='1' >
+                    이메일</Form.Label>
+                <Col sm ='8' lg='6'>
                 <Form.Control 
+                size='lg'
                 name = 'email'
                 value = {email}
                 onChange={onChangeHandler}
                 placeholder="email을 입력해주세요" />
+                </Col>
+                
             </Form.Group>
             <br/>
-            <Form.Group controlId="exampleForm.ControlInput1">
-                <Form.Label>PHONE NUMBER</Form.Label>
+            <Form.Group as={Row} controlId="exampleForm.ControlInput1">
+                <Form.Label  column sm="2" lg='1'>전화번호</Form.Label>
+                <Col sm ='8' lg='6'>
                 <Form.Control 
+                size='lg'
                 name = 'phone_number'
                 value = {phone_number}
                 onChange={onChangeHandler}
-                placeholder="전화번호를 입력해주세요" />
+                placeholder="대시(-) 없이 입력해주세요" />
+                </Col>
+                
             </Form.Group>
             <br/>
             
-            <Button onClick={onClickEditHandler}>수정</Button><span>{' '}</span>
-            <Button onClick={onClickDeleteHandler}>회원 탈퇴</Button>
+            <Button variant="outline-light" 
+                    style={{background: '#e85255', fontSize:'1.3rem'}} 
+                    onClick={onClickEditHandler}>수정</Button><span>{' '}</span>
+            <Button  variant="outline-light" 
+                    style={{background: '#e85255', fontSize:'1.3rem'}}
+                    onClick={onClickDeleteHandler}>회원 탈퇴</Button>
             </Form>
-                
-                </Col>
-            </Row>
+            </div>
+              
+ 
             
         </Container>
         </div>
