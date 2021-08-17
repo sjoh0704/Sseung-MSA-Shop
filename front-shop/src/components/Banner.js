@@ -1,35 +1,38 @@
 import React from 'react'
-import {Container,Row, Col, Nav, Navbar, Form, FormControl, Button} from 'react-bootstrap'
+import {Container,Row, Col, Nav, Navbar, Form, FormControl, Button, InputGroup} from 'react-bootstrap'
 import {Link} from 'react-router-dom'
-
+import bucket from '../images/bucket.png'
 const Banner = () => {
     return(
       <div style={{paddingBottom: 30}}>
   <hr/>
-  <br/>
   
   <Container>
       <Row>
         <Col xs lg = {3}>
         <Navbar.Brand href="#home">
           <Link to="/" style={{textDecoration:'none', color:'inherit'}}>
-          <h2>
-            Shopping Mall
+          <img src={bucket} style={{width:70}}>
+          </img>
+          <h2 style={{color: 'black'}}>
+            My Shopping Mall
             </h2>
             </Link>
             
             </Navbar.Brand>
         </Col>
-        <Col xs lg={6}>
+        <Col xs lg={8} style={{paddingTop: 70}}>
         <Form>
-      <FormControl type="text" placeholder="Search" className=" mr-sm-2"/>
-      </Form>
-      
-   
-        </Col>
-
-        <Col xs lg={3}>
-        <Button variant="outline-primary">Search</Button>
+  <Row className="align-items-center">
+    <Col lg={9} className="my-1">
+      <Form.Control id="inlineFormInputName" placeholder="검색어를 입력하세요" />
+    </Col>
+    <Col lg={3} className="my-1">
+      <Button variant="outline-light" style={{background: '#e85255'}}>Search</Button>
+    </Col>
+  </Row>
+</Form>
+        
         </Col>
 
         

@@ -16,7 +16,7 @@ export function CategoryDirection({tag1, tag2, tag3, tag4, tag5}){
     let last = tags[tags.length-1]
     expression = expression.substring(0, expression.length-last.length)
     // console.log(expression)
-    return(<div style={{marginTop:100, marginBottom:30, fontSize:'1.4rem'}}>
+    return(<div style={{marginTop:50, marginBottom:50, fontSize:'1.4rem'}}>
    
     <span>
         <Link to='/' style={{textDecoration:'none', color:'inherit'}}>
@@ -24,7 +24,7 @@ export function CategoryDirection({tag1, tag2, tag3, tag4, tag5}){
         </Link>
         
         </span>
-        <span style={{fontWeight:'bolder'}}>
+        <span style={{fontWeight:'bolder', color: '#e85255'}}>
         {last}
         </span>
      
@@ -47,48 +47,48 @@ function CategoryBanner(){
         
         let  path = '/category/' + (index + 1)
         return (
-            <NavDropdown.Item key={index}><Link to={path} style={{fontSize:20, textDecoration:'none', color:'inherit'}}>{k.kind}</Link></NavDropdown.Item>
-           
+            <Nav.Item>
+            <Nav.Link href={path} style={{color:'white'}}>{k.kind}</Nav.Link>
+            </Nav.Item>
+            
         );
     }
     );
 
-    const Item = ({path, pathname})=> {
-        if(!isLoggedIn){
-            return (<Nav.Link ><Link onClick={()=>{alert("로그인 후 이용해주세요^^")}}to="/" style={{textDecoration:'none', color:'inherit'}}>{pathname}</Link></Nav.Link>)
-        }
-        return (<Nav.Link ><Link to={path}style={{textDecoration:'none', color:'inherit'}}>{pathname}</Link></Nav.Link>)
-    }
+    
     
 
     return(
 
-            <div style={{background:"#eaf7fe", fontSize: "1.3rem", paddingTop:5, paddingBottom:5}}>
+            <div style={{background:"#e85255", fontSize: "1.3rem", paddingTop:5, paddingBottom:5, color:'white'}}>
 
-                <Nav justify className="justify-content-center" variant="pills" defaultActiveKey="/home">
+                <Nav style={{fontWeight:'bold'}} justify className="justify-content-center" variant="pills" defaultActiveKey="/home">
                 <Container>
                     <Row>
-                    <NavDropdown title="카테고리" id="nav-dropdown">
+                <Nav.Item>
+                <Nav.Link href="/" style={{color:'white'}}>홈</Nav.Link>
+                </Nav.Item>
+                    
                 {display_category}
-                </NavDropdown>
-                <Nav.Item>
-                    <Nav.Link href="/product/register">판매하기</Nav.Link>
+        
+                {/* <Nav.Item>
+                    <Nav.Link href="/product/register" style={{color:'white'}}>판매하기</Nav.Link>
                 </Nav.Item>
                 <Nav.Item>
-                    <Nav.Link href="/mysales">내 상품 목록</Nav.Link>
+                    <Nav.Link href="/mysales" style={{color:'white'}}>내 상품 목록</Nav.Link>
                 </Nav.Item>
                 <Nav.Item>
-                    <Nav.Link href="/orderlist">주문 목록</Nav.Link>
+                    <Nav.Link href="/orderlist" style={{color:'white'}}>주문 목록</Nav.Link>
                 </Nav.Item>
                 <Nav.Item>
-                    <Nav.Link href="/purchaselist">구매 목록</Nav.Link>
+                    <Nav.Link href="/purchaselist" style={{color:'white'}}>구매 목록</Nav.Link>
                 </Nav.Item>
                 <Nav.Item>
-                    <Nav.Link href="/likes">찜 목록</Nav.Link>
+                    <Nav.Link href="/likes" style={{color:'white'}}>찜 목록</Nav.Link>
                 </Nav.Item>
                 <Nav.Item>
-                    <Nav.Link href="/profile">내정보</Nav.Link>
-                </Nav.Item>
+                    <Nav.Link href="/profile" style={{color:'white'}}>내정보</Nav.Link>
+                </Nav.Item> */}
 
                     </Row>
                 </Container>

@@ -15,16 +15,18 @@ function ProductByCategory({match}){
     console.log(kind)
     const[products,Setproducts]= useState([])
     const fetchProducts= async ()=>{
-        await axios.get('/apis/v1/category/' + match.params.number).then(res=> {
-            let product_list = res.data.payload.payload.map((data, index)=> {
-                return {
-                    ...data,
-                    id: data.pk
-                }
-            })
-            Setproducts(product_list);
-            console.log(products)
-        })
+        let res = await axios.get('/apis/v1/category/' + match.params.number);
+        console.log(res);
+        let filtered_product_list = res.data.payload.payload.filter(product=> product.valid==true);
+        let product_list = filtered_product_list.map((data, index)=> {
+            return {
+                ...data,
+                id: data.pk
+            }
+        });
+            
+        Setproducts(product_list);
+        
     }
 
     useEffect(()=>{
