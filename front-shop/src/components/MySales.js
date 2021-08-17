@@ -32,12 +32,12 @@ function MySales({history}){
                     <Link style={{textDecoration:'none', color:'inherit'}} key={index} to={path}>
                        
                         <ListGroup.Item key={index}>
-                        <Row style={{margin:20}}>
-                        <Col md={4}>
-                        <img style={{width:'22rem', height:'22rem'}} src={product.base64_image_url?product.base64_image_url:placeholder}></img>
+                        <Row style={{margin:30}}>
+                        <Col sm='6' lg='6'>
+                        <img style={{height: 'auto', width:'30vw', objectFit:'cover'}} src={product.base64_image_url?product.base64_image_url:placeholder}></img>
                         </Col>
                       
-                        <Col md={8}>
+                        <Col sm='6' lg='6'>
                         <div style={{marginLeft:20}}>
                         
                         <p style = {{fontSize:"1.5rem", fontWeight: 'bold', marginLeft:20}}>
@@ -47,7 +47,7 @@ function MySales({history}){
                         총 수량: {product.quantity}
                         </p>
                         <p style = {{fontSize:"1.3rem", marginLeft:20}}>
-                        가격: {setMoney(product.price)} 원
+                        가격: {setMoney(product.price)} ₩
                         </p>
                         <p style = {{fontSize:"1.3rem", marginLeft:20}}>
                         등록 날짜: {setDate(product.created_at)}
@@ -57,7 +57,9 @@ function MySales({history}){
                         <p style={{fontSize:"1.3rem", marginLeft:20,color:'green', fontSize:20, fontWeight:'bold'}}>
                         주문한 사람이 있는지 확인해주세요!
                         </p>
-                        <Button style={{fontSize:"1rem", marginLeft:20, }} onClick={(e)=>onDeleteProduct(product.pk, e)}>
+                        <Button  variant="outline-light" 
+                        style={{fontSize:"1rem", marginLeft:20, background: '#e85255', fontSize:'1.3rem'}}
+                        onClick={(e)=>onDeleteProduct(product.pk, e)}>
                             상품 등록 취소
                         </Button>
                         

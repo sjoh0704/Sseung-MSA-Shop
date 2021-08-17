@@ -6,6 +6,7 @@ import {useSelector} from 'react-redux'
 import EmptyCheck from './EmptyCheck'
 import { Link } from 'react-router-dom'
 import { CategoryDirection } from './CategoryBanner'
+import { setDate, setMoney } from './Convenient'
 
 
 
@@ -35,24 +36,24 @@ function Likes({history}){
                             <Link to={path} style={{textDecoration:'none', color:'inherit'}}>
                         
                             <ListGroup.Item key={index}>
-                            <Row style={{margin:20}}>
-                            <Col md={4}>
-                            <img style={{width:'22rem'}} src={tmp_product.base64_image_url}></img>
+                            <Row style={{margin:30}}>
+                            <Col  sm='6' lg='6'>
+                            <img style={{height: 'auto', width:'30vw', objectFit:'cover'}} src={tmp_product.base64_image_url}></img>
                             </Col>
-                            <Col md={8}>
+                            <Col  sm='6' lg='6'>
                         <div style={{marginLeft:20}}>
                             
-                            <p>
-                            상품명: {tmp_product.name}
+                            <p style={{fontSize:"1.5rem", fontWeight: 'bold', marginLeft:20}}>
+                            {tmp_product.name}
                             </p>
-                            <p>
-                            수량: {tmp_product.quantity}
+                            <p style = {{fontSize:"1.3rem", marginLeft:20}}>
+                            남은 수량: {tmp_product.quantity}
                             </p>
-                            <p>
-                            지불 금액: {tmp_product.price}
+                            <p style = {{fontSize:"1.3rem", marginLeft:20}}>
+                            {setMoney(tmp_product.price)} ₩
                             </p>
-                            <p>
-                            찜한 날짜: {cart.createdAt}
+                            <p style = {{fontSize:"1.3rem", marginLeft:20}}>
+                            찜한 날짜: {setDate(cart.createdAt)}
                             </p>
                             
             
