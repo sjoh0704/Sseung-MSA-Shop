@@ -3,9 +3,8 @@ import axios from 'axios'
 import React, {useState} from 'react'
 import {useSelector, useDispatch} from 'react-redux'
 import {Form, Container, Button, Row, Col} from 'react-bootstrap'
-import Title from './Title'
 import { CategoryDirection } from './CategoryBanner'
-
+import '../App.css'
 
 function Login({history}){
     const dispatch = useDispatch();
@@ -42,45 +41,90 @@ function Login({history}){
     }
 
     return (
-        <div>
+   
     
      
         <Container >
             <CategoryDirection tag1={'로그인'}></CategoryDirection>
             <br/>
-            <Row className="justify-content-md-center">
-                <Col lg="12">
-                <Form onSubmit={onClickHandler} >
+            <div style={{fontSize:'1.3rem'}}>
 
-
-            <Form.Group controlId="exampleForm.ControlInput1">
-                <Form.Label>ID</Form.Label>
+           
+            <Form onSubmit={onClickHandler} >
+            <Form.Group as={Row} controlId="exampleForm.ControlInput1">
+                <Col sm={{ span: 2, offset: 2 }} 
+                lg={{ span: 1, offset: 3 }}>
+                <Form.Label style={{margin:10}}>아이디</Form.Label>
+                
+                </Col>
+                <Col lg={{ span: 4, offset: 0 }}
+                    sm={{ span: 8, offset: 0 }}>
                 <Form.Control 
+                size='lg'
                 name = 'username'
                 value = {username}
                 onChange={onChangeHandler}
-                placeholder="ID를 입력해주세요" />
+                placeholder="아이디를 입력해주세요" />
+                </Col>
+                
             </Form.Group>
             <br/>
-            <Form.Group controlId="exampleForm.ControlInput1">
-                <Form.Label>PASSWORD</Form.Label>
+            <Form.Group as={Row} controlId="exampleForm.ControlInput1">
+                <Col sm={{ span: 2, offset: 2 }} 
+                lg={{ span: 1, offset: 3 }}>
+                <Form.Label style={{margin:5}}>패스워드</Form.Label>
+                
+                </Col>
+                <Col lg={{ span: 4, offset: 0 }}
+                    sm={{ span: 8, offset: 0 }}>
                 <Form.Control
+                size='lg'
                 type="password"
                 name = 'password'
                 value = {password} 
                 onChange={onChangeHandler}
-                placeholder="비밀번호를 입력해주세요" />
-            </Form.Group>
-            <br/>
-           
-            <Button type="submit" size='lg'>Login</Button>
-            </Form>
-                </Col>
+                placeholder="패스워드를 입력해주세요" />
 
+                </Col>
+                </Form.Group>
+            <br/>
+            <Row>
+                <Col lg = {{span:5, offset:3}}
+                sm = {{span:10, offset:2}}>
+                <div className="d-grid gap-2">
+                <button 
+                type="submit"
+                className='filledButton'
+                >로그인</button>
+                
+                </div>
+                    
+                </Col>
             </Row>
             
+            <Row style={{marginTop:10}}>
+                <Col lg = {{span:5, offset:3}}
+                sm = {{span:10, offset:2}}>
+                <div className="d-grid gap-2">
+                <button 
+                className='emptyButton'
+                onClick={(e) => {
+                    e.preventDefault();
+                    alert('회원가입 페이지로 이동합니다')
+                    history.replace('/register');
+                }}
+                >회원가입
+                
+                </button>
+                
+                </div>
+                    
+                </Col>
+            </Row>
+            </Form>
+            </div>
         </Container>
-        </div>
+      
     );
     
 

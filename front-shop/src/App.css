@@ -44,3 +44,24 @@
   font-weight: normal;
   font-style: normal;
 }
+
+.filledButton {
+  background: #e85255;
+  border-radius: 5px;
+  border-color: #e85255;
+  color:white;
+}
+
+.emptyButton {
+  background: white;
+  border-radius: 5px;
+  border-color: #bb8182;
+  color:#e85255;
+}
+
+.primaryColor {
+  color:#e85255;
+}
+.primaryBackground {
+  background:#e85255;
+}
