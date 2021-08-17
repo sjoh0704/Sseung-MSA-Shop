@@ -123,22 +123,22 @@ function ProductDetail({match, history}){
         <Container>
         <CategoryDirection tag1={product.category} tag2={product.name}/>
             <Row>
-                <Col sm='8'>
+                <Col xs='12' sm='8' lg='8'>
                 <img style={{
-                    width: '40vw',
+                    width: '100%',
                     height: 'auto',
               
                 }}src={images[0]}>
                 </img>
          
                 </Col>
-                <Col sm='4'>
-                <Row style={{marginTop: 20}}>
-                    <Col sm={10} >
-                    <p style = {{fontSize:"2.2rem", fontWeight: 'bolder', marginLeft:20}}>{product.name}</p>
+                <Col xs='12'sm='4' lg='4'>
+                <Row style={{marginTop: 20, paddingTop:20}}>
+                    <Col xs='9' sm='9' >
+                    <p style = {{marginLeft: 20, fontSize:"2.2rem", fontWeight: 'bolder'}}>{product.name}</p>
                     </Col>
-                    <Col sm={2}>
-                    <img style = {{width:'2rem', marginRight:15}} src={like.checked?HeartImg:EmptyHeartImg} onClick={onClickCart}></img>
+                    <Col xs='3' sm='3'>
+                    <img style = {{width:'2rem'}} src={like.checked?HeartImg:EmptyHeartImg} onClick={onClickCart}></img>
                     </Col>
 
                 </Row>
@@ -147,11 +147,11 @@ function ProductDetail({match, history}){
                 <p style = {{fontSize:"2rem", margin:20}}>{setMoney(product.price)} ₩</p>
                  <p style = {{fontSize:"2rem", margin:20}}>남은 수량: {product.quantity}</p>
                 <Row style = {{fontSize:"2rem", paddingTop:20, paddingLeft:20}}> 
-                    <Col lg={6}>
+                    <Col xs= '6' sm= '12' lg={6}>
                     <p >선택 수량:</p>
                     </Col>
                
-                    <Col lg={6}>
+                    <Col xs='6' sm='9' lg={6}>
                     <Form style = {{fontSize:"2rem"}}>
                     <Form.Group controlId="exampleForm.ControlInput1">
                     <Form.Control size='lg' type='number' onChange={onChangeHandler} value={amount} />
@@ -162,20 +162,30 @@ function ProductDetail({match, history}){
  
                   
                 </Row>
+                <Col>
                 <p style = {{fontSize:"3em", margin:20}}>
                     {product.price?(product.price*amount).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','):product.price*amount} ₩</p>
-      
-                    <Col>
+                </Col>
+               
+                    <Col xs='12'>
+                    
+                    
+
+                   
                     <Link to={isLoggedIn?{
                         pathname: `/purchase`,
                         state: {
                             product:product,
                             demand_amount:amount,
-                        }}:'/product/' + match.params.number}>
-                            <Button size="lg"
-                             onClick={onClickOrder}
-                              variant="outline-light" 
-                              style={{background: '#e85255', fontSize:'1.3rem', margin:10}}>구매하기</Button>
+                        }}:'/product/' + match.params.number}
+                        style={{textDecoration:'none'}}
+                        >
+                            <div className='d-grid gap-2'>
+                            <button 
+                            className = 'emptyButton'
+                            onClick={onClickOrder}
+                            style={{fontSize:'1.3rem', margin:20, height:50}}>구매하기</button>
+                    </div> 
                     </Link>
                     
                     </Col>

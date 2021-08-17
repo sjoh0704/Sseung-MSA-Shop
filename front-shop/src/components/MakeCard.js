@@ -8,7 +8,7 @@ const MakeCard = ({products}) =>{
     products = products.map((product, index) => {
         let path = '/product/' + product.id
         return (
-            <Col md={4} xs={6} key={index} bg={'Light'}>
+            <Col lg={4} sm={6} key={index} bg={'Light'}>
                 
                 <Link style={{textDecoration:'none', color:'inherit'}} key={index} to={path}>
                 <Card border="secondary" style={{ height: '28rem', width:'25rem' }}>

@@ -37,13 +37,13 @@ function Likes({history}){
                         
                             <ListGroup.Item key={index}>
                             <Row style={{margin:30}}>
-                            <Col  sm='6' lg='6'>
-                            <img style={{height: 'auto', width:'30vw', objectFit:'cover'}} src={tmp_product.base64_image_url}></img>
+                            <Col  sm='6' lg='6' xs='12'>
+                            <img style={{height: 'auto', maxWidth:'100%', objectFit:'cover'}} src={tmp_product.base64_image_url}></img>
                             </Col>
-                            <Col  sm='6' lg='6'>
+                            <Col  sm='6' lg='6' xs='12'>
                         <div style={{marginLeft:20}}>
                             
-                            <p style={{fontSize:"1.5rem", fontWeight: 'bold', marginLeft:20}}>
+                            <p style={{fontSize:"1.5rem", fontWeight: 'bold', marginLeft:20, paddingTop:20}}>
                             {tmp_product.name}
                             </p>
                             <p style = {{fontSize:"1.3rem", marginLeft:20}}>

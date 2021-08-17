@@ -19,6 +19,7 @@ export function CategoryDirection({tag1, tag2, tag3, tag4, tag5}){
     return(<div style={{marginTop:50, marginBottom:50, fontSize:'1.4rem'}}>
    
     <span>
+
         <Link to='/' style={{textDecoration:'none', color:'inherit'}}>
         {expression}
         </Link>
@@ -47,9 +48,12 @@ function CategoryBanner(){
         
         let  path = '/category/' + (index + 1)
         return (
+            <Col lg='1' sm='2' xs='4'>
             <Nav.Item>
-            <Nav.Link href={path} style={{color:'white'}}>{k.kind}</Nav.Link>
+            <Nav.Link href={path} style={{color:'white',padding:5}}>{k.kind}</Nav.Link>
             </Nav.Item>
+            
+            </Col>
             
         );
     }
@@ -62,12 +66,15 @@ function CategoryBanner(){
 
             <div style={{background:"#e85255", fontSize: "1.3rem", paddingTop:5, paddingBottom:5, color:'white'}}>
 
-                <Nav style={{fontFamily:'twayair'}} justify className="justify-content-center" variant="pills" defaultActiveKey="/home">
+                <Nav variant="pills" defaultActiveKey="/home">
                 <Container>
                     <Row>
-                <Nav.Item>
-                <Nav.Link href="/" style={{color:'white'}}>홈</Nav.Link>
-                </Nav.Item>
+                        <Col lg='1' sm='1' xs='2'>
+                        <Nav.Item>
+                        <Nav.Link href="/" style={{color:'white',padding:5}}>홈</Nav.Link>
+                        </Nav.Item>
+                        
+                        </Col>
                     
                 {display_category}
 

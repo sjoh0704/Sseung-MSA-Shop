@@ -77,10 +77,14 @@ function Profile({history}){
         <Container>
             <CategoryDirection tag1={'내정보 관리'}></CategoryDirection>
             <br/>
-            <div style={{fontSize:'1.3rem', paddingLeft:100}}>
-            <Form>
+            <div style={{fontSize:'1.2rem'}}>
+            <Row>
+                <Col lg={{span: 10, offset: 3}}
+                sm={{span: 12, offset: 0}}>
+                <Form>
             <Form.Group as={Row} controlId="exampleForm.ControlInput1">
-                <Form.Label  column sm="2" lg='1'>
+                <Form.Label  column sm="2" lg='1'
+                style={{padding:10}}>
                     아이디</Form.Label>
                 <Col sm ='8' lg='6'>
                 <Form.Control 
@@ -94,7 +98,8 @@ function Profile({history}){
             </Form.Group>
             <br/>
             <Form.Group as={Row} controlId="exampleForm.ControlInput1">
-                <Form.Label  column sm="2" lg='1' >
+                <Form.Label  column sm="2" lg='1' 
+                style={{padding:10}}>
                     이메일</Form.Label>
                 <Col sm ='8' lg='6'>
                 <Form.Control 
@@ -108,7 +113,7 @@ function Profile({history}){
             </Form.Group>
             <br/>
             <Form.Group as={Row} controlId="exampleForm.ControlInput1">
-                <Form.Label  column sm="2" lg='1'>전화번호</Form.Label>
+                <Form.Label  column sm="2" lg='1' style={{padding:10}}>전화번호</Form.Label>
                 <Col sm ='8' lg='6'>
                 <Form.Control 
                 size='lg'
@@ -121,13 +126,36 @@ function Profile({history}){
             </Form.Group>
             <br/>
             
-            <Button variant="outline-light" 
-                    style={{background: '#e85255', fontSize:'1.3rem'}} 
-                    onClick={onClickEditHandler}>수정</Button><span>{' '}</span>
-            <Button  variant="outline-light" 
-                    style={{background: '#e85255', fontSize:'1.3rem'}}
-                    onClick={onClickDeleteHandler}>회원 탈퇴</Button>
+                <Row>
+                    <Col lg={{span:2, offset:3}}
+                    sm={{span:3, offset:4}}>
+                    <div className="d-grid gap-2">
+                    <button className='filledButton'
+                    style={{fontSize:'1.3rem', height:40}} 
+                    onClick={onClickEditHandler}>수정</button><span>{' '}</span>
+               
+                    </div>
+                    </Col>
+                <Col lg={{span:2, offset:0}}
+                    sm={{span:3, offset:0}}>
+                          <div className="d-grid gap-2">
+                          <button  className='emptyButton'
+                    style={{fontSize:'1.3rem', height:40}}
+                    onClick={onClickDeleteHandler}>회원 탈퇴</button>
+        
+
+                    </div>
+                   
+                    </Col>
+
+                </Row>
+                
+             
             </Form>
+                
+                </Col>
+            </Row>
+            
             </div>
               
  

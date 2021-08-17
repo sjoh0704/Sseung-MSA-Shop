@@ -127,11 +127,16 @@ function ProductRegister({history}){
         <Container>
             <CategoryDirection tag1={'판매하기'}></CategoryDirection>
             <br/>
-            <div style={{fontSize:'1.3rem', paddingLeft:100}}>
-            <Form>
+            <div style={{fontSize:'1.3rem'}}>
+            <Row>
+                <Col lg={{span: 11, offset:2}}
+                sm={{span: 12, offset:0}}
+                xs={{span: 12}}
+                 >
+                <Form>
             <Form.Group controlId="exampleForm.ControlSelect1" as={Row}>
-                <Form.Label column sm="2" lg='1'>카테고리</Form.Label>
-                <Col sm="2">
+                <Form.Label column sm="2" lg='1' xs='4'>카테고리</Form.Label>
+                <Col sm="2" xs='8'>
                 <Form.Control as="select"
                 name = 'category'
                 onChange={onChangeHandler}
@@ -143,8 +148,8 @@ function ProductRegister({history}){
             </Form.Group>
 
             <Form.Group controlId="exampleForm.ControlInput1" as={Row}>
-                <Form.Label column sm="2" lg='1'>상품명</Form.Label>
-                <Col sm ='10' lg='8'>
+                <Form.Label column sm="2" lg='1' xs='4'>상품명</Form.Label>
+                <Col sm ='10' lg='8' xs='8'>
                 <Form.Control 
                 name = 'name'
                 value = {name}
@@ -155,23 +160,23 @@ function ProductRegister({history}){
             </Form.Group>
 
             <Form.Group controlId="exampleForm.ControlInput1" as={Row}>
-                <Form.Label column sm="2" lg='1'>가격</Form.Label>
-                <Col sm ='4' lg='2'>
+                <Form.Label column sm="2" lg='1' xs='4'>가격</Form.Label>
+                <Col sm ='4' lg='2' xs='7'>
                 <Form.Control
                 name = 'price'
                 value = {price} 
                 onChange={onChangeHandler}
                 placeholder="가격을 적어주세요" />
                 </Col>
-                <Col>
+                <Col xs='1'>
                 <p>₩</p>
                 </Col>
                 
             </Form.Group>
 
             <Form.Group controlId="exampleForm.ControlInput1" as={Row}>
-                <Form.Label column sm="2" lg='1'>수량</Form.Label>
-                <Col sm ='2' lg='1'>
+                <Form.Label column sm="2" lg='1' xs= '4'>수량</Form.Label>
+                <Col sm ='2' lg='1' xs='8'>
                 <Form.Control
                 name = 'quantity'
                 value = {quantity} 
@@ -273,6 +278,9 @@ function ProductRegister({history}){
             onClick={onClickHandler}>상품 등록</Button>
             </Form>
 
+                </Col>
+            </Row>
+            
 
 
             </div>

@@ -33,12 +33,12 @@ function MySales({history}){
                        
                         <ListGroup.Item key={index}>
                         <Row style={{margin:30}}>
-                        <Col sm='6' lg='6'>
-                        <img style={{height: 'auto', width:'30vw', objectFit:'cover'}} src={product.base64_image_url?product.base64_image_url:placeholder}></img>
+                        <Col sm='6' lg='5' xs='12'>
+                        <img style={{height: 'auto', maxWidth:'100%', height:'auto'}} src={product.base64_image_url?product.base64_image_url:placeholder}></img>
                         </Col>
                       
-                        <Col sm='6' lg='6'>
-                        <div style={{marginLeft:20}}>
+                        <Col sm='6' lg={{span:6, offset:1}} xs='12'>
+                        <div style={{marginLeft:20, paddingTop:10}}>
                         
                         <p style = {{fontSize:"1.5rem", fontWeight: 'bold', marginLeft:20}}>
                        {product.name}

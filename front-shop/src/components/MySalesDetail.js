@@ -29,7 +29,8 @@ function MySalesDetail({history, match}){
             let image_list = await res.data.payload.payload.image.map(img => (<div >
                 <br/>
                 <img style = {{  
-                    width: "60rem"
+                    maxWidth: "100%",
+                    height:'auto' 
                     }} src={img}></img>
                 <br/>
                 <br/>
@@ -177,7 +178,7 @@ function MySalesDetail({history, match}){
             <div>
             <br/>
             <p style={{fontSize:"1.7rem", }}>아직 주문한 사람이 없네요...</p>
-            <img style={{width:600, height:600}}src={EmptyBox}></img>
+            <img style={{maxWidth:'50%', height:'auto'}}src={EmptyBox}></img>
             </div>
             :<div>
                 <br/>

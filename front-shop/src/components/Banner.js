@@ -29,7 +29,9 @@ const Banner = () => {
         <Form>
   <Row className="align-items-center">
     <Col lg={{span: 9}}
-    sm={{span: 9, offset: 0}}>
+    sm={{span: 9, offset: 0}}
+    xs='9'
+    >
       <Form.Control 
       size='lg'
       id="inlineFormInputName" 
@@ -37,6 +39,7 @@ const Banner = () => {
     </Col>
     <Col lg={{span: 3}}
     sm={{span: 3}}
+    xs='3'
     >
       <button className='emptyButton' style={{width: 100, height: 50, fontSize:'1.3rem'}}>Search</button>
     </Col>

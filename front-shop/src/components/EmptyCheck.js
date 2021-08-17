@@ -7,9 +7,10 @@ const EmptyCheck =({text, items}) => {
     if(items.length == 0){
         return(<Row>
                   <Col  lg={{span:6, offset:3}}
-                    sm={{span:12, offset:0}}>
-                    <p style={{fontSize:'2rem',marginLeft: 200, marginTop:50}}>{text}</p>
-                    <img style={{ margin:100}}src={EmptyBox}></img>
+                    sm={{span:9, offset:1}} 
+                    xs={{span:12}}>
+                    <p style={{fontSize:'2rem',marginTop:50}}>{text}</p>
+                    <img style={{ margin:100, maxWidth:'50%', height:'auto'}}src={EmptyBox}></img>
                 </Col>
             </Row>);
     }
@@ -27,8 +28,8 @@ export function EmptyCheckProductByCategory({text, items}){
         return(<Row>
                 <Col  lg={{span:6, offset:3}}
                     sm={{span:12, offset:0}}>
-                    <p style={{fontSize:'2rem',marginLeft: 200, marginTop:50}}>{text}</p>
-                    <img style={{ margin:100}}src={EmptyBox}></img>
+                    <p style={{fontSize:'2rem', marginTop:50}}>{text}</p>
+                    <img style={{ margin:100, maxWidth:'50%', height:'auto'}}src={EmptyBox}></img>
                 </Col>
             </Row>);
     }
