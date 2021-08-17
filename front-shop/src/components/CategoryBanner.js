@@ -63,33 +63,40 @@ function CategoryBanner(){
 
     return(
 
-            <div>
+            <div style={{background:"#eaf7fe", fontSize: "1.3rem", paddingTop:5, paddingBottom:5}}>
 
-                    <Container>
-                        <Row>
-                            <Col xs lg={3}>
-                            <NavDropdown title="Category" id="navbarScrollingDropdown" >
-                            {display_category}
-                            </NavDropdown>
-                            </Col>
+                <Nav justify className="justify-content-center" variant="pills" defaultActiveKey="/home">
+                <Container>
+                    <Row>
+                    <NavDropdown title="카테고리" id="nav-dropdown">
+                {display_category}
+                </NavDropdown>
+                <Nav.Item>
+                    <Nav.Link href="/product/register">판매하기</Nav.Link>
+                </Nav.Item>
+                <Nav.Item>
+                    <Nav.Link href="/mysales">내 상품 목록</Nav.Link>
+                </Nav.Item>
+                <Nav.Item>
+                    <Nav.Link href="/orderlist">주문 목록</Nav.Link>
+                </Nav.Item>
+                <Nav.Item>
+                    <Nav.Link href="/purchaselist">구매 목록</Nav.Link>
+                </Nav.Item>
+                <Nav.Item>
+                    <Nav.Link href="/likes">찜 목록</Nav.Link>
+                </Nav.Item>
+                <Nav.Item>
+                    <Nav.Link href="/profile">내정보</Nav.Link>
+                </Nav.Item>
 
-                            <Col>
-                            <Nav className="mr-auto">
-                            <Item path={"/product/register"} pathname={'판매하기'}/>
-                            <Item path={"/mysales"} pathname={'내 상품 목록'}/>
-                            <Item path={"/orderlist"} pathname={'주문 목록'}/>
-                            <Item path={"/purchaselist"} pathname={'구매 목록'}/>
-                            <Item path={"/likes"} pathname={'찜 목록'}/>
-                            <Item path={"/profile"} pathname={'내정보'}/>
-                        
-                            </Nav>
-                            </Col>
+                    </Row>
+                </Container>
+               
+                </Nav>
 
-                            
-                        </Row>
-      
-        </Container>
-            
+                
+
           </div>
   
       

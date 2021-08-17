@@ -4,12 +4,11 @@ import {Link} from 'react-router-dom'
 
 const Banner = () => {
     return(
-  
-  <>
+      <div style={{paddingBottom: 30}}>
   <hr/>
-  <br />
-<div>
-<Container>
+  <br/>
+  
+  <Container>
       <Row>
         <Col xs lg = {3}>
         <Navbar.Brand href="#home">
@@ -40,8 +39,6 @@ const Banner = () => {
    
 </div>
 
-
-</>
 
         
      

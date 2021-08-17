@@ -129,8 +129,7 @@ function ProductDetail({match, history}){
             <Row>
                 <Col>
                 <img style={{
-                    width:600,
-                    height:600
+                    objectFit:'cover'
                 }}src={images[0]}>
                 </img>
          

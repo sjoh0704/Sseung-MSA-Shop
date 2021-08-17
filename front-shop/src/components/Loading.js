@@ -1,5 +1,5 @@
 import react from 'react'
-import DisplayProducts from './DisplayProduct'
+import DisplayProducts from './MakeCard'
 import {Container, Spinner, Row, Col} from 'react-bootstrap'
 const Loading = ({products}) =>{
     if(products.length==0)

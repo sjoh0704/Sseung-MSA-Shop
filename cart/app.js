@@ -2,8 +2,8 @@ const express = require("express");
 const app = express();
 const port = 8080;
 const connect = require('./schemas');
-const cartRouter = require('./routers/cart')
 connect();
+const cartRouter = require('./routers/cart')
 app.use(express.urlencoded({extended: false}))
 app.use(express.json())
 app.use(express.static('public'));

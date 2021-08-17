@@ -48,12 +48,12 @@ export default function Home(props){
 
         return (
             <div>
-                <br/>
-                <div style={{marginTop:30}}>
-                <Container>
+            
+                <div>
+              
                 <ControlledCarousel/>
            
-                </Container>
+                
                 
                 <br/>
                 <Container>
@@ -84,10 +84,10 @@ function ControlledCarousel() {
             <Carousel.Item>
                 <img
                     className="d-block w-100"
-                    src="https://media.istockphoto.com/vectors/used-electronics-trading-concept-banner-header-vector-id1159672629"
+                    src="https://img.lovepik.com//back_pic/05/72/43/975bbd3c7e54c21.jpg_wh860.jpg"
                     alt="First slide"
-                    width="800"
-                    height="400"
+                    width="500"
+                    height="600"
                 />
                 <Carousel.Caption>
                     {/* <h3>First slide label</h3>
@@ -97,10 +97,10 @@ function ControlledCarousel() {
             <Carousel.Item>
                 <img
                     className="d-block w-100"
-                    src="https://img.lovepik.com//back_pic/05/72/43/975bbd3c7e54c21.jpg_wh860.jpg"
+                    src="https://image.freepik.com/free-vector/the-interior-of-mall-banner-scene-inside-a-shopping-store-at-night_93732-21.jpg"
                     alt="Second slide"
                     width="800"
-                    height="400"
+                    height="600"
                 />
 
                 <Carousel.Caption>
@@ -114,7 +114,7 @@ function ControlledCarousel() {
                     src="https://i.pinimg.com/originals/b9/42/dd/b942dd80ac8cba56dd90dc539d2040c0.jpg"
                     alt="Third slide"
                     width="800"
-                    height="400"
+                    height="600"
                 />
                 <Carousel.Caption>
                     {/* <h3>Third slide label</h3>

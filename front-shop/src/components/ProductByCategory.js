@@ -1,7 +1,7 @@
 import {useSelector} from 'react-redux'
 import axios from 'axios'
 import React, {useEffect, useState} from 'react';
-import DisplayProducts from './DisplayProduct'
+import DisplayProducts from './MakeCard'
 import {Container} from 'react-bootstrap'
 import Title from './Title';
 import Loading from './Loading';
