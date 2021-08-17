@@ -3,7 +3,7 @@ import placeholder from '../images/placeholder2.jpg'
 import {Link} from 'react-router-dom'
 import { setMoney } from './Convenient';
 // id가 필요하다!!
-const DisplayProducts = ({products}) =>{
+const MakeCard = ({products}) =>{
     products = products.filter(product => product.quantity > 0)
     products = products.map((product, index) => {
         let path = '/product/' + product.id
@@ -42,4 +42,4 @@ const DisplayProducts = ({products}) =>{
     )
 };
 
-export default DisplayProducts
+export default MakeCard;

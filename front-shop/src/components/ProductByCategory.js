@@ -6,26 +6,27 @@ import {Container} from 'react-bootstrap'
 import Title from './Title';
 import Loading from './Loading';
 import { CategoryDirection } from './CategoryBanner';
+import { EmptyCheckProductByCategory } from './EmptyCheck';
 
 function ProductByCategory({match}){
-    console.log(match.params.number)
     const {kind} = useSelector(state => ({
         kind: state.category.payload
     }))
-    console.log(kind)
-    const[products,Setproducts]= useState([])
+    const[products,setProducts]= useState([])
+
+
     const fetchProducts= async ()=>{
         let res = await axios.get('/apis/v1/category/' + match.params.number);
         console.log(res);
         let filtered_product_list = res.data.payload.payload.filter(product=> product.valid==true);
-        let product_list = filtered_product_list.map((data, index)=> {
+        let product_list = filtered_product_list.map((data)=> {
             return {
                 ...data,
                 id: data.pk
             }
         });
-            
-        Setproducts(product_list);
+        console.log(product_list);
+        setProducts(product_list);
         
     }
 
@@ -38,10 +39,11 @@ function ProductByCategory({match}){
         
         <Container>
         <CategoryDirection tag1={kind[match.params.number-1].kind}></CategoryDirection>
-       
         
-       
-        <Loading products={products}></Loading>
+        <EmptyCheckProductByCategory text="등록된 물건이 없습니다." items={products}>
+            
+        </EmptyCheckProductByCategory>
+    
         </Container>
        
           

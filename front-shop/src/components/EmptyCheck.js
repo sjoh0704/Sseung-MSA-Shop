@@ -1,12 +1,13 @@
 import React from 'react'
 import {Row, Col, ListGroup} from 'react-bootstrap'
 import EmptyBox from '../images/box.png'
+import MakeCard from './MakeCard';
 const EmptyCheck =({text, items}) => {
 
     if(items.length == 0){
         return(<Row>
                 <Col>
-                    <p style={{fontSize:'1.6rem',margin:30}}>{text}</p>
+                    <p style={{fontSize:'1.7rem',marginLeft: 200, marginTop:50, fontWeight:'bold'}}>{text}</p>
                     <img style={{ margin:100}}src={EmptyBox}></img>
                 </Col>
             </Row>);
@@ -17,6 +18,24 @@ const EmptyCheck =({text, items}) => {
             </ListGroup>);
     }
 
+}
+
+export function EmptyCheckProductByCategory({text, items}){
+
+    if(items.length == 0){
+        return(<Row>
+                <Col>
+                    <p style={{fontSize:'1.7rem',marginLeft: 200, marginTop:50, fontWeight:'bold'}}>{text}</p>
+                    <img style={{ margin:100}}src={EmptyBox}></img>
+                </Col>
+            </Row>);
+    }
+    else{
+        return(  
+            <MakeCard products={items}></MakeCard>
+        );
+
+    }
 }
 
 export default EmptyCheck;
