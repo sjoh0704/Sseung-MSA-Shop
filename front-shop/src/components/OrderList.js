@@ -28,49 +28,63 @@ function OrderList({history}){
                     return (
                             
                              <ListGroup.Item key={index}>
-                            <Row style={{margin:20}}>
-                            <Col md={4}>
-                            <img style={{width:'22rem'}} src={order.base64_image_url?order.base64_image_url:placeholder}></img>
+                            <Row style={{margin:30}}>
+                            <Col sm='6' lg='5' xs='12'>
+                            <img style={{height: 'auto', maxWidth:'100%', height:'auto'}} src={order.base64_image_url?order.base64_image_url:placeholder}></img>
                             </Col>
-                            <Col md={8}>
-                           <div style={{margin:20}}>
+                            <Col sm='6' lg={{span:6, offset:1}} xs='12'>
+                            <div style={{marginLeft:20, paddingTop:10}}>
                             
-                            <p style={{fontSize:'1.3rem', fontWeight:'bold'}}>
+                            <p style={{fontSize:"1.5rem", fontWeight: 'bold', marginLeft:20}}>
                             {order.name}
                             </p>
-                            <p style={{fontSize:'1.3rem'}}>
-                            수량: {order.demand_quantity}
+                            <p style={{fontSize:'1.3rem', marginLeft:20}}>
+                            주문 수량: {order.demand_quantity}
                             </p>
-                            <p style={{fontSize:'1.3rem'}}>
-                            지불 금액: {setMoney(order.price)} 원
+                            <p style={{fontSize:'1.3rem', marginLeft:20}}>
+                            지불 금액: {setMoney(order.price)} ₩
                             </p>
-                            <p style={{fontSize:'1.3rem'}}>
+                            <p style={{fontSize:'1.3rem', marginLeft:20}}>
                             주문일: {setDate(order.created_at)}
                             </p>
-                            <p style={{fontSize:'1.3rem'}}>
+                            <p style={{fontSize:'1.4rem', marginLeft:20}}>
                             주문 상태: {order.sales_stage=='S'?
-                            <span style={{color:'red',fontWeight:'bold'}}>판매자의 확인을 기다려주세요</span>:<span style={{color:'green', fontWeight:'bold'}}>예약되었습니다! 판매자와 거래하세요</span>}
+                            <span style={{color:'red'}}>판매자의 확인을 기다려주세요</span>:<span style={{color:'green', fontWeight:'bold'}}>예약되었습니다! 판매자와 거래하세요</span>}
                             </p>
-                            <br/>
+                            </div>
+                            <Row>
+                           
+                                <Col lg='6' xs='12'>
+                                <div className="d-grid gap-2">
+
+                                <button className='emptyButton'
+                                style={{height:50, fontSize:'1.3rem', marginTop:10}}
+                                onClick={()=>{
+                                connectSeller(order.seller_id)
+                            }}>판매자에게 연락하기</button>
+                             </div>
+                           
+                                </Col>
+                                <Col lg='6' xs='12'>
+                                <div className="d-grid gap-2">
+
+                                <button  className='filledButton'
+                                 style={{height:50, fontSize:'1.3rem', marginTop:10}}
+                               
+                                onClick={()=>{
+                                onDeleteOrder(order.order_id);
+                            }}>주문 취소하기</button>
+                             
+                                </div>
+                                </Col>
+                            </Row>
 
                             
-                                <Button size='lg' onClick={()=>{
-                                connectSeller(order.seller_id)
-                            }}>판매자에게 연락하기</Button>
-                           
-                          
-                                <Button size='lg' style={{marginLeft:10}}onClick={()=>{
-                                
-                                onDeleteOrder(order.order_id);
-                            }}>주문 취소하기</Button>
-                             
-                          
-            
+                            </Col>
+       
                             <br/>
                             
-                            </div>
-                            
-                            </Col>
+                           
                             </Row>
                             </ListGroup.Item>
                        

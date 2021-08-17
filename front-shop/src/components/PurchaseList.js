@@ -26,23 +26,23 @@ function PurchaseList({history}){
                 return (
                         
                             <ListGroup.Item key={index}>
-                        <Row style={{margin:20}}>
-                        <Col md={4}>
-                        <img style={{width:'22rem'}} src={order.base64_image_url?order.base64_image_url:placeholder}></img>
+                        <Row style={{margin:30}}>
+                        <Col sm='6' lg='5' xs='12'>
+                        <img style={{height: 'auto', maxWidth:'100%', height:'auto'}} src={order.base64_image_url?order.base64_image_url:placeholder}></img>
                         </Col>
-                        <Col md={8}>
-                        <div>
+                        <Col sm='6' lg={{span:6, offset:1}} xs='12'>
+                        <div style={{marginLeft:20, paddingTop:10}}>
                         
-                        <p style={{fontSize:'1.5rem',margin:15, fontWeight:'bold'}}>
+                        <p style={{fontSize:'1.5rem',marginLeft:20, fontWeight:'bold'}}>
                         {order.name}
                         </p>
-                        <p style={{fontSize:'1.3rem',margin:15}}>
+                        <p style={{fontSize:'1.3rem',marginLeft:20}}>
                         구매량: {order.demand_quantity}
                         </p>
-                        <p style={{fontSize:'1.3rem',margin:15}}>
-                        지불 금액: {setMoney(order.price)} 원
+                        <p style={{fontSize:'1.3rem',marginLeft:20}}>
+                        지불 금액: {setMoney(order.price)} ₩
                         </p>
-                        <p style={{fontSize:'1.3rem',margin:15}}>
+                        <p style={{fontSize:'1.3rem',marginLeft:20}}>
                         주문 날짜: {setDate(order.created_at)}
                         </p>
                         </div>

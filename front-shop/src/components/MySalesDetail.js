@@ -4,7 +4,7 @@ import {ListGroup, Container, Row, Col, Dropdown, DropdownButton, Card} from 're
 import Accordion from 'react-bootstrap/Accordion'
 import Title from './Title'
 import {useSelector} from 'react-redux'
-import placeholder from '../images/placeholder2.jpg'
+import arrow from '../images/arrow.png'
 import { CategoryDirection } from './CategoryBanner'
 import EmptyBox from '../images/box.png'
 import {setMoney, setDate} from './Convenient'
@@ -66,7 +66,7 @@ function MySalesDetail({history, match}){
                     <Col>
                     <div>
                     <p style={{fontSize:'1.5rem'}}>
-                    ID: {order.user_name}
+                    아이디: {order.user_name}
                     </p>
                     <p style={{fontSize:'1.5rem'}}>
                     이메일: {order.user_email}
@@ -78,17 +78,42 @@ function MySalesDetail({history, match}){
                     구매량: {order.demand_quantity}
                     </p>
                     <p style={{fontSize:'1.5rem'}}>
-                    지불 금액: {setMoney(order.price)} 원
+                    가격: {setMoney(order.price)} 원
                     </p>
                     <p style={{fontSize:'1.5rem'}}>
-                    구매 날짜: {setDate(order.created_at)}
+                    주문 날짜: {setDate(order.created_at)}
                     </p>
-                    <DropdownButton id="dropdown-basic-button" title={btnValue?btnValue:sale_status} size='lg'>
-                    <Dropdown.Item onClick={(e) => {onClickHandler({order, product_id:match.params.number}, e)}} name='예약 중'>예약 중</Dropdown.Item>
-                    <Dropdown.Item onClick={(e) => {onClickHandler({order, product_id:match.params.number}, e)}} name='판매 완료'>판매 완료</Dropdown.Item>
-                    <Dropdown.Item onClick={(e) => {onClickHandler({order, product_id:match.params.number}, e)}} name='거래 취소'>거래 취소</Dropdown.Item>
-                    </DropdownButton>
+
                     
+                    <p style={{fontSize:'1.5rem'}}>
+                    
+                    </p>
+
+                    <Row>
+                    <Col lg='2' sm ='4' xs='12'>
+                    <div className="dropdown">
+		            <button className="dropdown-button ">{btnValue?btnValue:sale_status}</button>
+                    <div class="dropdown-content">
+                        <a name="예약 중" onClick={(e) => {onClickHandler({order, product_id:match.params.number}, e)}}>예약 중</a>
+                        <a name="판매 완료" onClick={(e) => {onClickHandler({order, product_id:match.params.number}, e)}}>판매 완료</a>
+                        <a name="거래 취소" onClick={(e) => {onClickHandler({order, product_id:match.params.number}, e)}}>거래 취소</a>
+                        </div>
+                    </div>
+
+                    </Col>
+                    <Col lg='1' sm ='2' xs='6'
+                   
+                    >
+                        <img  style={{marginLeft: 15, maxWidth:'100%', }} 
+                        src={arrow}></img>
+                    </Col>
+                    <Col lg='4' sm ='6' xs='6'
+                    style={{fontSize:'1.5rem', padding:20}}>
+                    주문 상태 조회하기
+                    </Col>
+
+                    </Row>
+                   
                     </div>
                     
                     </Col>
@@ -173,19 +198,6 @@ function MySalesDetail({history, match}){
               
     
         <CategoryDirection tag1={"내 상품 목록"} tag2={product.name}></CategoryDirection>
-        <ListGroup>
-            {orders.length==0?
-            <div>
-            <br/>
-            <p style={{fontSize:"1.7rem", }}>아직 주문한 사람이 없네요...</p>
-            <img style={{maxWidth:'50%', height:'auto'}}src={EmptyBox}></img>
-            </div>
-            :<div>
-                <br/>
-                <p style={{fontSize:'1.6rem', fontWeight:'bold', margin:20}}>구매자 정보</p>
-                {orders}
-            </div>}
-        </ListGroup>
         
         <Accordion style={{marginTop:100}}>
                 <Card>
@@ -220,6 +232,20 @@ function MySalesDetail({history, match}){
 
                 
         </Accordion>
+
+        <ListGroup style={{marginTop: 20}}>
+            {orders.length==0?
+            <div>
+            <br/>
+            <p style={{fontSize:"1.7rem", }}>아직 주문한 사람이 없네요...</p>
+            <img style={{maxWidth:'50%', height:'auto'}}src={EmptyBox}></img>
+            </div>
+            :<div>
+                <br/>
+                <p className='primaryColor' style={{fontSize:'1.8rem', margin:20}}>주문 요청이 들어왔어요!</p>
+                {orders}
+            </div>}
+        </ListGroup>
 
 
         

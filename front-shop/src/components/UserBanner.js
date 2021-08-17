@@ -38,8 +38,8 @@ const UserBanner = ()=>{
 
     return(
 
-            <Col lg={{span: 6, offset:9}}
-            sm={{span: 8, offset:5}}
+            <Col lg={{span: 6, offset:8}}
+            sm={{span: 12, offset:3}}
             >
             <div style={{fontSize:'1.1rem'}}>
         <Link to='/product/register' style={{textDecoration:'none'}}>
@@ -52,14 +52,20 @@ const UserBanner = ()=>{
                 내 상품
             </button>
         </Link>
-        <Link to='/likes' style={{textDecoration:'none'}}>
+        <Link to='/orderlist' style={{textDecoration:'none'}}>
             <button style={{background:'white', border:'none'}}>
-                찜 목록
+                주문 목록
             </button>
         </Link>
+        
         <Link to='/purchaselist' style={{textDecoration:'none'}}>
             <button style={{background:'white', border:'none'}}>
                 구매 목록
+            </button>
+        </Link>
+        <Link to='/likes' style={{textDecoration:'none'}}>
+            <button style={{background:'white', border:'none'}}>
+                찜 목록
             </button>
         </Link>
 
