@@ -93,6 +93,7 @@ function Login({history}){
                 sm = {{span:10, offset:2}}>
                 <div className="d-grid gap-2">
                 <button 
+                style={{height:50}}
                 type="submit"
                 className='filledButton'
                 >로그인</button>
@@ -102,11 +103,12 @@ function Login({history}){
                 </Col>
             </Row>
             
-            <Row style={{marginTop:10}}>
+            <Row style={{marginTop:15}}>
                 <Col lg = {{span:5, offset:3}}
                 sm = {{span:10, offset:2}}>
                 <div className="d-grid gap-2">
                 <button 
+                style={{height:50}}
                 className='emptyButton'
                 onClick={(e) => {
                     e.preventDefault();

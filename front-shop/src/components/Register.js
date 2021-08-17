@@ -32,14 +32,20 @@ function Register({history}){
             email: email,
             phone_number:phone_number
         };
+        
+        if(!(username&& password && email && phone_number)){
+            alert("모든 항목을 입력해 주세요");
+            return;
+        }
+
         axios.post('/apis/v1/user/', body)
         .then(response => {
             
             alert("축하합니다. 회원이 되셨어요!")
             history.replace('/login')
         }).catch(e =>{
-            alert("회원가입 실패")
-            console.log("회원가입 실패")
+            alert("회원가입에 실패했습니다. 관리자에게 문의해 주세요.");
+            
         })
 
         setUserData({
@@ -50,64 +56,106 @@ function Register({history}){
         })
     }
     return (
-        <div>
+        
         
         <Container>
         <CategoryDirection tag1={'회원가입'}></CategoryDirection>
         <br/>
+        <div style={{fontSize:'1.3rem'}}>
+
+    
+        <Form onSubmit={onClickHandler} >
         
-            <Row className="justify-content-md-center"> 
-                <Col xs lg={12}>
-                <Form onSubmit={onClickHandler} >
 
-
-            <Form.Group controlId="exampleForm.ControlInput1">
-                <Form.Label>ID</Form.Label>
-                <Form.Control 
+            <Form.Group as={Row} controlId="exampleForm.ControlInput1">
+            <Col sm={{ span: 2, offset: 1 }} 
+                lg={{ span: 1, offset: 2 }}>
+                <Form.Label style={{margin:5}}>아이디</Form.Label>
+                
+                </Col>
+                <Col lg={{ span: 6, offset: 0 }}
+                    sm={{ span: 8, offset: 0 }}>
+               <Form.Control 
                 name = 'username'
                 value = {username}
                 onChange={onChangeHandler}
-                placeholder="ID를 입력해주세요" />
-            </Form.Group>
-            <br/>
-            <Form.Group controlId="exampleForm.ControlInput1">
-                <Form.Label>EMAIL</Form.Label>
-                <Form.Control 
+                placeholder="아이디를 입력해주세요" />
+                </Col>
+                </Form.Group>
+
+            <Form.Group style={{paddingTop:15}}as={Row} controlId="exampleForm.ControlInput1">
+            <Col sm={{ span: 2, offset: 1 }} 
+                lg={{ span: 1, offset: 2 }}>
+                <Form.Label style={{margin:5}}>이메일</Form.Label>
+                
+                </Col>
+                <Col lg={{ span: 6, offset: 0 }}
+                    sm={{ span: 8, offset: 0 }}>
+                 <Form.Control 
                 name = 'email'
                 value = {email}
                 onChange={onChangeHandler}
-                placeholder="email을 입력해주세요" />
+                placeholder="이메일을 입력해주세요" />
+                </Col>
+                
             </Form.Group>
-            <br/>
-            <Form.Group controlId="exampleForm.ControlInput1">
-                <Form.Label>PASSWORD</Form.Label>
+   
+            <Form.Group style={{paddingTop:15}} as={Row} controlId="exampleForm.ControlInput1">
+            <Col sm={{ span: 2, offset: 1 }} 
+                lg={{ span: 1, offset: 2 }}>
+                <Form.Label style={{margin:5}}>패스워드</Form.Label>
+                
+                </Col>
+                <Col lg={{ span: 6, offset: 0 }}
+                    sm={{ span: 8, offset: 0 }}>
                 <Form.Control
                 type="password"
                 name = 'password'
                 value = {password} 
                 onChange={onChangeHandler}
-                placeholder="비밀번호를 입력해주세요" />
+                placeholder="패스워드를 입력해 주세요" />
+                </Col>
+                
             </Form.Group>
-            <br/>
-            <Form.Group controlId="exampleForm.ControlInput1">
-                <Form.Label>PHONE NUMBER</Form.Label>
-                <Form.Control
+       
+            <Form.Group style={{paddingTop:15}} as={Row} controlId="exampleForm.ControlInput1">
+            <Col sm={{ span: 2, offset: 1 }} 
+                lg={{ span: 1, offset: 2 }}>
+                <Form.Label style={{margin:5}}>전화번호</Form.Label>
+                
+                </Col>
+                <Col lg={{ span: 6, offset: 0 }}
+                    sm={{ span: 8, offset: 0 }}>
+                 <Form.Control
                 name = 'phone_number'
                 value = {phone_number} 
                 onChange={onChangeHandler}
-                placeholder="전화번호를 입력해주세요" />
-            </Form.Group>
-            <br/>
+                placeholder="대시(-) 없이 입력해 주세요" />
+               
+                </Col>
+                </Form.Group>    
            
-           
-            <Button size='lg' type="submit">Register</Button>
-            </Form>
+                <Row style={{marginTop:30}}>
+                <Col lg = {{span:6, offset:3}}
+                sm = {{span:10, offset:2}}>
+                <div className="d-grid gap-2">
+                <button 
+                style={{height:50}}
+                type='submit'
+                className='emptyButton'
+                >회원가입
                 
+                </button>
+                
+                </div>
+                    
                 </Col>
             </Row>
+            </Form>
+            </div>
             
         </Container>
-        </div>
+    
    
     );
 
