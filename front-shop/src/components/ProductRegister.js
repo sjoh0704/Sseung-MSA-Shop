@@ -25,26 +25,6 @@ function ImageUpload() {
     }
   }
 
-  
-  // const onClickGetImage = async () => {
-    
-  //   let imageList = await axios.get("/apis/image/product").then(res => {
-      
-  //     return(res.data.map(data => {
-  //       return {
-  //         data_url: data.fields.base64_image_url}
-  //     }))
-  //   })
-  //   .catch(e => {
-  //     console.log(e)
-  //   })
-
-  //   console.log(imageList)
-
-  // }
-
-
-
   return (
     <Container>
      
@@ -76,23 +56,6 @@ function ProductRegister({history}){
       }
     }
   
-    
-    // const onClickGetImage = async () => {
-      
-    //   let imageList = await axios.get("/apis/image/product").then(res => {
-        
-    //     return(res.data.map(data => {
-    //       return {
-    //         data_url: data.fields.base64_image_url}
-    //     }))
-    //   })
-    //   .catch(e => {
-    //     console.log(e)
-    //   })
-  
-    //   console.log(imageList)
-  
-    // }
     
     const displayCategory = kind.map((k, index) => {
         return (
@@ -140,16 +103,19 @@ function ProductRegister({history}){
             description: description,
             ...image_list  // 용량이 크면 안넘어가
         };
-        console.log(body)
+        if(!(name && category_number && price && quantity && description && image_list.length)){
+            alert('모든 항목을 입력해 주세요.');
+            return;
+        }
   
     
         axios.post('/apis/v1/product/', body)
         .then(response => {
-            alert("상품 등록 성공")
+            alert("상품이 등록되었습니다")
             history.replace('/')
         }).catch(e =>{
             console.log(e)
-            alert("상품 등록 실패")
+            alert("상품 등록에 실패하였습니다. 관리자에게 문의하세요.")
      
         })
 
@@ -161,12 +127,11 @@ function ProductRegister({history}){
         <Container>
             <CategoryDirection tag1={'판매하기'}></CategoryDirection>
             <br/>
-            <Row className="justify-content-md-center">
-                <Col lg={12}>
-                {/* <Form onSubmit={onClickHandler} > */}
-                <Form>
-            <Form.Group controlId="exampleForm.ControlSelect1">
-                <Form.Label>카테고리</Form.Label>
+            <div style={{fontSize:'1.3rem', paddingLeft:100}}>
+            <Form>
+            <Form.Group controlId="exampleForm.ControlSelect1" as={Row}>
+                <Form.Label column sm="2" lg='1'>카테고리</Form.Label>
+                <Col sm="2">
                 <Form.Control as="select"
                 name = 'category'
                 onChange={onChangeHandler}
@@ -174,48 +139,69 @@ function ProductRegister({history}){
                 {displayCategory}
 
                 </Form.Control>
+                </Col>
             </Form.Group>
 
-            <Form.Group controlId="exampleForm.ControlInput1">
-                <Form.Label>상품명</Form.Label>
+            <Form.Group controlId="exampleForm.ControlInput1" as={Row}>
+                <Form.Label column sm="2" lg='1'>상품명</Form.Label>
+                <Col sm ='10' lg='8'>
                 <Form.Control 
                 name = 'name'
                 value = {name}
                 onChange={onChangeHandler}
                 placeholder="상품명을 적어주세요" />
+                </Col>
+                
             </Form.Group>
 
-            <Form.Group controlId="exampleForm.ControlInput1">
-                <Form.Label>가격</Form.Label>
+            <Form.Group controlId="exampleForm.ControlInput1" as={Row}>
+                <Form.Label column sm="2" lg='1'>가격</Form.Label>
+                <Col sm ='4' lg='2'>
                 <Form.Control
                 name = 'price'
                 value = {price} 
                 onChange={onChangeHandler}
                 placeholder="가격을 적어주세요" />
+                </Col>
+                <Col>
+                <p>₩</p>
+                </Col>
+                
             </Form.Group>
 
-            <Form.Group controlId="exampleForm.ControlInput1">
-                <Form.Label>수량</Form.Label>
+            <Form.Group controlId="exampleForm.ControlInput1" as={Row}>
+                <Form.Label column sm="2" lg='1'>수량</Form.Label>
+                <Col sm ='2' lg='1'>
                 <Form.Control
                 name = 'quantity'
                 value = {quantity} 
                 onChange={onChangeHandler}
                 placeholder="수량을 적어주세요" />
+                
+                </Col>
+        
+      
             </Form.Group>
-            <Form.Group controlId="exampleForm.ControlTextarea1">
-                <Form.Label>상품 설명</Form.Label>
+            <Form.Group controlId="exampleForm.ControlTextarea1" as={Row}>
+                <Form.Label column sm="2" lg='1'>상품설명</Form.Label>
+                <Col sm ='10' lg='8'>
                 <Form.Control 
                 as="textarea" 
                 rows={5}
                 onChange={onChangeHandler}
                 name = 'description'
+                placeholder = '상품 설명을 적어주세요'
                 value = {description}
                 />
+                
+                </Col>  
             </Form.Group>
-            <Form.Group controlId="exampleForm.ControlTextarea1">
+            <br/>
+            <Form.Group controlId="exampleForm.ControlTextarea1" as={Row}>
                 <Form.Label>상품 이미지 등록</Form.Label>
              {/* <Button onClick={onClickGetImage}>이미지 가져오기 </Button> */}
-            <ImageUploading
+             
+             <ImageUploading 
                 multiple
                 value={images}
                 onChange={onChangeImage}
@@ -232,15 +218,17 @@ function ProductRegister({history}){
                 dragProps,
                 }) => (
                 // write your building UI
+         
                 <div className="upload__image-wrapper">
+                    <br/>
                     <Button
-                    style={isDragging ? { color: 'red' } : undefined}
+                    variant="outline-light" style={{background: '#e85255', fontSize:'1.3rem'}}
                     onClick={(e) => {
                         e.preventDefault()
                         onImageUpload()}}
                     {...dragProps}
                     >
-                    사진추가
+                    사진 추가
                     </Button>
                     <br/>
                     &nbsp;
@@ -249,10 +237,16 @@ function ProductRegister({history}){
                         <img src={image['data_url']} alt="" width="700" />
                         <div className="image-item__btn-wrapper">
                         <br/>
-                        <Button onClick={(e) => {
+                        <Button      
+                            variant="outline-light" 
+                            style={{background: '#e85255', fontSize:'1.3rem'}} 
+                            onClick={(e) => {
                             e.preventDefault()
                             onImageUpdate(index)}}>수정</Button>{' '}
-                        <Button onClick={(e) => {
+                        <Button
+                            variant="outline-light" 
+                            style={{background: '#e85255', fontSize:'1.3rem'}} 
+                            onClick={(e) => {
                             e.preventDefault()
                             onImageRemove(index)}}>삭제</Button>
                         </div>
@@ -263,17 +257,28 @@ function ProductRegister({history}){
             
                 )}
             </ImageUploading>
+            <Col>
+                <p>
+                {`이미지는 최대 ${maxNumber}개까지만 첨부할 수 있습니다`}
+                </p>
+                <br/>
+            </Col>
 
 
 
             </Form.Group>
-            <Button type="submit" onClick={onClickHandler}>상품 등록</Button>
+            <Button type="submit" 
+            variant="outline-light" 
+            style={{background: '#e85255', fontSize:'1.3rem'}} 
+            onClick={onClickHandler}>상품 등록</Button>
             </Form>
 
+
+
+            </div>
+        
             
-                </Col>
-                
-            </Row>
+  
             
         </Container>
         

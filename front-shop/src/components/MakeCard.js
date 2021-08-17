@@ -21,7 +21,7 @@ const MakeCard = ({products}) =>{
                     
                     <Card.Title style={{fontSize:"1.5rem"}}>{product.name}</Card.Title>
                     <Card.Text style={{fontSize:23, fontWeight:'bolder'}}>
-                    {setMoney(product.price)}원
+                    {setMoney(product.price)} ₩
                     </Card.Text>
                 
                 </Card.Body>

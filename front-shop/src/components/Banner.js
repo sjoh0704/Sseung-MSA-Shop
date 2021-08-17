@@ -28,7 +28,7 @@ const Banner = () => {
       <Form.Control id="inlineFormInputName" placeholder="검색어를 입력하세요" />
     </Col>
     <Col lg={3} className="my-1">
-      <Button variant="outline-light" style={{background: '#e85255'}}>Search</Button>
+      <Button variant="outline-light" style={{background: '#e85255', fontSize:'1.3rem'}}>Search</Button>
     </Col>
   </Row>
 </Form>
