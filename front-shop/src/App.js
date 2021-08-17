@@ -24,14 +24,9 @@ import Likes from './components/LikeList';
 function App() {
   return (
 
-    
-   <div>
-    {/* <Login></Login> */}
-    {/* <Logout></Logout> */}
-    {/* <Register></Register> */}
-    {/* <Home/> */}
-    {/* <ProductRegister/> */}
+  
 
+    <div style={{fontFamily:'twayair'}}>
     <Top/>
     <Banner/>
     <CategoryBanner/>
@@ -55,8 +50,8 @@ function App() {
    
     
     <Move/>
+    </div>
     
-   </div>
   );
 }
 

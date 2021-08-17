@@ -62,7 +62,7 @@ function CategoryBanner(){
 
             <div style={{background:"#e85255", fontSize: "1.3rem", paddingTop:5, paddingBottom:5, color:'white'}}>
 
-                <Nav style={{fontWeight:'bold'}} justify className="justify-content-center" variant="pills" defaultActiveKey="/home">
+                <Nav style={{fontFamily:'twayair'}} justify className="justify-content-center" variant="pills" defaultActiveKey="/home">
                 <Container>
                     <Row>
                 <Nav.Item>
@@ -71,7 +71,7 @@ function CategoryBanner(){
                     
                 {display_category}
         
-                {/* <Nav.Item>
+                <Nav.Item>
                     <Nav.Link href="/product/register" style={{color:'white'}}>판매하기</Nav.Link>
                 </Nav.Item>
                 <Nav.Item>
@@ -88,7 +88,7 @@ function CategoryBanner(){
                 </Nav.Item>
                 <Nav.Item>
                     <Nav.Link href="/profile" style={{color:'white'}}>내정보</Nav.Link>
-                </Nav.Item> */}
+                </Nav.Item>
 
                     </Row>
                 </Container>

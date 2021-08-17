@@ -36,3 +36,11 @@
     transform: rotate(360deg);
   }
 }
+
+
+@font-face {
+  font-family: 'twayair';
+  src: url('./fonts/tway_air.ttf');
+  font-weight: normal;
+  font-style: normal;
+}
