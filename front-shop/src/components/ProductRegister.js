@@ -5,6 +5,7 @@ import {Form, Container, Button, Row, Col} from 'react-bootstrap'
 import Title from './Title'
 import ImageUploading from 'react-images-uploading';
 import { CategoryDirection } from './CategoryBanner'
+import AreaButton from './AreaButton'
 
 
 
@@ -35,6 +36,7 @@ function ImageUpload() {
 
 
 function ProductRegister({history}){
+    const [area, setArea] = useState(undefined)
     const {isLoggedIn, userData} = useSelector(state =>({
         isLoggedIn: state.user.isLoggedIn,
         userData: state.user.payload
@@ -85,28 +87,37 @@ function ProductRegister({history}){
             ...product,
             [name]: value
         })
-        console.log(product)
     };
+
+    const onChangeArea = (e) => {
+        const {name, value} = e.target;
+        setArea(value);
+    }
 
 
     const onClickHandler = (e)=>{
         let category_number = kind.findIndex((k) => k.kind === category) + 1
         let image_list = images.map((img, index) => (img.data_url))
-        console.log(image_list)
         e.preventDefault();
+ 
+        if(!(name && category_number && price && quantity && description && image_list.length)){
+            alert('모든 항목을 입력해 주세요.');
+            return;
+        }
+        if(area == undefined || area==null || area == ''){
+            alert('거래 지역을 선택해 주세요');
+            return;
+        }
         const body = {
             seller_id: userData.user_id,
             name: name,
             category_id: category_number,
             price: price,
             quantity: quantity,
+            area: area,
             description: description,
             ...image_list  // 용량이 크면 안넘어가
         };
-        if(!(name && category_number && price && quantity && description && image_list.length)){
-            alert('모든 항목을 입력해 주세요.');
-            return;
-        }
   
     
         axios.post('/apis/v1/product/', body)
@@ -184,9 +195,25 @@ function ProductRegister({history}){
                 placeholder="수량을 적어주세요" />
                 
                 </Col>
+           
         
       
             </Form.Group>
+         
+            <Row>
+                <Col sm="4" lg='2' xs='12'
+                 style={{paddingTop:20}}>
+                거래 선호 지역
+                </Col>
+                <Col sm ='6' lg='3' xs='12'
+                style={{paddingTop:10}}
+                >
+
+                <AreaButton onChange={onChangeArea}/>
+
+                </Col>
+            </Row>
+            <br/>
             <Form.Group controlId="exampleForm.ControlTextarea1" as={Row}>
                 <Form.Label column sm="2" lg='1'>상품설명</Form.Label>
                 <Col sm ='10' lg='8'>
