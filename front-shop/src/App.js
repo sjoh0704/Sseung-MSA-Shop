@@ -1,4 +1,6 @@
 import './App.css';
+import './assets/css/color.css'
+import './assets/css/dropdown.css'
 import Login from './components/Login';
 import Logout from './components/Logout';
 import Register from './components/Register'
@@ -11,7 +13,6 @@ import UserBanner from './components/UserBanner'
 import Banner from './components/Banner'
 import CategoryBanner from './components/CategoryBanner';
 import ProductDetail from './components/ProductDetail'
-
 import OrderList from './components/OrderList';
 import PurchasePage from './components/PurchasePage';
 import Profile from './components/Profile';

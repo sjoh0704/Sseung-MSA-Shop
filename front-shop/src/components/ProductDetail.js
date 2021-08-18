@@ -3,8 +3,8 @@ import axios from 'axios'
 import {useEffect, useState} from 'react'
 import {useSelector} from 'react-redux'
 import { Link } from 'react-router-dom'
-import EmptyHeartImg from "../images/heart.png"; 
-import HeartImg from "../images/heart_pressed.png";
+import EmptyHeartImg from "../assets/images/heart.png"; 
+import HeartImg from "../assets/images/heart_pressed.png";
 import { CategoryDirection } from './CategoryBanner'
 import { setMoney, setDate } from './Convenient'
 

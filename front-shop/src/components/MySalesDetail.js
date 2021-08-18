@@ -1,12 +1,11 @@
 import React, {useState, useEffect, useMemo} from 'react'
 import axios from 'axios'
-import {ListGroup, Container, Row, Col, Dropdown, DropdownButton, Card} from 'react-bootstrap'
+import {ListGroup, Container, Row, Col, Card} from 'react-bootstrap'
 import Accordion from 'react-bootstrap/Accordion'
-import Title from './Title'
 import {useSelector} from 'react-redux'
-import arrow from '../images/arrow.png'
+import arrow from '../assets/images/arrow.png'
+import EmptyBox from '../assets/images/box.png'
 import { CategoryDirection } from './CategoryBanner'
-import EmptyBox from '../images/box.png'
 import {setMoney, setDate} from './Convenient'
 
 function MySalesDetail({history, match}){

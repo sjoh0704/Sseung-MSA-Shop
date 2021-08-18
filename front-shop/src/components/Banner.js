@@ -1,7 +1,7 @@
 import React from 'react'
 import {Container,Row, Col, Nav, Navbar, Form, FormControl, Button, InputGroup} from 'react-bootstrap'
 import {Link} from 'react-router-dom'
-import bucket from '../images/bucket.png'
+import bucket from '../assets/images/bucket.png'
 const Banner = () => {
     return(
       <div style={{paddingBottom: 30}}>

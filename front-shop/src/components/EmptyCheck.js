@@ -1,6 +1,6 @@
 import React from 'react'
 import {Row, Col, ListGroup} from 'react-bootstrap'
-import EmptyBox from '../images/box.png'
+import EmptyBox from '../assets/images/box.png'
 import MakeCard from './MakeCard';
 const EmptyCheck =({text, items}) => {
 

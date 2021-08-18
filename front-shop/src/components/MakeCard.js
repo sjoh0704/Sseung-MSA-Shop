@@ -1,5 +1,5 @@
 import {Row, Col, Card} from 'react-bootstrap'
-import placeholder from '../images/placeholder2.jpg'
+import placeholder from '../assets/images/placeholder2.jpg'
 import {Link} from 'react-router-dom'
 import { setMoney } from './Convenient';
 // id가 필요하다!!
