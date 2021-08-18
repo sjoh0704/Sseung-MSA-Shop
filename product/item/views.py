@@ -62,6 +62,9 @@ class ProductNonParam(BaseView):
             description = data.get('description', '')
             if not description:
                 return self.response(message="description 없음", status=400)
+            area = data.get('area', '')
+            if not area:
+                return self.response(message="area 없음", status=400)
             
 
             product = Product(name = name,
@@ -69,7 +72,8 @@ class ProductNonParam(BaseView):
                             category=category,
                             price=price,
                             quantity=quantity,
-                            description=description)
+                            description=description,
+                            area=area)
             i = 0
             image_list = []
             while True:
@@ -114,7 +118,7 @@ class ProductNonParam(BaseView):
                 product_list[i]['created_at'] = product.created_at
                 product_list[i]['updated_at'] = product.updated_at
                 product_list[i]['valid'] = product.valid
-                
+                product_list[i]['area'] = product.area
      
                 if product.productimage_set.first():
                     product_list[i]['base64_image_url'] = product.productimage_set.first().base64_image_url
@@ -151,6 +155,7 @@ class ProductStatusView(BaseView):
                 "updated_at": product.updated_at,
                 "seller_id": product.seller_id,
                 'valid': product.valid,
+                'area': product.area,
                 "image":[],
                 
             }
@@ -188,7 +193,10 @@ class ProductStatusView(BaseView):
                 product.quantity = quantity         
             description = data.get('description', '')
             if description:
-                product.description = description 
+                product.description = description
+            area = data.get('area', '')
+            if area:
+                product.area = area 
 
             product.save()  
         except Exception as e:
@@ -249,6 +257,7 @@ class GetProductByCategory(BaseView):
                 product_list[i]['created_at'] = product.created_at
                 product_list[i]['updated_at'] = product.updated_at
                 product_list[i]['valid'] = product.valid
+                product_list[i]['area'] = product.area
                 
       
                 
@@ -287,7 +296,7 @@ class ProductByUser(BaseView):
                 product_list[i]['created_at'] = product.created_at
                 product_list[i]['updated_at'] = product.updated_at
                 product_list[i]['valid'] = product.valid
-                
+                product_list[i]['area'] = product.area
           
                 if product.productimage_set.first():
                     product_list[i]['base64_image_url'] = product.productimage_set.first().base64_image_url
