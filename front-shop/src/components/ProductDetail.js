@@ -7,6 +7,7 @@ import EmptyHeartImg from "../assets/images/heart.png";
 import HeartImg from "../assets/images/heart_pressed.png";
 import { CategoryDirection } from './CategoryBanner'
 import { setMoney, setDate } from './Convenient'
+import Rating from './Rating'
 
 function ProductDetail({match, history}){
     const [amount, setAmount] = useState(1)
@@ -15,18 +16,22 @@ function ProductDetail({match, history}){
         userData: state.user.payload
     }));
     const [like, setLike] = useState({checked: false});
-
     const[images,setImages]= useState([]);
     const[product,setProduct]= useState({});
+    const [seller, setSeller] = useState({});
+    
     const fetchProduct= async ()=>{
-            let res = await axios.get('/apis/v1/product/' + match.params.number);
-            console.log(res.data)
+            let res = await axios.get('/apis/v1/product/' + match.params.number);       
+            let tmp = res.data.payload.payload;
             setProduct({
             ...res.data.payload.payload,
             product_id: match.params.number
             });
-            let image_list = res.data.payload.payload.image;
-            setImages(image_list);
+            setImages(tmp.image);
+
+            let res_seller = await axios.get('/apis/v1/user/' + tmp.seller_id);  
+            setSeller(res_seller.data.payload.payload);
+            
             
             // check likes
             
@@ -123,7 +128,8 @@ function ProductDetail({match, history}){
         <Container>
         <CategoryDirection tag1={product.category} tag2={product.name}/>
             <Row>
-                <Col xs='12' sm='8' lg='8'>
+                <Col xs='12' sm='7' lg='7'>
+                    
                 <img style={{
                     width: '100%',
                     height: 'auto',
@@ -132,7 +138,12 @@ function ProductDetail({match, history}){
                 </img>
          
                 </Col>
-                <Col xs='12'sm='4' lg='4'>
+                <Col xs='12'sm='5' lg='5'>
+                <Row style={{paddingTop:5}}>
+                    <Rating user={seller} area={product.area}/>
+                </Row>
+                <hr/>
+
                 <Row style={{marginTop: 20, paddingTop:20}}>
                     <Col xs='9' sm='9' >
                     <p style = {{marginLeft: 20, fontSize:"2.2rem", fontWeight: 'bolder'}}>{product.name}</p>
@@ -145,16 +156,16 @@ function ProductDetail({match, history}){
                 <hr/>
               
                 <p style = {{fontSize:"2rem", margin:20}}>{setMoney(product.price)} ₩</p>
-                 <p style = {{fontSize:"2rem", margin:20}}>남은 수량: {product.quantity}</p>
-                <Row style = {{fontSize:"2rem", paddingTop:20, paddingLeft:20}}> 
-                    <Col xs= '6' sm= '12' lg={6}>
+                 <p style = {{fontSize:"1.5rem", margin:20}}>남은 수량: {product.quantity}</p>
+                <Row style = {{fontSize:"1.5rem", padding:20}}> 
+                    <Col xs= '6' sm= '12' lg={4}>
                     <p >선택 수량:</p>
                     </Col>
                
-                    <Col xs='6' sm='9' lg={6}>
-                    <Form style = {{fontSize:"2rem"}}>
+                    <Col xs='6' sm='9' lg={4}>
+                    <Form >
                     <Form.Group controlId="exampleForm.ControlInput1">
-                    <Form.Control size='lg' type='number' onChange={onChangeHandler} value={amount} />
+                    <Form.Control style = {{fontSize:"1.5rem"}} type='number' onChange={onChangeHandler} value={amount} />
                     </Form.Group>
                     </Form>
                     

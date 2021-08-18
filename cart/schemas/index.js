@@ -6,7 +6,6 @@ const connect = () => {
     path = `mongodb://${process.env.MONGO_CART_HOST}/db`
     
   }
-  ㄴ
     mongoose
       .connect(path, {
         useNewUrlParser: true,
