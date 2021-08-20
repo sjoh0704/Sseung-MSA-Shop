@@ -97,7 +97,7 @@ pipeline {
             sh 'git add . '
             sh 'git commit -m "commit manifest${BUILD_NUMBER}"'
             withCredentials([usernamePassword(credentialsId: 'github-credential', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
-                        sh('git push https://${GIT_USERNAME}:${GIT_PASSWORD::-1}%40@github.com/sjoh0704/MSA-Shop-Helm-Chart.git master')
+                        sh('git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/sjoh0704/MSA-Shop-Helm-Chart.git master')
                     }
             
              }
