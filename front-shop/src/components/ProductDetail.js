@@ -153,7 +153,7 @@ function ProductDetail({match, history}){
                     </Col>
 
                 </Row>
-                <hr/>
+            
               
                 <p style = {{fontSize:"2rem", margin:20}}>{setMoney(product.price)} ₩</p>
                  <p style = {{fontSize:"1.5rem", margin:20}}>남은 수량: {product.quantity}</p>
