@@ -70,6 +70,7 @@ class CartParams(BaseView):
 
     # check
     def post(self, request, word):
+        print(CART_SERVICE_URL)
         if word != 'check':
             return self.response(message='잘못된 경로', status=400)
 

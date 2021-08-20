@@ -22,7 +22,7 @@ class Product(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     valid = models.BooleanField(default=True)
-
+    area = models.CharField(default='서울 강동구',max_length=100)
 
     class Meta:
         ordering = ['-created_at' ]
