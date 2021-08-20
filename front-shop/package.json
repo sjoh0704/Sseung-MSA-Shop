@@ -49,6 +49,6 @@
   "devDependencies": {
     "http-proxy-middleware": "^2.0.0"
   },
-  "proxy": "http://api-gateway-service:8080"
+  "proxy": "http://apigateway-service:8080"
 
 }
