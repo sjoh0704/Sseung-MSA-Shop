@@ -8,10 +8,16 @@ import { Link } from 'react-router-dom'
 import EmptyCheck from './EmptyCheck'
 import {setDate, setMoney} from './Convenient'
 import { CategoryDirection } from './CategoryBanner'
-
+import Modal from './Modal'
 
 
 function MySales({history}){
+    const [ modalOpen, setModalOpen ] = useState(false);
+    const [ modalContents, setModalContents ] = useState('');	
+    const closeModal = () => {
+        setModalOpen(false);
+    }
+
     const [flag, setFlag] = useState(true);
     const [products, setProducts] = useState([]) 
     const {isLoggedIn, userData} = useSelector(state =>({
@@ -29,14 +35,18 @@ function MySales({history}){
                 let path = '/mysales/' + product.pk
                 return (
                        
-                    <Link style={{textDecoration:'none', color:'inherit'}} key={index} to={path}>
+                    
                        
                         <ListGroup.Item key={index}>
                         <Row style={{margin:30}}>
+                        
                         <Col sm='6' lg='5' xs='12'>
+                        <Link style={{textDecoration:'none', color:'inherit'}} key={index} to={path}>
                         <img style={{height: 'auto', maxWidth:'100%', height:'auto'}} src={product.base64_image_url?product.base64_image_url:placeholder}></img>
+                        </Link>
                         </Col>
-                      
+                       
+
                         <Col sm='6' lg={{span:6, offset:1}} xs='12'>
                         <div style={{marginLeft:20, paddingTop:10}}>
                         
@@ -53,10 +63,12 @@ function MySales({history}){
                         등록 날짜: {setDate(product.created_at)}
                     
                         </p>
-
+                        <Link style={{textDecoration:'none', color:'inherit'}} key={index} to={path}>
+                        
                         <p style={{fontSize:"1.3rem", marginLeft:20,color:'green', fontSize:20, fontWeight:'bold'}}>
                         주문한 사람이 있는지 확인해주세요!
                         </p>
+                        </Link>
                         <Button  variant="outline-light" 
                         style={{fontSize:"1rem", marginLeft:20, background: '#e85255', fontSize:'1.3rem'}}
                         onClick={(e)=>onDeleteProduct(product.pk, e)}>
@@ -70,7 +82,7 @@ function MySales({history}){
                         </Col>
                         </Row>
                         </ListGroup.Item>
-                        </Link>
+              
                     
                 );
             })
@@ -81,14 +93,17 @@ function MySales({history}){
     }
 
     const onDeleteProduct = async (product_id, e) => {
-        e.preventDefault();
-        axios.delete(`/apis/v1/product/${product_id}`).then(res=> {
-            alert('상품 등록을 취소합니다.');    
+  
+        setModalOpen(true);
+        setModalContents('상품 등록을 취소합니다');
+               axios.delete(`/apis/v1/product/${product_id}`).then(res=> {
             setFlag(!flag) ;
         })
         .catch(e => {
-            alert('문제가 발생했습니다. 관리자에게 문의하세요');
+            setModalOpen(true);
+            setModalContents('문제가 발생했습니다. 관리자에게 문의하세요.');
         })
+
 
     }
 
@@ -100,6 +115,10 @@ function MySales({history}){
     
 
     return (<div>
+        <Modal open={ modalOpen } close={ closeModal }>
+		{modalContents}
+        </Modal>
+       
        <Container>
        <CategoryDirection tag1={'내 상품 목록'}></CategoryDirection>
         
