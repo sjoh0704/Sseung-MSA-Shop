@@ -5,39 +5,43 @@ function Rating({user, area}){
     if(!user){
         return;
     }
-    const {username} = user;
-    let temperature = 37.1
+
+    const {username, temperature, celcius} = user;
     let tmp = <div></div>;
+    let temp_type;
+
+    if(celcius){
+        temp_type = temperature + '℃';
+    }
+    else{
+        temp_type = temperature + '°F';
+    }
 
     if(! temperature){
         tmp = (
         <div style={{padding: 10, fontSize:'1.2rem', color:'black'}}>
-        36.5 ℃
+            {temp_type}
         </div>)
         }
         else
-        temperature = parseFloat(temperature);
 
     if(temperature >= 36.5){
-        let temp = temperature + '℃'
         tmp = (
         <div style={{padding: 15, fontSize:'1.3rem', color:'green', fontWeight:'bold'}}>
-            {temp}
+            {temp_type}
         </div>
-    
     )}
        
      
     else{
-            let temp = temperature + '℃'
             tmp = (
             <p style={{fontSize:'1.2rem', color:'red'}}>
-                {temp}
+                {temp_type}
             </p>
         )
-    
     }
     return (
+
         <Row style={{marginTop: 20, paddingTop:20}}>
                     <Col xs='3' sm='3' lg='2'>
                     <img style={{maxWidth:'100%', height:'auto'}} 
