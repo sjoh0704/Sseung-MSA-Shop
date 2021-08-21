@@ -38,7 +38,8 @@ router.post('/ratings', async(req, res)=> {
     }
     const rating = new Rating({userId});
     await rating.save();
-    res.send({message: 'rating 생성 성공'});
+    res.send({payload: rating,
+        message: 'rating 생성 성공'});
 })
 
 
