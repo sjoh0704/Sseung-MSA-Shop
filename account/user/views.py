@@ -52,6 +52,12 @@ class UserLoginView(BaseView):
             return self.response(message="입력 정보를 확인해주세요", status=400)
             # return JsonResponse({'data':{}, 'message': "입력정보를 확인해주세요"}, status=400)
   
+        res = requests.get('{}/apis/v1/ratings/{}'.format(RATING_SERVICE_URL, user.id))
+        rating = json.loads(res.content).get('payload')
+        if res.status_code!=200:
+            return self.response(data=rating, message='get rating fail',status=400)
+         
+
         login(request, user)
  
         data = {
@@ -59,6 +65,8 @@ class UserLoginView(BaseView):
             'username': user.username,
             "useremail": user.email,
             "phone_number": user.phoneNumber,
+            'temperature': rating.get('temperature'),
+            'celcius': rating.get('celcius')
         }
         return self.response(data=data, message="login success")   
 
