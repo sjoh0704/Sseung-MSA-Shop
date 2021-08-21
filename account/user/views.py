@@ -99,19 +99,21 @@ class UserAPIView(BaseView):
 
     # 회원가입 
     def post(self, request):
-
-        try:
-            
-            data = json.loads(request.body)
         
+        try:
+            data = json.loads(request.body)
         except:
             data = request.POST
+
         username = data.get('username', '')
+
         if not username:
             return self.response(message="아이디를 입력해주세요", status=400)
+
         password = data.get('password', '')
         if not password:
             return self.response(message="패스워드를 입력해주세요", status=400)
+
         email = data.get('email', '')
         if not email:
             return self.response(message="email을 입력해주세요", status=400)
@@ -120,29 +122,30 @@ class UserAPIView(BaseView):
             validate_email(email)
         except ValidationError:
             return self.response(message="유효하지 않은 이메일입니다.", status=400)
+
         phoneNumber = data.get('phone_number', '')
         if not phoneNumber:
             return self.response(message="전화번호를 입력해주세요", status=400)
 
         try:
-            user = User.objects.create_user(username, email, password,phoneNumber=phoneNumber)    
+            user = User.objects.create_user(username, email, password,phoneNumber=phoneNumber)
         except IntegrityError:
             return self.response(message="존재하는 아이디입니다.", status=400)
         
-        res = request.post('{}/apis/v1/ratings'.format(RATING_SERVICE_URL), {'userId': user.id})
-        data = json.loads(res.content)
+        res = requests.post('{}/apis/v1/ratings'.format(RATING_SERVICE_URL), {'userId': user.id})
+        rating = json.loads(res.content).get('payload')
+
         if res.status_code != 200:
             user.delete()
-            return self.response(data=data, message='rating 생성 실패', status=400)
-
+            return self.response(data=rating, message='rating 생성 실패', status=400)
 
         data = {
             'user_id': user.id,
             'username': user.username,
             "useremail": user.email,
             'phone_number': user.phoneNumber,
-            'rating': data.get('temperature'),
-            'celcius': data.get('celcius')
+            'temperature': rating.get('temperature'),
+            'celcius': rating.get('celcius')
         }
         return self.response(data = data, message="create user success", status=200)
 
