@@ -48,9 +48,7 @@ class UserLoginView(BaseView):
         user = authenticate(username=username, password=password)
 
         if user is None:
-     
             return self.response(message="입력 정보를 확인해주세요", status=400)
-            # return JsonResponse({'data':{}, 'message': "입력정보를 확인해주세요"}, status=400)
   
         res = requests.get('{}/apis/v1/ratings/{}'.format(RATING_SERVICE_URL, user.id))
         rating = json.loads(res.content).get('payload')
@@ -166,26 +164,36 @@ class UserAPIViewParam(BaseView):
         return super(UserAPIViewParam, self).dispatch(request, *args, **kargs)
 # 이 부분은 유의 
     def delete(self, request, pk):
-        response = requests.delete("{}/apis/v1/product/user/{}".format(PRODUCT_SERIVCE_URL, pk))  # product-service url
 
-        if response.status_code == 200:
-            
-            user = get_object_or_404(User, id=pk)
-            # user = User.objects.get(id=pk)
-            user.delete()
-            return self.response(message='deleting user success', status=200)
+        user = get_object_or_404(User, id=pk)
+        res1 = requests.delete("{}/apis/v1/product/user/{}".format(PRODUCT_SERIVCE_URL, pk))  # product-service url
+        if res1.status_code != 200:
+            return self.response(message='deleting user fail', status=200)
+
+        res2 = requests.delete('{}/apis/v1/ratings/{}'.format(RATING_SERVICE_URL, pk))
+        if res2.status_code != 200:
+            return self.response(message='rating delete fail', status=400)
+
+        user.delete() 
         
-        return self.response(message='deleting user fails', status=400)
+        return self.response(message='deleting user success')
 
         
 
     def get(self, request, pk):
         user = get_object_or_404(User, id=pk)
+        res = requests.get('{}/apis/v1/ratings/{}'.format(RATING_SERVICE_URL, pk))
+        if res.status_code != 200:
+            return self.response(message='get rating fail', status=400)
+        rating = json.loads(res.content).get('payload')
+
         data = {
             "id": user.id,
             "username": user.username,
             "useremail": user.email,
-            'phone_number': user.phoneNumber
+            'phone_number': user.phoneNumber,
+            "temperature": rating.get('temperature'),
+            "celcius": rating.get('celcius')
         }
 
         return self.response(data=data ,message='get user success', status=200)
