@@ -20,11 +20,11 @@ import MySales from './components/MySales'
 import PurchaseList from './components/PurchaseList';
 import MySalesDetail from './components/MySalesDetail';
 import Likes from './components/LikeList';
+import React from 'react';
 
 function App() {
   return (
-    <div>
- 
+    <React.Fragment>
     <UserBanner/>
     <div style={{fontFamily:'twayair'}}>
     <Banner/>
@@ -50,8 +50,8 @@ function App() {
     
     <Move/>
     </div>
-    </div>
 
+    </React.Fragment>
     
   );
 }

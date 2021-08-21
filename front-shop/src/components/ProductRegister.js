@@ -2,11 +2,10 @@ import React, {useState} from 'react'
 import {useSelector, useDispatch} from 'react-redux'
 import axios from 'axios'
 import {Form, Container, Button, Row, Col} from 'react-bootstrap'
-import Title from './Title'
 import ImageUploading from 'react-images-uploading';
 import { CategoryDirection } from './CategoryBanner'
 import AreaButton from './AreaButton'
-
+import Modal from './Modal'
 
 
 function ImageUpload() {
@@ -36,6 +35,12 @@ function ImageUpload() {
 
 
 function ProductRegister({history}){
+    const [ modalOpen, setModalOpen ] = useState(false);
+
+    const [ modalContents, setModalContents ] = useState('');	
+    const closeModal = () => {
+        setModalOpen(false);
+    }
     const [area, setArea] = useState(undefined)
     const {isLoggedIn, userData} = useSelector(state =>({
         isLoggedIn: state.user.isLoggedIn,
@@ -101,11 +106,13 @@ function ProductRegister({history}){
         e.preventDefault();
  
         if(!(name && category_number && price && quantity && description && image_list.length)){
-            alert('모든 항목을 입력해 주세요.');
+            setModalOpen(true);
+            setModalContents('모든 항목을 입력해 주세요');
             return;
         }
         if(area == undefined || area==null || area == ''){
-            alert('거래 지역을 선택해 주세요');
+            setModalOpen(true);
+            setModalContents('거래 지역을 선택해 주세요');
             return;
         }
         const body = {
@@ -122,19 +129,21 @@ function ProductRegister({history}){
     
         axios.post('/apis/v1/product/', body)
         .then(response => {
-            alert("상품이 등록되었습니다")
             history.replace('/')
         }).catch(e =>{
-            console.log(e)
-            alert("상품 등록에 실패하였습니다. 관리자에게 문의하세요.")
-     
+      
+            setModalOpen(true);
+            setModalContents('상품 등록에 실패하였습니다. 관리자에게 문의하세요.');
         })
 
     }
 
     
     return(<div>
-        
+        <Modal open={ modalOpen } close={ closeModal } >
+		    {modalContents}
+        </Modal>
+       
         <Container>
             <CategoryDirection tag1={'판매하기'}></CategoryDirection>
             <br/>

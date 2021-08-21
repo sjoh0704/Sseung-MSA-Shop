@@ -5,9 +5,16 @@ import {Form, Container, Button, Row, Col} from 'react-bootstrap'
 import Banner from './Banner'
 import Title from './Title'
 import { CategoryDirection } from './CategoryBanner'
+import Modal from './Modal'
 
 
 function Register({history}){
+    const [ modalOpen, setModalOpen ] = useState(false);
+    const closeModal = () => {
+        setModalOpen(false);
+    }
+    const [ modalContents, setModalContents ] = useState('');
+
     const [userData, setUserData] = useState({
         username: "",
         password: "",
@@ -34,18 +41,17 @@ function Register({history}){
         };
         
         if(!(username&& password && email && phone_number)){
-            alert("모든 항목을 입력해 주세요");
+            setModalOpen(true);
+            setModalContents('모든 항목을 입력해 주세요');
             return;
         }
 
         axios.post('/apis/v1/user/', body)
         .then(response => {
-            
-            alert("축하합니다. 회원이 되셨어요!")
             history.replace('/login')
         }).catch(e =>{
-            alert("회원가입에 실패했습니다. 관리자에게 문의해 주세요.");
-            
+            setModalOpen(true);
+            setModalContents('회원가입에 실패했습니다. 관리자에게 문의해 주세요.');
         })
 
         setUserData({
@@ -59,6 +65,9 @@ function Register({history}){
         
         
         <Container>
+        <Modal open={ modalOpen } close={ closeModal } >
+            {modalContents}
+        </Modal>
         <CategoryDirection tag1={'회원가입'}></CategoryDirection>
         <br/>
         <div style={{fontSize:'1.3rem'}}>
