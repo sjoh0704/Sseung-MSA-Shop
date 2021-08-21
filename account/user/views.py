@@ -13,7 +13,7 @@ import requests
 import os
 
 PRODUCT_SERIVCE_URL = os.environ.get("PRODUCT_SERIVCE_URL", 'http://localhost:8100') 
-
+RATING_SERVICE_URL = os.environ.get("RATING_SERVICE_URL",'http://172.30.1.34:8081')
 
 class BaseView(View):
     @staticmethod
@@ -58,7 +58,7 @@ class UserLoginView(BaseView):
             'user_id': user.id,
             'username': user.username,
             "useremail": user.email,
-            "phone_number": user.phoneNumber
+            "phone_number": user.phoneNumber,
         }
         return self.response(data=data, message="login success")   
 
@@ -125,20 +125,24 @@ class UserAPIView(BaseView):
             return self.response(message="전화번호를 입력해주세요", status=400)
 
         try:
-            user = User.objects.create_user(username, email, password,phoneNumber=phoneNumber)
-            #  friend = KakaoFriend(name = request.POST['name'],
-            #                      type = request.POST['type'],
-            #                      job = request.POST['job'],
-            #                      age = request.POST['age'])
-            # friend.save()
+            user = User.objects.create_user(username, email, password,phoneNumber=phoneNumber)    
         except IntegrityError:
             return self.response(message="존재하는 아이디입니다.", status=400)
         
+        res = request.post('{}/apis/v1/ratings'.format(RATING_SERVICE_URL), {'userId': user.id})
+        data = json.loads(res.content)
+        if res.status_code != 200:
+            user.delete()
+            return self.response(data=data, message='rating 생성 실패', status=400)
+
+
         data = {
             'user_id': user.id,
             'username': user.username,
             "useremail": user.email,
-            'phone_number': user.phoneNumber
+            'phone_number': user.phoneNumber,
+            'rating': data.get('temperature'),
+            'celcius': data.get('celcius')
         }
         return self.response(data = data, message="create user success", status=200)
 
