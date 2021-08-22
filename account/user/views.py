@@ -64,7 +64,8 @@ class UserLoginView(BaseView):
             "useremail": user.email,
             "phone_number": user.phoneNumber,
             'temperature': rating.get('temperature'),
-            'celcius': rating.get('celcius')
+            'celcius': rating.get('celcius'),
+            'created_at': user.date_joined
         }
         return self.response(data=data, message="login success")   
 
@@ -94,7 +95,9 @@ class UserAPIView(BaseView):
                     'user_id': user.id,
                     'username': user.username,
                     "useremail": user.email,
-                    'phone_number': user.phoneNumber
+                    'phone_number': user.phoneNumber,
+                    'created_at': user.date_joined
+
                     }
                 users_list.append(data)
 
@@ -151,7 +154,8 @@ class UserAPIView(BaseView):
             "useremail": user.email,
             'phone_number': user.phoneNumber,
             'temperature': rating.get('temperature'),
-            'celcius': rating.get('celcius')
+            'celcius': rating.get('celcius'),
+            'created_at': user.date_joined
         }
         return self.response(data = data, message="create user success", status=200)
 
@@ -193,7 +197,8 @@ class UserAPIViewParam(BaseView):
             "useremail": user.email,
             'phone_number': user.phoneNumber,
             "temperature": rating.get('temperature'),
-            "celcius": rating.get('celcius')
+            "celcius": rating.get('celcius'),
+            'created_at': user.date_joined
         }
 
         return self.response(data=data ,message='get user success', status=200)

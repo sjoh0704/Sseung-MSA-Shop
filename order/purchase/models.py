@@ -16,6 +16,7 @@ class Order(models.Model):
     address = models.CharField(max_length=250) 
     created_at = models.DateTimeField(auto_now_add=True)
     sales_stage = models.CharField(max_length=2, choices = SALES_STAGE, default='S')
+    rating_check = models.BooleanField(default=False)
     
     class Meta:
         ordering = ['-created_at']

@@ -114,6 +114,7 @@ class OrderView(BaseView):
                         data['created_at'] = order.created_at
                         data['base64_image_url'] = product.get('base64_image_url', None)
                         data['sales_stage'] = order.sales_stage
+                        data['rating_check'] = order.rating_check
                         order_by_user.append(data)
                         break
           
@@ -162,6 +163,9 @@ class OrderView(BaseView):
         address = data.get('address')
         if address:
             order.address = address
+        rating_check = data.get('rating_check')
+        if rating_check:
+            order.rating_check = rating_check
 
         order.save()
 
