@@ -33,26 +33,26 @@ function OrderList({history}){
                     return (
                             
                              <ListGroup.Item key={index}>
-                            <Row style={{margin:30}}>
+                            <Row style={{padding:10}}>
                             <Col sm='6' lg='5' xs='12'>
-                            <img style={{height: 'auto', maxWidth:'100%', height:'auto'}} src={order.base64_image_url?order.base64_image_url:placeholder}></img>
+                            <img style={{height: 'auto', maxWidth:'100%', padding:10}} src={order.base64_image_url?order.base64_image_url:placeholder}></img>
                             </Col>
                             <Col sm='6' lg={{span:6, offset:1}} xs='12'>
-                            <div style={{marginLeft:20, paddingTop:10}}>
+                            <div style={{paddingTop:10}}>
                             
-                            <p style={{fontSize:"1.5rem", fontWeight: 'bold', marginLeft:20}}>
+                            <p style={{fontSize:"1.5rem", fontWeight: 'bold'}}>
                             {order.name}
                             </p>
-                            <p style={{fontSize:'1.3rem', marginLeft:20}}>
+                            <p style={{fontSize:'1.3rem'}}>
                             주문 수량: {order.demand_quantity}
                             </p>
-                            <p style={{fontSize:'1.3rem', marginLeft:20}}>
+                            <p style={{fontSize:'1.3rem'}}>
                             지불 금액: {setMoney(order.price)} ₩
                             </p>
-                            <p style={{fontSize:'1.3rem', marginLeft:20}}>
+                            <p style={{fontSize:'1.3rem'}}>
                             주문일: {setDate(order.created_at)}
                             </p>
-                            <p style={{fontSize:'1.4rem', marginLeft:20}}>
+                            <p style={{fontSize:'1.4rem'}}>
                             주문 상태: {order.sales_stage=='S'?
                             <span style={{color:'red'}}>판매자의 확인을 기다려주세요</span>:<span style={{color:'green', fontWeight:'bold'}}>예약되었습니다! 판매자와 거래하세요</span>}
                             </p>
@@ -63,7 +63,7 @@ function OrderList({history}){
                                 <div className="d-grid gap-2">
 
                                 <button className='emptyButton'
-                                style={{height:50, fontSize:'1.3rem', marginTop:10}}
+                                style={{height:40, fontSize:'1.3rem', marginTop:10}}
                                 onClick={()=>{
                                 connectSeller(order.seller_id)
                             }}>판매자에게 연락하기</button>
@@ -74,7 +74,7 @@ function OrderList({history}){
                                 <div className="d-grid gap-2">
 
                                 <button  className='filledButton'
-                                 style={{height:50, fontSize:'1.3rem', marginTop:10}}
+                                 style={{height:40, fontSize:'1.3rem', marginTop:10}}
                                
                                 onClick={()=>{
                                 onDeleteOrder(order.order_id);
