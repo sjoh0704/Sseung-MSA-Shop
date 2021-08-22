@@ -1,27 +1,37 @@
-import React, {useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 import axios from 'axios';
 import {logoutAction} from '../modules/user'
 import {useDispatch} from 'react-redux'
 import {Container, Col, Row} from 'react-bootstrap'
 import { CategoryDirection } from './CategoryBanner';
+import Modal from './Modal'
 function Logout({history}) {
+    const [ modalOpen, setModalOpen ] = useState(false);
+    const [ modalContents, setModalContents ] = useState('');	
+    const closeModal = () => {
+        setModalOpen(false);
+    }
     const dispatch = useDispatch();
 
     const onClickHandler = () => {
         axios.get('/apis/v1/user/logout')
         .then(res => {
             dispatch(logoutAction())
-            alert('로그아웃 합니다.')
             history.replace('/')
         })
         .catch(e => {
-            alert('로그아웃에 실패했습니다. 관리자에게 문의해 주세요.')
+            setModalOpen(true);
+            setModalContents('로그아웃에 실패했습니다. 관리자에게 문의해 주세요.');
+          
         })
     }
     return (
         <div >
+            <Modal open={ modalOpen } close={ closeModal } >
+		    {modalContents}
+            </Modal>
             <Container>
-         
+            
             <CategoryDirection tag1={'로그아웃'}></CategoryDirection>
             <br/>
             <Row> 

@@ -89,6 +89,7 @@ function Login({history}){
                 <Col lg={{ span: 4, offset: 0 }}
                     sm={{ span: 8, offset: 0 }}>
                 <Form.Control
+                style={{fontFamily:'ubuntu'}}
                 size='lg'
                 type="password"
                 name = 'password'

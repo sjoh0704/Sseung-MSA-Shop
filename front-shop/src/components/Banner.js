@@ -29,9 +29,11 @@ const Banner = () => {
       <Col lg={{span: 3}}
       sm={{span: 12}}
       xs='12'>
+      <Link to="/" style={{textDecoration:'none', color:'inherit'}}>
       <h2 style={{color: 'black'}}>
               My Shopping Mall
               </h2>
+              </Link>
       </Col>
       <Col lg={{span: 6}}
       sm={{span: 9}}

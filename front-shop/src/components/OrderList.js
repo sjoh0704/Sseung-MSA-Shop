@@ -7,10 +7,15 @@ import placeholder from '../assets/images/placeholder2.jpg'
 import EmptyCheck from './EmptyCheck'
 import { CategoryDirection } from './CategoryBanner'
 import {setMoney, setDate} from './Convenient'
-
+import Modal from './Modal'
 
 
 function OrderList({history}){
+    const [ modalOpen, setModalOpen ] = useState(false);
+    const [ modalContents, setModalContents ] = useState('');	
+    const closeModal = () => {
+        setModalOpen(false);
+    }
     const [flag, setFlag] = useState(true);
     const [orders, setOrders] = useState([]) 
     const {isLoggedIn, userData} = useSelector(state =>({
@@ -108,8 +113,10 @@ function OrderList({history}){
     const connectSeller = async(seller_id) => {
         let res = await axios.get(`/apis/v1/user/${seller_id}`)
         let tmp = res.data.payload.payload.phone_number
-        let phone_number = tmp.slice(0,3) + '-'+tmp.slice(3,7) + '-'+tmp.slice(7,11) 
-        alert(`[${phone_number}]로 연락해주세요!`)
+        let phone_number = tmp.slice(0,3) + '-'+tmp.slice(3,7) + '-'+tmp.slice(7,11)
+        setModalOpen(true);
+        setModalContents(`[${phone_number}]로 연락해주세요!`);
+       
     }
 
     const onDeleteOrder = (order_id) => {
@@ -123,6 +130,9 @@ function OrderList({history}){
     }
 
     return (<div>
+         <Modal open={ modalOpen } close={ closeModal } >
+		    {modalContents}
+        </Modal>
          <Container>
          <CategoryDirection tag1={'주문 목록'}></CategoryDirection>
        

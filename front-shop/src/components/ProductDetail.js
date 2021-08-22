@@ -48,7 +48,7 @@ function ProductDetail({match, history}){
                     buyer_id: userData.user_id,
                     product_id: parseInt(match.params.number)
                 };
-                let res_likes = await axios.post('/apis/v1/carts/check', body);
+            let res_likes = await axios.post('/apis/v1/carts/check', body);
             setLike(res_likes.data.payload.payload);
             }
             
@@ -91,7 +91,7 @@ function ProductDetail({match, history}){
         }
 
         if(like.checked){
-   
+            
             await axios.delete(`/apis/v1/carts/${like[0]._id}`);
             setLike({checked: false});
         }
@@ -139,17 +139,17 @@ function ProductDetail({match, history}){
         <Container>
         <CategoryDirection tag1={product.category} tag2={product.name}/>
             <Row>
-                <Col xs='12' sm='7' lg='7'>
+                <Col xs='12' sm='12' lg='7'>
                     
                 <img style={{
-                    width: '100%',
+                    width: '90%',
                     height: 'auto',
               
                 }}src={images[0]}>
                 </img>
          
                 </Col>
-                <Col xs='12'sm='5' lg='5'>
+                <Col xs='12'sm='10' lg='5'>
                 <Row style={{paddingTop:5}}>
                     <Rating user={seller} area={product.area}/>
                 </Row>

@@ -38,39 +38,39 @@ function MySales({history}){
                     
                        
                         <ListGroup.Item key={index}>
-                        <Row style={{margin:30}}>
+                        <Row style={{padding:30}}>
                         
-                        <Col sm='6' lg='5' xs='12'>
+                        <Col sm={{span:6, offset:0}} lg={{span:5, offset:0}} xs='12'>
                         <Link style={{textDecoration:'none', color:'inherit'}} key={index} to={path}>
-                        <img style={{height: 'auto', maxWidth:'100%', height:'auto'}} src={product.base64_image_url?product.base64_image_url:placeholder}></img>
+                        <img style={{maxWidth:'100%', height:'auto'}} src={product.base64_image_url?product.base64_image_url:placeholder}></img>
                         </Link>
                         </Col>
                        
 
-                        <Col sm='6' lg={{span:6, offset:1}} xs='12'>
-                        <div style={{marginLeft:20, paddingTop:10}}>
+                        <Col sm='6' lg={{span:5, offset:1}} xs='12'>
+                        <div style={{paddingTop:10}}>
                         
-                        <p style = {{fontSize:"1.5rem", fontWeight: 'bold', marginLeft:20}}>
+                        <p style = {{fontSize:"1.5rem", fontWeight: 'bold'}}>
                        {product.name}
                         </p>
-                        <p style = {{fontSize:"1.3rem", marginLeft:20}}>
+                        <p style = {{fontSize:"1.3rem"}}>
                         총 수량: {product.quantity}
                         </p>
-                        <p style = {{fontSize:"1.3rem", marginLeft:20}}>
+                        <p style = {{fontSize:"1.2rem"}}>
                         가격: {setMoney(product.price)} ₩
                         </p>
-                        <p style = {{fontSize:"1.3rem", marginLeft:20}}>
+                        <p style = {{fontSize:"1.2rem"}}>
                         등록 날짜: {setDate(product.created_at)}
                     
                         </p>
                         <Link style={{textDecoration:'none', color:'inherit'}} key={index} to={path}>
                         
-                        <p style={{fontSize:"1.3rem", marginLeft:20,color:'green', fontSize:20, fontWeight:'bold'}}>
+                        <p style={{fontSize:"1.3rem",color:'green'}}>
                         주문한 사람이 있는지 확인해주세요!
                         </p>
                         </Link>
                         <Button  variant="outline-light" 
-                        style={{fontSize:"1rem", marginLeft:20, background: '#e85255', fontSize:'1.3rem'}}
+                        style={{fontSize:"1rem",background: '#e85255', fontSize:'1.3rem'}}
                         onClick={(e)=>onDeleteProduct(product.pk, e)}>
                             상품 등록 취소
                         </Button>

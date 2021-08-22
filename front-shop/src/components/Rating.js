@@ -53,7 +53,9 @@ function Rating({user, area}){
                     src={userImage}/>
 
                      </Col>
+                   
                     <Col xs='3' sm='4' lg='4'>
+                        {area? <div>
                         <Row>
                             {username}
 
@@ -62,12 +64,21 @@ function Rating({user, area}){
                             {area?area:''}
 
                         </Row>
+
+                        </div>: <div>
+                        <Row>
+                            <p style={{fontSize:'1.5rem', padding:10}}>{username}</p>
+
+                        </Row>
+                        </div>}
+                       
+                        
                    
                     
                     </Col>
                     <Col xs='6' sm='5' lg='6'>
                     <Row>
-                    <Col xs="5" sm='6' lg={{span:3, offset:4}}>
+                    <Col xs="5" sm='6' lg={{span:3, offset:4}} style={{paddingTop:0}}>
                         {tmp}
                     </Col>
                     <Col xs='5' sm='6' lg='4'>

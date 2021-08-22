@@ -118,6 +118,7 @@ function Register({history}){
                 <Col lg={{ span: 6, offset: 0 }}
                     sm={{ span: 8, offset: 0 }}>
                 <Form.Control
+                style={{fontFamily:'ubuntu'}}
                 type="password"
                 name = 'password'
                 value = {password} 
