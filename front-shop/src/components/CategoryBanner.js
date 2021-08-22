@@ -48,7 +48,7 @@ function CategoryBanner(){
         
         let  path = '/category/' + (index + 1)
         return (
-            <Col lg='1' sm='2' xs='4'>
+            <Col lg='1' sm='2' xs='3'>
             <Nav.Item>
             <Nav.Link href={path} style={{color:'white',padding:5}}>{k.kind}</Nav.Link>
             </Nav.Item>
@@ -69,7 +69,7 @@ function CategoryBanner(){
                 <Nav variant="pills" defaultActiveKey="/home">
                 <Container>
                     <Row>
-                        <Col lg='1' sm='1' xs='2'>
+                        <Col lg='1' sm='1' xs='1'>
                         <Nav.Item>
                         <Nav.Link href="/" style={{color:'white',padding:5}}>홈</Nav.Link>
                         </Nav.Item>

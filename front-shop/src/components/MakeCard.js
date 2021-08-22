@@ -11,16 +11,16 @@ const MakeCard = ({products}) =>{
             <Col lg={4} sm={6} key={index} bg={'Light'}>
                 
                 <Link style={{textDecoration:'none', color:'inherit'}} key={index} to={path}>
-                <Card border="secondary" style={{ height: '28rem', width:'25rem' }}>
+                <Card border="secondary" style={{ height: '29rem'}}>
                     <Row>
-                    <Card.Img variant="top" style={{margin:10, height: '20rem', width:'25rem', objectFit:'cover'}} src={product.base64_image_url ? product.base64_image_url: placeholder} />
+                    <Card.Img variant="top" style={{height: '22rem', objectFit:'cover'}} src={product.base64_image_url ? product.base64_image_url: placeholder} />
                    
                     </Row>
                     
-                    <Card.Body style={{marginTop:5}}>
+                    <Card.Body style={{marginTop:4}}>
                     
-                    <Card.Title style={{fontSize:"1.5rem"}}>{product.name}</Card.Title>
-                    <Card.Text style={{fontSize:23, fontWeight:'bolder'}}>
+                    <Card.Title style={{fontSize:"1.4rem"}}>{product.name}</Card.Title>
+                    <Card.Text style={{fontSize:'1.5rem', fontWeight:'bolder'}}>
                     {setMoney(product.price)} ₩
                     </Card.Text>
                 

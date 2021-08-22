@@ -1,22 +1,24 @@
-const AreaButton = ({onChange}) => {
+import { Col, Row } from "react-bootstrap";
 
+const AreaButton = (props) => {
+    const {onChange, area} = props;
     return (
-        <div className="dropdown">
+        <Row>
+            <Col>
+            <div className="dropdown">
             <button className="dropdown-button"
-                    style={{height:50,
-                    padding: 0,
-                    width:300,
+                    style={{height:'auto',
+                    padding: 10,
                 
                     }}
                     onClick={(e)=>{e.preventDefault();}}
-                    >지역 선택</button>
+                    >{area}</button>
                     <div class="dropdown-content"
                     style={{padding:0, minWidth:300}}
                     >
             <select autofocus
             style={{width:300}}
             onChange={onChange}>
-                    <option value=''>미정</option>
                 <optgroup  label="서울">
                     <option value="서울 강남/역삼/삼성/논현">강남/역삼/삼성/논현</option>
                     <option value="서울 서초/신사/방배">서초/신사/방배</option>
@@ -239,6 +241,10 @@ const AreaButton = ({onChange}) => {
                 </select>
             </div>
         </div>
+            
+            </Col>
+        </Row>
+        
         
     );
 }

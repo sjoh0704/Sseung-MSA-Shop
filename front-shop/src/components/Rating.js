@@ -6,7 +6,7 @@ function Rating({user, area}){
         return;
     }
 
-    const {username, temperature, celcius} = user;
+    let {username, temperature, celcius} = user;
     let tmp = <div></div>;
     let temp_type;
 
@@ -20,18 +20,23 @@ function Rating({user, area}){
     if(! temperature){
         tmp = (
         <div style={{padding: 10, fontSize:'1.2rem', color:'black'}}>
-            {temp_type}
+            {"36.5℃"}
         </div>)
         }
         else
 
-    if(temperature >= 36.5){
+    if(temperature > 36.5){
         tmp = (
         <div style={{padding: 15, fontSize:'1.3rem', color:'green', fontWeight:'bold'}}>
             {temp_type}
         </div>
     )}
-       
+    else if(temperature== 36.5){
+        tmp = (
+        <div style={{padding: 15, fontSize:'1.3rem', fontWeight:'bold'}}>
+            {temp_type}
+        </div>
+    )}
      
     else{
             tmp = (
