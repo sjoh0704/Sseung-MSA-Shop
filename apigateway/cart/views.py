@@ -4,9 +4,7 @@ from django.http.response import Http404, HttpResponse
 from django.views import View
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
-
 import requests
-from django.conf import settings
 import os 
 CART_SERVICE_URL = os.environ.get("CART_SERVICE_URL",'http://172.30.1.34:8080')
 
@@ -30,6 +28,7 @@ class CartNonParam(BaseView):
             self.x_request_id =x_request_id
         else:
             self.x_request_id = None
+
         return super(CartNonParam, self).dispatch(request, *args, **kargs)
 
     # cart 생성
@@ -54,7 +53,6 @@ class CartNonParam(BaseView):
         headers = {}
         if self.x_request_id:
             headers['x-request-id']=self.x_request_id
-  
         response = requests.get('{}/apis/v1/carts'.format(CART_SERVICE_URL), headers=headers)
         data = json.loads(response.content)
         if response.status_code == 200:
@@ -90,16 +88,12 @@ class CartParams(BaseView):
 
     # check
     def post(self, request, word):
-  
         if word != 'check':
             return self.response(message='잘못된 경로', status=400)
-    
         try:
             data = json.loads(request.body)
-        
         except:
             data = request.POST
-            
         headers = {}
         if self.x_request_id:
             headers['x-request-id']=self.x_request_id
