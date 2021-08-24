@@ -59,6 +59,11 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+MIDDLEWARE += [
+    'order.middleware.MiddlewareForTransaction'
+
+]
+
 ROOT_URLCONF = 'order.urls'
 
 TEMPLATES = [
