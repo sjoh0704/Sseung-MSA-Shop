@@ -139,6 +139,11 @@ class ProductNonParam(BaseView):
 class ProductStatusView(BaseView):
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kargs):
+        x_request_id = request.headers.get('x-request-id')
+        if x_request_id:
+            self.x_request_id =x_request_id
+        else:
+            self.x_request_id = None
         return super(ProductStatusView, self).dispatch(request, *args, **kargs)
     # pk = 상품 Id 
     def get(self, request, pk):
@@ -206,11 +211,13 @@ class ProductStatusView(BaseView):
     
     
     def delete(self, request, pk):
-
+        headers = {}
+        if self.x_request_id:
+            headers['x-request-id']=self.x_request_id
         product = get_object_or_404(Product, id=pk)
 
-        cart_response = requests.delete('{}/apis/v1/product/{}/carts'.format(CART_SERVICE_URL, pk))
-        order_response = requests.delete('{}/apis/v1/product/{}/order'.format(ORDER_SERVICE_URL, pk))
+        cart_response = requests.delete('{}/apis/v1/product/{}/carts'.format(CART_SERVICE_URL, pk), headers=headers)
+        order_response = requests.delete('{}/apis/v1/product/{}/order'.format(ORDER_SERVICE_URL, pk), headers=headers)
         if cart_response.status_code == 200 and order_response.status_code==200:
             product.valid = False
             product.save()
