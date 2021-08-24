@@ -27,6 +27,12 @@ class BaseView(View):
 class ProductNonParam(BaseView):
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kargs):
+        x_request_id = request.headers.get('x-request-id')
+        if x_request_id:
+            self.x_request_id =x_request_id
+        else:
+            self.x_request_id = None
+
         return super(ProductNonParam, self).dispatch(request, *args, **kargs)
 
     
@@ -36,8 +42,10 @@ class ProductNonParam(BaseView):
           
         except:
             data = request.POST
- 
-        response = requests.post('{}/apis/v1/product'.format(PRODUCT_SERVICE_URL), data)
+        headers = {}
+        if self.x_request_id:
+            headers['x-request-id']=self.x_request_id
+        response = requests.post('{}/apis/v1/product'.format(PRODUCT_SERVICE_URL), data, headers=headers)
         data = json.loads(response.content)
         if response.status_code == 200:
             return self.response(data=data, message='success')
@@ -48,8 +56,10 @@ class ProductNonParam(BaseView):
 
 
     def get(self, request):
-        
-        response = requests.get('{}/apis/v1/product'.format(PRODUCT_SERVICE_URL))
+        headers = {}
+        if self.x_request_id:
+            headers['x-request-id']=self.x_request_id
+        response = requests.get('{}/apis/v1/product'.format(PRODUCT_SERVICE_URL), headers=headers)
         if response.status_code == 200:
             data = json.loads(response.content)
        
@@ -63,11 +73,20 @@ class ProductNonParam(BaseView):
 class ProductStatusView(BaseView):
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kargs):
+        x_request_id = request.headers.get('x-request-id')
+        if x_request_id:
+            self.x_request_id =x_request_id
+        else:
+            self.x_request_id = None
+
         return super(ProductStatusView, self).dispatch(request, *args, **kargs)
     
 
     def get(self, request, pk):
-        response = requests.get('{}/apis/v1/product/{}'.format(PRODUCT_SERVICE_URL, pk))
+        headers = {}
+        if self.x_request_id:
+            headers['x-request-id']=self.x_request_id
+        response = requests.get('{}/apis/v1/product/{}'.format(PRODUCT_SERVICE_URL, pk), headers=headers)
         data = json.loads(response.content)
         if response.status_code == 200:
             return self.response(data = data, message='success')
@@ -82,8 +101,10 @@ class ProductStatusView(BaseView):
           
         except:
             data = request.POST
-
-        response = requests.post('{}/apis/v1/product/{}'.format(PRODUCT_SERVICE_URL, pk), data)
+        headers = {}
+        if self.x_request_id:
+            headers['x-request-id']=self.x_request_id
+        response = requests.post('{}/apis/v1/product/{}'.format(PRODUCT_SERVICE_URL, pk), data, headers=headers)
         res_data = json.loads(response.content)
         if response.status_code == 200:
             return self.response(data= res_data, message='success')
@@ -93,7 +114,10 @@ class ProductStatusView(BaseView):
     
     
     def delete(self, request, pk):
-        response = requests.delete('{}/apis/v1/product/{}'.format(PRODUCT_SERVICE_URL, pk))
+        headers = {}
+        if self.x_request_id:
+            headers['x-request-id']=self.x_request_id
+        response = requests.delete('{}/apis/v1/product/{}'.format(PRODUCT_SERVICE_URL, pk), headers=headers)
         res_data = json.loads(response.content)
         if response.status_code == 200:
             return self.response(data=res_data, message='success')
@@ -106,11 +130,19 @@ class ProductStatusView(BaseView):
 class ProductByUser(BaseView):
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kargs):
+        x_request_id = request.headers.get('x-request-id')
+        if x_request_id:
+            self.x_request_id =x_request_id
+        else:
+            self.x_request_id = None
+
         return super(ProductByUser, self).dispatch(request, *args, **kargs)
     
     def get(self, request, pk):
-                
-        response = requests.get('{}/apis/v1/product/user/{}'.format(PRODUCT_SERVICE_URL, pk))
+        headers = {}
+        if self.x_request_id:
+            headers['x-request-id']=self.x_request_id
+        response = requests.get('{}/apis/v1/product/user/{}'.format(PRODUCT_SERVICE_URL, pk), headers=headers)
         data = json.loads(response.content)
         if response.status_code == 200:
             
