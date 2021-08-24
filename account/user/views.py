@@ -165,6 +165,12 @@ class UserAPIViewParam(BaseView):
 
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kargs):
+        x_request_id = request.headers.get('x-request-id')
+        if x_request_id:
+            self.x_request_id =x_request_id
+        else:
+            self.x_request_id = None
+
         return super(UserAPIViewParam, self).dispatch(request, *args, **kargs)
 # 이 부분은 유의 
     def delete(self, request, pk):
@@ -185,8 +191,12 @@ class UserAPIViewParam(BaseView):
         
 
     def get(self, request, pk):
+
+        headers = {}
+        if self.x_request_id:
+            headers['x-request-id']=self.x_request_id     
         user = get_object_or_404(User, id=pk)
-        res = requests.get('{}/apis/v1/ratings/{}'.format(RATING_SERVICE_URL, pk))
+        res = requests.get('{}/apis/v1/ratings/{}'.format(RATING_SERVICE_URL, pk), headers=headers)
         if res.status_code != 200:
             return self.response(message='get rating fail', status=400)
         rating = json.loads(res.content).get('payload')

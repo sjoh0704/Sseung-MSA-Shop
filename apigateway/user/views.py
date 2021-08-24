@@ -28,6 +28,11 @@ class BaseView(View):
 class UserLoginView(BaseView):
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kargs):
+        x_request_id = request.headers.get('x-request-id')
+        if x_request_id:
+            self.x_request_id =x_request_id
+        else:
+            self.x_request_id = None
         return super(UserLoginView, self).dispatch(request, *args, **kargs)
 
 
@@ -82,6 +87,11 @@ class UserAPIViewParam(BaseView):
 
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kargs):
+        x_request_id = request.headers.get('x-request-id')
+        if x_request_id:
+            self.x_request_id =x_request_id
+        else:
+            self.x_request_id = None
         return super(UserAPIViewParam, self).dispatch(request, *args, **kargs)
 
 
@@ -97,7 +107,11 @@ class UserAPIViewParam(BaseView):
 
 # /apis/v1/user/1
     def get(self, request, pk):
-        response = requests.get('{}/apis/v1/user/{}'.format(USER_SERVICE_URL, pk))
+        
+        headers = {}
+        if self.x_request_id:
+            headers['x-request-id']=self.x_request_id
+        response = requests.get('{}/apis/v1/user/{}'.format(USER_SERVICE_URL, pk), headers=headers)
         dic_response = json.loads(response.content)   
         return self.response(data = dic_response, message='success', status=200)
         # else:
