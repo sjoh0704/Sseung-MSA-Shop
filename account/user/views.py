@@ -29,6 +29,12 @@ class BaseView(View):
 class UserLoginView(BaseView):
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kargs):
+        x_request_id = request.headers.get('x-request-id')
+        if x_request_id:
+            self.x_request_id =x_request_id
+        else:
+            self.x_request_id = None
+
         return super(UserLoginView, self).dispatch(request, *args, **kargs)
 
     def post(self, request):
@@ -49,8 +55,10 @@ class UserLoginView(BaseView):
 
         if user is None:
             return self.response(message="입력 정보를 확인해주세요", status=400)
-  
-        res = requests.get('{}/apis/v1/ratings/{}'.format(RATING_SERVICE_URL, user.id))
+        headers = {}
+        if self.x_request_id:
+            headers['x-request-id']=self.x_request_id
+        res = requests.get('{}/apis/v1/ratings/{}'.format(RATING_SERVICE_URL, user.id), headers=headers)
         rating = json.loads(res.content).get('payload')
         if res.status_code!=200:
             return self.response(data=rating, message='get rating fail',status=400)
@@ -84,6 +92,11 @@ class UserAPIView(BaseView):
 
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kargs):
+        x_request_id = request.headers.get('x-request-id')
+        if x_request_id:
+            self.x_request_id =x_request_id
+        else:
+            self.x_request_id = None
         return super(UserAPIView, self).dispatch(request, *args, **kargs)
 
     def get(self, request):
@@ -140,8 +153,10 @@ class UserAPIView(BaseView):
             user = User.objects.create_user(username, email, password,phoneNumber=phoneNumber)
         except IntegrityError:
             return self.response(message="존재하는 아이디입니다.", status=400)
-        
-        res = requests.post('{}/apis/v1/ratings'.format(RATING_SERVICE_URL), {'userId': user.id})
+        headers = {}
+        if self.x_request_id:
+            headers['x-request-id']=self.x_request_id
+        res = requests.post('{}/apis/v1/ratings'.format(RATING_SERVICE_URL), {'userId': user.id}, headers=headers)
         rating = json.loads(res.content).get('payload')
 
         if res.status_code != 200:
@@ -176,11 +191,14 @@ class UserAPIViewParam(BaseView):
     def delete(self, request, pk):
 
         user = get_object_or_404(User, id=pk)
-        res1 = requests.delete("{}/apis/v1/product/user/{}".format(PRODUCT_SERIVCE_URL, pk))  # product-service url
+        headers = {}
+        if self.x_request_id:
+            headers['x-request-id']=self.x_request_id
+        res1 = requests.delete("{}/apis/v1/product/user/{}".format(PRODUCT_SERIVCE_URL, pk), headers=headers)  # product-service url
         if res1.status_code != 200:
             return self.response(message='deleting user fail', status=200)
 
-        res2 = requests.delete('{}/apis/v1/ratings/{}'.format(RATING_SERVICE_URL, pk))
+        res2 = requests.delete('{}/apis/v1/ratings/{}'.format(RATING_SERVICE_URL, pk), headers=headers)
         if res2.status_code != 200:
             return self.response(message='rating delete fail', status=400)
 
@@ -191,11 +209,10 @@ class UserAPIViewParam(BaseView):
         
 
     def get(self, request, pk):
-
+        user = get_object_or_404(User, id=pk)
         headers = {}
         if self.x_request_id:
             headers['x-request-id']=self.x_request_id     
-        user = get_object_or_404(User, id=pk)
         res = requests.get('{}/apis/v1/ratings/{}'.format(RATING_SERVICE_URL, pk), headers=headers)
         if res.status_code != 200:
             return self.response(message='get rating fail', status=400)
