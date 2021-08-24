@@ -31,11 +31,19 @@ class GetCategory(BaseView):
 
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kargs):
+        x_request_id = request.headers.get('x-request-id')
+        if x_request_id:
+            self.x_request_id =x_request_id
+        else:
+            self.x_request_id = None
         return super(GetCategory, self).dispatch(request, *args, **kargs)
    
    
     def get(self, request):
-        response = requests.get('{}/apis/v1/category'.format(PRODUCT_SERVICE_URL))
+        headers = {}
+        if self.x_request_id:
+            headers['x-request-id']=self.x_request_id
+        response = requests.get('{}/apis/v1/category'.format(PRODUCT_SERVICE_URL), headers=headers)
         if response.status_code == 200:
             data = json.loads(response.content)
 
@@ -46,10 +54,18 @@ class GetProductByCategory(BaseView):
     
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kargs):
+        x_request_id = request.headers.get('x-request-id')
+        if x_request_id:
+            self.x_request_id =x_request_id
+        else:
+            self.x_request_id = None
         return super(GetProductByCategory, self).dispatch(request, *args, **kargs)
     
     def get(self, request, pk):
-        response = requests.get('{}/apis/v1/category/{}'.format(PRODUCT_SERVICE_URL, pk))
+        headers = {}
+        if self.x_request_id:
+            headers['x-request-id']=self.x_request_id
+        response = requests.get('{}/apis/v1/category/{}'.format(PRODUCT_SERVICE_URL, pk), headers=headers)
         if response.status_code == 200:
             data = json.loads(response.content)
 
