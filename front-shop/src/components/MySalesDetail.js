@@ -7,8 +7,15 @@ import arrow from '../assets/images/arrow.png'
 import EmptyBox from '../assets/images/box.png'
 import { CategoryDirection } from './CategoryBanner'
 import {setMoney, setDate} from './Convenient'
+import Rating from './Rating'
+import Modal from './Modal'
 
 function MySalesDetail({history, match}){
+    const [ modalOpen, setModalOpen ] = useState(false);
+    const [ modalContents, setModalContents ] = useState('');	
+    const closeModal = () => {
+        setModalOpen(false);
+    }
     const [btnValue, setBtnValue] = useState('')
     const [orders, setOrders] = useState([]) 
     const[images,setImages]= useState([])
@@ -36,19 +43,36 @@ function MySalesDetail({history, match}){
                 
             </div>));
         setImages(image_list);
-
-
     }
     
-    
+    const fetchUserInfo = async (userId) => {
+        let res = await axios.get('/apis/v1/user/' + userId);
+        setModalOpen(true);
+        let data = res.data.payload.payload
+        setModalContents(<Container>
+            <Rating user={data}></Rating>
+            <Row style={{marginTop: 20}}>
+                <Col>
+                이메일: {data.useremail}
+                </Col>
+            </Row>
+            <Row style={{marginTop: 20}}>
+                <Col>
+                계정 생성일: {setDate(data.created_at)}
+                </Col>
+            </Row>
+
+
+        </Container>);   
+    }
 
 
 
     const fetchOrders= async()=>{
-        let res = await axios.get('/apis/v1/order/sale/' + match.params.number)
-        console.log(res)
+        let res = await axios.get('/apis/v1/order/sale/' + match.params.number);
         let tmp_orders = res.data.payload.payload.filter(order=> order.sales_stage!='SO')
-        console.log(tmp_orders)
+
+        console.log(tmp_orders);
         let orderlist = tmp_orders.map((order, index) => {
         let sale_status = ''
             if(order.sales_stage == 'S')
@@ -59,63 +83,66 @@ function MySalesDetail({history, match}){
                 sale_status='판매 완료'
 
             return (
+
                     
                     <ListGroup.Item key={index}>
                     <Row style={{margin:20}}>
                     <Col>
-                    <div>
+            
                     <p style={{fontSize:'1.5rem'}}>
-                    아이디: {order.user_name}
-                    </p>
-                    <p style={{fontSize:'1.5rem'}}>
-                    이메일: {order.user_email}
+                    주문자 선호 장소: {order.address}
                     </p>
                     <p style={{fontSize:'1.5rem'}}>
                     연락처: {order.phone_number}
                     </p>
                     <p style={{fontSize:'1.5rem'}}>
-                    구매량: {order.demand_quantity}
+                    주문량: {order.demand_quantity}
                     </p>
                     <p style={{fontSize:'1.5rem'}}>
                     가격: {setMoney(order.price)} 원
                     </p>
                     <p style={{fontSize:'1.5rem'}}>
-                    주문 날짜: {setDate(order.created_at)}
+                    주문 일짜: {setDate(order.created_at)}
                     </p>
+              
 
-                    
-                    <p style={{fontSize:'1.5rem'}}>
-                    
-                    </p>
-
+                    </Col>
+                    <Col>
                     <Row>
-                    <Col lg='2' sm ='4' xs='12'>
-                    <div className="dropdown">
-		            <button className="dropdown-button ">{btnValue?btnValue:sale_status}</button>
-                    <div class="dropdown-content">
-                        <a name="예약 중" onClick={(e) => {onClickHandler({order, product_id:match.params.number}, e)}}>예약 중</a>
-                        <a name="판매 완료" onClick={(e) => {onClickHandler({order, product_id:match.params.number}, e)}}>판매 완료</a>
-                        <a name="거래 취소" onClick={(e) => {onClickHandler({order, product_id:match.params.number}, e)}}>거래 취소</a>
+                        <Row>
+                            <Col> 
+                            <button className='emptyButton'
+                                onClick={()=>fetchUserInfo(order.buyer_id)}
+                                style ={{height:'4rem', fontSize:'1.3rem'}}
+                                 >주문자 정보 보기</button>
+                            
+                            </Col>
+                        </Row>
+                    <Row style={{marginTop: 20}}>
+                  
+                        <Col lg='3' sm ='4' xs='12'>
+                        <div className="dropdown">
+                        <button
+                        style ={{height:'4rem', padding:10, width: 100}} 
+                        className="dropdown-button ">{btnValue?btnValue:sale_status}</button>
+                        <div class="dropdown-content">
+                            <a name="예약 중" onClick={(e) => {onClickHandler({order, product_id:match.params.number}, e)}}>예약 중</a>
+                            <a name="판매 완료" onClick={(e) => {onClickHandler({order, product_id:match.params.number}, e)}}>판매 완료</a>
+                            <a name="거래 취소" onClick={(e) => {onClickHandler({order, product_id:match.params.number}, e)}}>거래 취소</a>
+                            </div>
                         </div>
-                    </div>
-
                     </Col>
-                    <Col lg='1' sm ='2' xs='6'
-                   
-                    >
-                        <img  style={{marginLeft: 15, maxWidth:'100%', }} 
-                        src={arrow}></img>
-                    </Col>
-                    <Col lg='4' sm ='6' xs='6'
-                    style={{fontSize:'1.5rem', padding:20}}>
-                    주문 상태 조회하기
-                    </Col>
-
+                    <Col lg='6' sm ='12' xs='12'>
+                         <p 
+                         style={{fontSize:'1.2rem', padding:10, color:'red'}}>
+                         주문 상태를 조회해주세요!
+                             </p>
+                        </Col>
                     </Row>
-                   
-                    </div>
-                    
+ 
+                    </Row>
                     </Col>
+                    
                     </Row>
                     </ListGroup.Item>
                     
@@ -143,7 +170,7 @@ function MySalesDetail({history, match}){
         
         if(e.target.name  === '판매 완료'){
             
-            alert('거래가 완료되셨습니까?')
+          
 
             let data = {sales_stage: "SO", 
             product_id,
@@ -152,34 +179,39 @@ function MySalesDetail({history, match}){
             };
 
             axios.post('/apis/v1/order/' + order.order_id, data).then(res=> {
-                alert('거래가 성사되었습니다.')
+                setModalOpen(true);
+                setModalContents('거래가 완료되었습니다');
                 
             })
             .catch(e=>{
-                alert('잘못되었습니다.')
+                setModalOpen(true);
+                setModalContents('Error: 관리자에게 문의하세요');
             })
       
         }
         else if(e.target.name  === '예약 중'){
-            alert('거래를 예약하시겠습니까?')
+       
             let data = {sales_stage: "SR"}
             axios.post('/apis/v1/order/' + order.order_id, data).then(res=> {
-                console.log(res)
-                alert('거래가 예약되었습니다.')
+                setModalOpen(true);
+                setModalContents('거래가 예약되었습니다');
             })
             .catch(e=>{
-                alert('예약에 실패했습니다. 판매자에게 문의하세요')
+                setModalOpen(true);
+                setModalContents('Error: 관리자에게 문의하세요');
             })
         }
         else{
-            alert('주문 요청을 취소하시겠습니까?')
+       
  
             axios.delete('/apis/v1/order/' + order.order_id).then(res=> {
-                
-                alert('주문이 취소되었습니다.')
+                setModalOpen(true);
+                setModalContents('주문이 취소되었습니다.');
+               
             })
             .catch(e=>{
-                alert('Error')
+                setModalOpen(true);
+                setModalContents('Error: 관리자에게 문의하세요');
             })
 
         }      
@@ -188,14 +220,11 @@ function MySalesDetail({history, match}){
   
 
 
-    return (<div>
-        
-
-        <Container>
-        
-        
-              
-    
+    return (<div>  
+        <Modal open={ modalOpen } close={ closeModal } >
+		    {modalContents}
+        </Modal>
+        <Container>    
         <CategoryDirection tag1={"내 상품 목록"} tag2={product.name}></CategoryDirection>
         
         <Accordion style={{marginTop:100}}>

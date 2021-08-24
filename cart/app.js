@@ -4,6 +4,7 @@ const port = 8080;
 const connect = require('./schemas');
 connect();
 const cartRouter = require('./routers/cart')
+const middleware = require('./middlewares/middlewareForTransaction');
 app.use(express.urlencoded({extended: false}))
 app.use(express.json())
 app.use(express.static('public'));
@@ -13,7 +14,7 @@ app.get('/health', async(req, res) => {
     res.send({message: 'ok'});
 });
 
-app.use('/apis/v1', [cartRouter]);
+app.use('/apis/v1', middleware, [cartRouter]);
 
 
 

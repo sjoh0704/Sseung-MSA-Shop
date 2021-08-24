@@ -20,11 +20,12 @@ import MySales from './components/MySales'
 import PurchaseList from './components/PurchaseList';
 import MySalesDetail from './components/MySalesDetail';
 import Likes from './components/LikeList';
+import React from 'react';
+import NotFound from './components/NotFound';
 
 function App() {
   return (
-    <div>
- 
+    <React.Fragment>
     <UserBanner/>
     <div style={{fontFamily:'twayair'}}>
     <Banner/>
@@ -44,14 +45,16 @@ function App() {
     <Route exact path="/mysales" component={MySales}/>
     <Route exact path="/mysales/:number" component={MySalesDetail}/>
     <Route exact path="/likes" component={Likes}/>
+    <Route path="*" component={NotFound}/>
+    
     
     </Switch>
    
     
     <Move/>
     </div>
-    </div>
 
+    </React.Fragment>
     
   );
 }

@@ -57,10 +57,9 @@ router.get('/carts/users/:buyerId', async(req, res)=> {
 
 // cart check 
 router.post('/carts/check', async(req, res)=> {
-    console.log
+    console.log('체크!')
     const {product_id, buyer_id, seller_id} = req.body;
     const cartCheck = await Cart.find({$and: [{productId: product_id},{buyerId: buyer_id}, {sellerId: seller_id}]}).exec(); 
-    console.log(cartCheck);
     if(cartCheck.length === 0){
         res.send({
             message: "cart item doesn't exist",

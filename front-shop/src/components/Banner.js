@@ -16,40 +16,47 @@ const Banner = () => {
           <Link to="/" style={{textDecoration:'none', color:'inherit'}}>
           <img src={bucket} style={{width:70}}>
           </img>
-          <h2 style={{color: 'black'}}>
-            My Shopping Mall
-            </h2>
+   
             </Link>
             
             </Navbar.Brand>
         </Col>
-        <Col lg={{span: 8, offset: 1}}
-            sm={{span: 9, offset: 0}}
-         style={{paddingTop: 70}}>
-        <Form>
-  <Row className="align-items-center">
-    <Col lg={{span: 9}}
-    sm={{span: 9, offset: 0}}
-    xs='9'
-    >
-      <Form.Control 
-      size='lg'
-      id="inlineFormInputName" 
-      placeholder="검색어를 입력하세요" />
-    </Col>
-    <Col lg={{span: 3}}
-    sm={{span: 3}}
-    xs='3'
-    >
-      <button className='emptyButton' style={{width: 100, height: 50, fontSize:'1.3rem'}}>Search</button>
-    </Col>
-  </Row>
+      </Row>
+
+
+    <Form>
+    <Row className="align-items-center">
+      <Col lg={{span: 3}}
+      sm={{span: 12}}
+      xs='12'>
+      <Link to="/" style={{textDecoration:'none', color:'inherit'}}>
+      <h2 style={{color: 'black'}}>
+              My Shopping Mall
+              </h2>
+              </Link>
+      </Col>
+      <Col lg={{span: 6}}
+      sm={{span: 9}}
+      xs='9'
+      >
+        <Form.Control 
+        size='lg'
+        id="inlineFormInputName" 
+        placeholder="검색어를 입력하세요" />
+      </Col>
+      <Col lg={{span: 3}}
+      sm={{span: 3}}
+      xs='3'
+      >
+        <button className='emptyButton' style={{width: '5em', height: 50, fontSize:'1.3rem'}}>Search</button>
+      </Col>
+    </Row>
 </Form>
         
-        </Col>
+   
 
         
-      </Row>
+     
       </Container>
 </div>
     )

@@ -2,41 +2,20 @@ import React, {useState} from 'react'
 import {useSelector, useDispatch} from 'react-redux'
 import axios from 'axios'
 import {Form, Container, Button, Row, Col} from 'react-bootstrap'
-import Title from './Title'
 import ImageUploading from 'react-images-uploading';
 import { CategoryDirection } from './CategoryBanner'
 import AreaButton from './AreaButton'
-
-
-
-function ImageUpload() {
-
-  const [images, setImages] = useState([]);
-  const maxNumber = 4;
-
-  const onChangeImage = (imageList, addUpdateIndex) => {
-    console.log(imageList, addUpdateIndex);
-    setImages(imageList);
-  };
-
-  // 추가
-  const onError = (errors, files) => {
-    if(errors.maxNumber) {
-      alert(`이미지는 ${maxNumber}개까지만 첨부할 수 있습니다`)
-    }
-  }
-
-  return (
-    <Container>
-     
-    </Container>
-  )
-}
-
+import Modal from './Modal'
 
 
 function ProductRegister({history}){
-    const [area, setArea] = useState(undefined)
+    const [ modalOpen, setModalOpen ] = useState(false);
+
+    const [ modalContents, setModalContents ] = useState('');	
+    const closeModal = () => {
+        setModalOpen(false);
+    }
+    const [area, setArea] = useState('지역을 선택해 주세요')
     const {isLoggedIn, userData} = useSelector(state =>({
         isLoggedIn: state.user.isLoggedIn,
         userData: state.user.payload
@@ -101,11 +80,13 @@ function ProductRegister({history}){
         e.preventDefault();
  
         if(!(name && category_number && price && quantity && description && image_list.length)){
-            alert('모든 항목을 입력해 주세요.');
+            setModalOpen(true);
+            setModalContents('모든 항목을 입력해 주세요');
             return;
         }
-        if(area == undefined || area==null || area == ''){
-            alert('거래 지역을 선택해 주세요');
+        if(area == undefined || area==null || area == '지역을 선택해 주세요'){
+            setModalOpen(true);
+            setModalContents('거래 지역을 선택해 주세요');
             return;
         }
         const body = {
@@ -122,19 +103,21 @@ function ProductRegister({history}){
     
         axios.post('/apis/v1/product/', body)
         .then(response => {
-            alert("상품이 등록되었습니다")
             history.replace('/')
         }).catch(e =>{
-            console.log(e)
-            alert("상품 등록에 실패하였습니다. 관리자에게 문의하세요.")
-     
+      
+            setModalOpen(true);
+            setModalContents('상품 등록에 실패하였습니다. 관리자에게 문의하세요.');
         })
 
     }
 
     
     return(<div>
-        
+        <Modal open={ modalOpen } close={ closeModal } >
+		    {modalContents}
+        </Modal>
+       
         <Container>
             <CategoryDirection tag1={'판매하기'}></CategoryDirection>
             <br/>
@@ -201,15 +184,15 @@ function ProductRegister({history}){
             </Form.Group>
          
             <Row>
-                <Col sm="4" lg='2' xs='12'
+                <Col sm="2" lg='1' xs='4'
                  style={{paddingTop:20}}>
-                거래 선호 지역
+                거래 지역
                 </Col>
-                <Col sm ='6' lg='3' xs='12'
-                style={{paddingTop:10}}
+                <Col sm ='6' lg='6' xs='6'
+                style={{paddingTop:8}}
                 >
-
-                <AreaButton onChange={onChangeArea}/>
+            
+                <AreaButton onChange={onChangeArea} area={area}/>
 
                 </Col>
             </Row>

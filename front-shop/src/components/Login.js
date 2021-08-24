@@ -5,8 +5,16 @@ import {useSelector, useDispatch} from 'react-redux'
 import {Form, Container, Button, Row, Col} from 'react-bootstrap'
 import { CategoryDirection } from './CategoryBanner'
 import '../App.css'
+import Modal from './Modal'
 
 function Login({history}){
+    const [ modalOpen, setModalOpen ] = useState(false);
+    const closeModal = () => {
+        setModalOpen(false);
+    }
+    const [ modalContents, setModalContents ] = useState('');
+    
+
     const dispatch = useDispatch();
     const [userData, setUserData] = useState({
         username: "",
@@ -31,12 +39,12 @@ function Login({history}){
         axios.post('/apis/v1/user/login', body)
         .then(response => {
             history.replace('/')
-            console.log("login")
             dispatch(loginAction(response.data.payload.payload))
-            alert("환영합니다!")
+      
         }).catch(e =>{
-            alert("로그인 실패")
-            console.log("로그인 실패")
+            setModalOpen(true);
+            setModalContents('아이디와 패스워드를 확인해 주세요');
+       
         })
     }
 
@@ -45,6 +53,9 @@ function Login({history}){
     
      
         <Container >
+            <Modal open={ modalOpen } close={ closeModal }>
+                {modalContents}
+            </Modal>
             <CategoryDirection tag1={'로그인'}></CategoryDirection>
             <br/>
             <div style={{fontSize:'1.3rem'}}>
@@ -78,6 +89,7 @@ function Login({history}){
                 <Col lg={{ span: 4, offset: 0 }}
                     sm={{ span: 8, offset: 0 }}>
                 <Form.Control
+                style={{fontFamily:'ubuntu'}}
                 size='lg'
                 type="password"
                 name = 'password'
@@ -112,7 +124,6 @@ function Login({history}){
                 className='emptyButton'
                 onClick={(e) => {
                     e.preventDefault();
-                    alert('회원가입 페이지로 이동합니다')
                     history.replace('/register');
                 }}
                 >회원가입

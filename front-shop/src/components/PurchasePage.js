@@ -4,8 +4,15 @@ import {useEffect, useState} from 'react'
 import {useSelector} from 'react-redux'
 import { CategoryDirection } from './CategoryBanner'
 import {setMoney, setDate} from './Convenient'
+import Modal from './Modal'
 
 function PurchasePage({location, history}){
+    const [ modalOpen, setModalOpen ] = useState(false);
+
+    const [ modalContents, setModalContents ] = useState('');	
+    const closeModal = () => {
+        setModalOpen(false);
+    }
     const {product, demand_amount} = location.state
     const {isLoggedIn, userData} = useSelector(state =>({
         isLoggedIn: state.user.isLoggedIn,
@@ -23,7 +30,8 @@ function PurchasePage({location, history}){
 
     const orderProduct= async ()=>{
         if(!(address && email_address)){
-            alert('모든 항목을 입력해주세요');
+            setModalOpen(true);
+            setModalContents('모든 항목을 입력해 주세요');
             return;
         }
         let body = {
@@ -38,8 +46,6 @@ function PurchasePage({location, history}){
         };
         console.log(body)
         await axios.post('/apis/v1/order/', body).then(res=> {
-            
-            alert('주문이 정상적으로 처리되었습니다')
             history.replace('/orderlist')
         })
         .catch(e => {
@@ -71,6 +77,10 @@ function PurchasePage({location, history}){
 
     return(
         <div>
+                   
+        <Modal open={ modalOpen } close={ closeModal } >
+		    {modalContents}
+            </Modal>
          <Container>
          <CategoryDirection tag1={product.category} tag2={product.name} tag3={'구매하기'}></CategoryDirection> 
             <br/>

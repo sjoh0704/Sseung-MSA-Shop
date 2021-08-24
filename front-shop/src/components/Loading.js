@@ -5,8 +5,8 @@ const Loading = ({products}) =>{
     if(products.length==0)
         return(
             <Container>
-                <Row className="justify-content-md-center">
-                    <Col xs lg="2">
+                <Row>
+                    <Col lg={{span:2, offset:5}} xs={{span:3, offset:5}} md={{span:6, offset:5}}>
                         <Spinner style={{marginTop: 100,marginBottom:100, width:50, height:50}}animation="border" variant="primary">
                         </Spinner>      
                     </Col>

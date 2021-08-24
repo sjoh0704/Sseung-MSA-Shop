@@ -8,8 +8,15 @@ import HeartImg from "../assets/images/heart_pressed.png";
 import { CategoryDirection } from './CategoryBanner'
 import { setMoney, setDate } from './Convenient'
 import Rating from './Rating'
+import Modal from './Modal'
 
 function ProductDetail({match, history}){
+    const [ modalOpen, setModalOpen ] = useState(false);
+    const [ modalContents, setModalContents ] = useState('');	
+    const closeModal = () => {
+        setModalOpen(false);
+    }
+
     const [amount, setAmount] = useState(1)
     const {isLoggedIn, userData} = useSelector(state =>({
         isLoggedIn: state.user.isLoggedIn,
@@ -41,7 +48,7 @@ function ProductDetail({match, history}){
                     buyer_id: userData.user_id,
                     product_id: parseInt(match.params.number)
                 };
-                let res_likes = await axios.post('/apis/v1/carts/check', body);
+            let res_likes = await axios.post('/apis/v1/carts/check', body);
             setLike(res_likes.data.payload.payload);
             }
             
@@ -55,16 +62,19 @@ function ProductDetail({match, history}){
 
     const onClickOrder = (e) => {
         if(isLoggedIn === false || userData == null){
-            alert("로그인 후 이용하세요.")
+            setModalOpen(true);
+            setModalContents('로그인 후 이용하세요.');
             history.replace('/login')
            
         }
         else if(userData.user_id == product.seller_id){
-            alert("판매자가 구매할 수 없습니다.")
+            setModalOpen(true);
+            setModalContents('판매자가 구매할 수 없습니다.');
             e.preventDefault()
         }
         else if(amount < 1 || amount > product.quantity){
-            alert("수량이 올바르지 않습니다.")
+            setModalOpen(true);
+            setModalContents('수량이 올바르지 않습니다.');
             e.preventDefault()
             
         }
@@ -75,13 +85,13 @@ function ProductDetail({match, history}){
 
     const onClickCart = async() => {
         if(isLoggedIn === false){
-            alert("로그인 후 이용하세요.")
+            setModalOpen(true);
+            setModalContents('로그인 후 이용하세요.');
             return;
         }
-        console.log(like)
 
         if(like.checked){
-   
+            
             await axios.delete(`/apis/v1/carts/${like[0]._id}`);
             setLike({checked: false});
         }
@@ -95,7 +105,6 @@ function ProductDetail({match, history}){
             setLike({checked:true});
 
         }
-        console.log(like)
     }
 
     const onChangeHandler = (e) => {
@@ -104,7 +113,6 @@ function ProductDetail({match, history}){
     }
 
     const displayImages = () =>{
-        console.log(images)
         if(images.length == 1){
             return;
         }
@@ -125,20 +133,23 @@ function ProductDetail({match, history}){
 
     return(
         <div>
+        <Modal open={ modalOpen } close={ closeModal } >
+		    {modalContents}
+        </Modal>
         <Container>
         <CategoryDirection tag1={product.category} tag2={product.name}/>
             <Row>
-                <Col xs='12' sm='7' lg='7'>
+                <Col xs='12' sm='12' lg='7'>
                     
                 <img style={{
-                    width: '100%',
+                    width: '90%',
                     height: 'auto',
               
                 }}src={images[0]}>
                 </img>
          
                 </Col>
-                <Col xs='12'sm='5' lg='5'>
+                <Col xs='12'sm='10' lg='5'>
                 <Row style={{paddingTop:5}}>
                     <Rating user={seller} area={product.area}/>
                 </Row>
