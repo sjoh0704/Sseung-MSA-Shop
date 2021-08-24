@@ -8,6 +8,7 @@ pipeline {
     ORDER_IMAGE = 'order-service'    
     GATEWAY_IMAGE = 'gateway-service'
     CART_IMAGE = 'cart-service'
+    RATING_IMAGE = 'rating-service'
     TAG = 'test'
     VERSION = 'test${BUILD_NUMBER}'
     }
@@ -32,34 +33,25 @@ pipeline {
    
                 sh 'docker build -t ${DOCKER_ID}/${PRODUCT_IMAGE}:${TAG}${BUILD_NUMBER} .'
             }
-                
-                
             dir('front-shop'){
             
             sh 'docker build -t ${DOCKER_ID}/${FRONT_IMAGE}:${TAG}${BUILD_NUMBER} .'
-            }
-                
-            dir('account'){
-            
+            }   
+            dir('account'){         
             sh 'docker build -t ${DOCKER_ID}/${USER_IMAGE}:${TAG}${BUILD_NUMBER} .'
-
-            }
-             
-                
+            }          
             dir('order'){
-           
             sh 'docker build -t ${DOCKER_ID}/${ORDER_IMAGE}:${TAG}${BUILD_NUMBER} .'
-            }
-                
+            }       
             dir('apigateway'){
-          
             sh 'docker build -t ${DOCKER_ID}/${GATEWAY_IMAGE}:${TAG}${BUILD_NUMBER} .'
             }
             dir('cart'){
-          
             sh 'docker build -t ${DOCKER_ID}/${CART_IMAGE}:${TAG}${BUILD_NUMBER} .'
             }
-            
+            dir('rating'){
+            sh 'docker build -t ${DOCKER_ID}/${RATING_IMAGE}:${TAG}${BUILD_NUMBER} .'
+            }
             
             
         }
@@ -79,8 +71,7 @@ pipeline {
             sh 'docker push ${DOCKER_ID}/${GATEWAY_IMAGE}:${TAG}${BUILD_NUMBER}'
             sh 'docker push ${DOCKER_ID}/${ORDER_IMAGE}:${TAG}${BUILD_NUMBER}'
             sh 'docker push ${DOCKER_ID}/${CART_IMAGE}:${TAG}${BUILD_NUMBER}'
-
-           
+            sh 'docker push ${DOCKER_ID}/${RATING_IMAGE}:${TAG}${BUILD_NUMBER}'
 
         }
  
