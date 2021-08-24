@@ -24,77 +24,31 @@ class BaseView(View):
         return JsonResponse(results, status=status)
 
 
-
-# class OrderNonParam(BaseView):
-#     @method_decorator(csrf_exempt)
-#     def dispatch(self, request, *args, **kargs):
-#         return super(OrderNonParam, self).dispatch(request, *args, **kargs)
-
-#     # 주문하기 
-#     def post(self, request):
-#         try:
-#             data = json.loads(request.body)
-          
-#         except:
-#             data = request.POST
-#         print(data)
-#         seller_id = data.get('seller_id')
-#         buyer_id = data.get('buyer_id')
-#         product_id = data.get('product_id')
-#         quantity = data.get('quantity')
-#         email_address = data.get('email_address')
-#         address = data.get('address')
-#         demand_amount = data.get('demand_amount')
-#         print(seller_id, buyer_id, product_id, quantity, email_address, address,demand_amount)
-#         if not (buyer_id and product_id and quantity and email_address and address and seller_id and demand_amount):
-#             print("여기")
-#             return self.response(message="not sufficent info", status=400)
-
-#         data_dict = data.dict()
-#         data_dict["quantity"] = int(quantity) - int(demand_amount)
-        
-#         response = requests.post('{}/apis/v1/product/{}'.format(PRODUCT_SERIVCE_URL, product_id), data_dict)
-#         if response.status_code == 200:
-        
-#             order = Order(
-#                         seller_id = seller_id,
-#                         buyer_id = buyer_id,
-#                         quantity = demand_amount,
-#                         product_id = product_id,
-#                         email_address = email_address,
-#                         address = address
-#             )
-#             order.save()
-
-#             return self.response(message='delete order success', status=200)
-#         return self.response(message='delete order fails', status=400)
-        
-
- 
-
-
 class SalesView(BaseView):
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kargs):
+        x_request_id = request.headers.get('x-request-id')
+        if x_request_id:
+            self.x_request_id =x_request_id
+        else:
+            self.x_request_id = None
         return super(SalesView, self).dispatch(request, *args, **kargs)
     
         # 판매자 입장에서 상품 별 주문 정보 얻기 
         # pk = product_id
     def get(self, request, pk):
+        headers = {}
+        if self.x_request_id:
+            headers['x-request-id']=self.x_request_id
 
         try:
-                
             orders = Order.objects.filter(product_id=pk)
-      
-            product_response = requests.get('{}/apis/v1/product/{}'.format(PRODUCT_SERIVCE_URL, pk))
+            product_response = requests.get('{}/apis/v1/product/{}'.format(PRODUCT_SERIVCE_URL, pk), headers=headers)
           
             product = json.loads(product_response.content)["payload"]
-            user_response = requests.get('{}/apis/v1/user'.format(USER_SERIVCE_URL))
+            user_response = requests.get('{}/apis/v1/user'.format(USER_SERIVCE_URL), headers=headers)
             user_list = json.loads(user_response.content)["payload"]
-  
             order_list = []
-        
-        
             for order in orders:
                 for user in user_list:
           
@@ -121,33 +75,11 @@ class SalesView(BaseView):
              
                         order_list.append(data)
                         break
- 
         except Exception as e:
-    
             return self.response(message="get order fails Error: "+ str(e), status=400)
-
         return self.response(data=order_list, message="get order success")
 
-        # 주문 편집
-        # pk = order_id
-    # def post(self, request, pk):
-
-    #     order = get_object_or_404(Order, pk=pk)
-    #     try:
-    #         data = json.loads(request.body)
-    #     except:
-    #         data = request.POST
-    #     print(data)
-       
-    #     email_address = data.get('email_address')
-    #     if email_address:
-    #         order.email_address = email_address
-    #     address = data.get('address')
-    #     if address:
-    #         order.address = address
-    #     order.save()
-
-    #     return self.response(message='edit order success', status=200)
+  
 
 
     
