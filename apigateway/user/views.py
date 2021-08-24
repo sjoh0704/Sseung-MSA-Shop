@@ -41,7 +41,10 @@ class UserLoginView(BaseView):
             data = json.loads(request.body)
         except:
             data = request.POST
-        response = requests.post('{}/apis/v1/user/login'.format(USER_SERVICE_URL), data)
+        headers = {}
+        if self.x_request_id:
+            headers['x-request-id']=self.x_request_id
+        response = requests.post('{}/apis/v1/user/login'.format(USER_SERVICE_URL), data, headers=headers)
         dic_response = json.loads(response.content)
         if response.status_code == 200:
             return self.response(data = dic_response, message='user login success', status=200)
@@ -52,10 +55,19 @@ class UserLoginView(BaseView):
 class UserLogoutView(BaseView):
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kargs):
+        x_request_id = request.headers.get('x-request-id')
+        if x_request_id:
+            self.x_request_id =x_request_id
+        else:
+            self.x_request_id = None
+
         return super(UserLogoutView, self).dispatch(request, *args, **kargs)
 
     def get(self, request):
-        response = requests.get('{}/apis/v1/user/logout'.format(USER_SERVICE_URL))
+        headers = {}
+        if self.x_request_id:
+            headers['x-request-id']=self.x_request_id
+        response = requests.get('{}/apis/v1/user/logout'.format(USER_SERVICE_URL), headers=headers)
         dic_response = json.loads(response.content)
         if response.status_code == 200:
             return self.response(data = dic_response, message='user logout success', status=200)
@@ -68,6 +80,12 @@ class UserAPIView(BaseView):
 
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kargs):
+        x_request_id = request.headers.get('x-request-id')
+        if x_request_id:
+            self.x_request_id =x_request_id
+        else:
+            self.x_request_id = None
+
         return super(UserAPIView, self).dispatch(request, *args, **kargs)
 
 
@@ -76,7 +94,10 @@ class UserAPIView(BaseView):
             data = json.loads(request.body)
         except:
             data = request.POST
-        response = requests.post('{}/apis/v1/user/'.format(USER_SERVICE_URL), data)
+        headers = {}
+        if self.x_request_id:
+            headers['x-request-id']=self.x_request_id
+        response = requests.post('{}/apis/v1/user/'.format(USER_SERVICE_URL), data, headers=headers)
         res_data = json.loads(response.content)
         if response.status_code == 200:
             return self.response(data = res_data, message='user create success', status=200)
@@ -96,7 +117,10 @@ class UserAPIViewParam(BaseView):
 
 
     def delete(self, request, pk):
-        response = requests.delete("{}/apis/v1/user/{}".format(USER_SERVICE_URL, pk))
+        headers = {}
+        if self.x_request_id:
+            headers['x-request-id']=self.x_request_id
+        response = requests.delete("{}/apis/v1/user/{}".format(USER_SERVICE_URL, pk), headers=headers)
         res_data = json.loads(response.content)
         if response.status_code == 200:
             return self.response(data=res_data, message='user delete success', status=200)
@@ -124,7 +148,10 @@ class UserAPIViewParam(BaseView):
             data = json.loads(request.body)
         except Exception as e:
             data = request.POST
-        response = requests.post('{}/apis/v1/user/{}'.format(USER_SERVICE_URL, pk), data)
+        headers = {}
+        if self.x_request_id:
+            headers['x-request-id']=self.x_request_id
+        response = requests.post('{}/apis/v1/user/{}'.format(USER_SERVICE_URL, pk), data, headers=headers)
         dic_response = json.loads(response.content)
         if response.status_code == 200:
             return self.response(data = dic_response, message='user edit success', status=200)
