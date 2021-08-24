@@ -114,7 +114,7 @@ function PurchaseList({history}){
                         {!order.rating_check?  <div>
                             <p style={{fontSize:'1.3rem', color:'blue'}}>판매자의 매너를 평가해볼까요?</p>
                             <button className='emptyButton'
-                                onClick={()=>fetchUserInfo(order.buyer_id, order.order_id)}
+                                onClick={()=>fetchUserInfo(order.seller_id, order.order_id)}
                                 style ={{height:'4rem', fontSize:'1.3rem'}}
                                  >매너 평가하기</button>
                         </div>:

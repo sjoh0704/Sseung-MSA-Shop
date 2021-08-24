@@ -1,4 +1,5 @@
 const express = require("express");
+const middleware = require('./middlewares/middlewareForTransaction');
 const app = express();
 const port = 8081;
 const connect = require('./models');
@@ -12,7 +13,7 @@ app.get('/health', async(req, res) => {
     res.send({message: 'ok'});
 });
 
-app.use('/apis/v1', [ratingRouter]);
+app.use('/apis/v1', middleware, [ratingRouter]);
 
 app.listen(port, () => {
     console.log(`listening at http://localhost:${port}`)
