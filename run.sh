@@ -1,6 +1,10 @@
 echo "-----------------------------------------------------------------------"
 echo "configure envrionment setting"
-export CART_SERVICE_URL=http://172.30.1.34:8080 # local ip 
+export CART_SERVICE_URL=http://172.30.1.34:8080 # local ip
+export RATING_SERVICE_URL=http://172.30.1.34:8081 # local ip
+# export CART_SERVICE_URL=http://192.168.219.171:8080 # local ip
+# export RATING_SERVICE_URL=http://192.168.219.171:8081 # local ip
+
 export MYSQL_PRODUCT_HOST=172.17.0.4 
 export MYSQL_ORDER_HOST=172.17.0.4
 export MYSQL_USER_HOST=172.17.0.4
