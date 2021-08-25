@@ -23,19 +23,15 @@ class BaseView(View):
 class RatingUpView(BaseView):
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kargs):
-        x_request_id = request.headers.get('x-request-id')
-        if x_request_id:
-            self.x_request_id =x_request_id
-        else:
-            self.x_request_id = None
-
+        headers = {}
+        for key, value in request.headers.items():
+            if key.startswith('X-'):
+                headers[key] = value
+        self.headers=headers
         return super(RatingUpView, self).dispatch(request, *args, **kargs)
 
     def get(self, request, pk):
-        headers = {}
-        if self.x_request_id:
-            headers['x-request-id']=self.x_request_id
-        response = requests.get('{}/apis/v1/ratings/{}/up'.format(RATING_SERVICE_URL, pk), headers=headers)
+        response = requests.get('{}/apis/v1/ratings/{}/up'.format(RATING_SERVICE_URL, pk), headers=self.headers)
         data = json.loads(response.content)
         if response.status_code == 200:
             return self.response(data = data, message='success')
@@ -46,19 +42,15 @@ class RatingUpView(BaseView):
 class RatingDownView(BaseView):
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kargs):
-        x_request_id = request.headers.get('x-request-id')
-        if x_request_id:
-            self.x_request_id =x_request_id
-        else:
-            self.x_request_id = None
-
+        headers = {}
+        for key, value in request.headers.items():
+            if key.startswith('X-'):
+                headers[key] = value
+        self.headers=headers
         return super(RatingDownView, self).dispatch(request, *args, **kargs)
 
     def get(self, request, pk):
-        headers = {}
-        if self.x_request_id:
-            headers['x-request-id']=self.x_request_id
-        response = requests.get('{}/apis/v1/ratings/{}/down'.format(RATING_SERVICE_URL, pk), headers=headers)
+        response = requests.get('{}/apis/v1/ratings/{}/down'.format(RATING_SERVICE_URL, pk), headers=self.headers)
         data = json.loads(response.content)
         if response.status_code == 200:
             return self.response(data = data, message='success')

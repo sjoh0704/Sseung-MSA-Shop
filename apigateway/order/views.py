@@ -27,11 +27,11 @@ class BaseView(View):
 class OrderNonParam(BaseView):
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kargs):
-        x_request_id = request.headers.get('x-request-id')
-        if x_request_id:
-            self.x_request_id =x_request_id
-        else:
-            self.x_request_id = None
+        headers = {}
+        for key, value in request.headers.items():
+            if key.startswith('X-'):
+                headers[key] = value
+        self.headers=headers
         return super(OrderNonParam, self).dispatch(request, *args, **kargs)
 
     # 주문 생성
@@ -42,11 +42,7 @@ class OrderNonParam(BaseView):
           
         except:
             data = request.POST
-        headers = {}
-        if self.x_request_id:
-            headers['x-request-id']=self.x_request_id
-
-        response = requests.post('{}/apis/v1/order'.format(ORDER_SERVICE_URL), data, headers=headers)
+        response = requests.post('{}/apis/v1/order'.format(ORDER_SERVICE_URL), data, headers=self.headers)
         res_data = json.loads(response.content)
         if response.status_code == 200:
             return self.response(data = res_data, message='create order success')
@@ -58,21 +54,17 @@ class OrderNonParam(BaseView):
 class OrderView(BaseView):
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kargs):
-        x_request_id = request.headers.get('x-request-id')
-        if x_request_id:
-            self.x_request_id =x_request_id
-        else:
-            self.x_request_id = None
-
+        headers = {}
+        for key, value in request.headers.items():
+            if key.startswith('X-'):
+                headers[key] = value
+        self.headers=headers
         return super(OrderView, self).dispatch(request, *args, **kargs)
     
     
     # 구매 기록 리스트 
     def get(self, request, pk):
-        headers = {}
-        if self.x_request_id:
-            headers['x-request-id']=self.x_request_id
-        response = requests.get('{}/apis/v1/order/{}'.format(ORDER_SERVICE_URL, pk), headers=headers)
+        response = requests.get('{}/apis/v1/order/{}'.format(ORDER_SERVICE_URL, pk), headers=self.headers)
         if response.status_code == 200:
             data = json.loads(response.content)
  
@@ -89,11 +81,7 @@ class OrderView(BaseView):
           
         except:
             data = request.POST
-        headers = {}
-        if self.x_request_id:
-            headers['x-request-id']=self.x_request_id
-
-        response = requests.post('{}/apis/v1/order/{}'.format(ORDER_SERVICE_URL, pk), data, headers=headers)
+        response = requests.post('{}/apis/v1/order/{}'.format(ORDER_SERVICE_URL, pk), data, headers=self.headers)
         res_data = json.loads(response.content)
         if response.status_code == 200:
             return self.response(data = res_data, message='edit order success')
@@ -103,10 +91,7 @@ class OrderView(BaseView):
     
     # 주문 취소 
     def delete(self, request, pk):
-        headers = {}
-        if self.x_request_id:
-            headers['x-request-id']=self.x_request_id
-        response = requests.delete('{}/apis/v1/order/{}'.format(ORDER_SERVICE_URL, pk), headers=headers)
+        response = requests.delete('{}/apis/v1/order/{}'.format(ORDER_SERVICE_URL, pk), headers=self.headers)
         res_data = json.loads(response.content)
         if response.status_code == 200:
             return self.response(data=res_data, message='delete order success')
@@ -117,20 +102,17 @@ class OrderView(BaseView):
 class SaleView(BaseView):
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kargs):
-        x_request_id = request.headers.get('x-request-id')
-        if x_request_id:
-            self.x_request_id =x_request_id
-        else:
-            self.x_request_id = None
+        headers = {}
+        for key, value in request.headers.items():
+            if key.startswith('X-'):
+                headers[key] = value
+        self.headers=headers
         return super(SaleView, self).dispatch(request, *args, **kargs)
     
     
     # 구매 기록 리스트 
     def get(self, request, pk):
-        headers = {}
-        if self.x_request_id:
-            headers['x-request-id']=self.x_request_id
-        response = requests.get('{}/apis/v1/order/sale/{}'.format(ORDER_SERVICE_URL, pk), headers=headers)
+        response = requests.get('{}/apis/v1/order/sale/{}'.format(ORDER_SERVICE_URL, pk), headers=self.headers)
         if response.status_code == 200:
             data = json.loads(response.content)
 
