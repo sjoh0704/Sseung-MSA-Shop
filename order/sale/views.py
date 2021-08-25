@@ -27,26 +27,22 @@ class BaseView(View):
 class SalesView(BaseView):
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kargs):
-        x_request_id = request.headers.get('x-request-id')
-        if x_request_id:
-            self.x_request_id =x_request_id
-        else:
-            self.x_request_id = None
+        headers = {}
+        for key, value in request.headers.items():
+            if key.startswith('X-'):
+                headers[key] = value
+        self.headers=headers
         return super(SalesView, self).dispatch(request, *args, **kargs)
     
         # 판매자 입장에서 상품 별 주문 정보 얻기 
         # pk = product_id
     def get(self, request, pk):
-        headers = {}
-        if self.x_request_id:
-            headers['x-request-id']=self.x_request_id
-
         try:
             orders = Order.objects.filter(product_id=pk)
-            product_response = requests.get('{}/apis/v1/product/{}'.format(PRODUCT_SERIVCE_URL, pk), headers=headers)
+            product_response = requests.get('{}/apis/v1/product/{}'.format(PRODUCT_SERIVCE_URL, pk), headers=self.headers)
           
             product = json.loads(product_response.content)["payload"]
-            user_response = requests.get('{}/apis/v1/user'.format(USER_SERIVCE_URL), headers=headers)
+            user_response = requests.get('{}/apis/v1/user'.format(USER_SERIVCE_URL), headers=self.headers)
             user_list = json.loads(user_response.content)["payload"]
             order_list = []
             for order in orders:

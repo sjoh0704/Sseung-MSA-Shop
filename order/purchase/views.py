@@ -30,12 +30,11 @@ class BaseView(View):
 class OrderNonParam(BaseView):
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kargs):
-        x_request_id = request.headers.get('x-request-id')
-        if x_request_id:
-            self.x_request_id =x_request_id
-        else:
-            self.x_request_id = None
-
+        headers = {}
+        for key, value in request.headers.items():
+            if key.startswith('X-'):
+                headers[key] = value
+        self.headers=headers
         return super(OrderNonParam, self).dispatch(request, *args, **kargs)
 
     # 주문하기 
@@ -89,12 +88,11 @@ class OrderNonParam(BaseView):
 class OrderView(BaseView):
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kargs):
-        x_request_id = request.headers.get('x-request-id')
-        if x_request_id:
-            self.x_request_id =x_request_id
-        else:
-            self.x_request_id = None
-
+        headers = {}
+        for key, value in request.headers.items():
+            if key.startswith('X-'):
+                headers[key] = value
+        self.headers=headers
         return super(OrderView, self).dispatch(request, *args, **kargs)
     
         # 주문 정보 얻기 
@@ -104,10 +102,7 @@ class OrderView(BaseView):
         try:
                 
             orders = Order.objects.filter(buyer_id=pk)
-            headers = {}
-            if self.x_request_id:
-                headers['x-request-id']=self.x_request_id
-            response = requests.get('{}/apis/v1/product'.format(PRODUCT_SERVICE_URL), headers=headers)
+            response = requests.get('{}/apis/v1/product'.format(PRODUCT_SERVICE_URL), headers=self.headers)
             products = json.loads(response.content)["payload"]
             order_by_user = []
             for order in orders:
@@ -141,9 +136,6 @@ class OrderView(BaseView):
         # 주문 편집
         # pk = order_id
     def post(self, request, pk):
-        headers = {}
-        if self.x_request_id:
-            headers['x-request-id']=self.x_request_id
         order = get_object_or_404(Order, pk=pk)
         try:
             data = json.loads(request.body)
@@ -164,7 +156,7 @@ class OrderView(BaseView):
                 tmp = {
                     "quantity":  int(total_quantity) - int(demand_quantity)
                 }
-                response = requests.post('{}/apis/v1/product/{}'.format(PRODUCT_SERVICE_URL, product_id), tmp, headers=headers)
+                response = requests.post('{}/apis/v1/product/{}'.format(PRODUCT_SERVICE_URL, product_id), tmp, headers=self.headers)
                 if response.status_code == 200:
                     order.save()
                     return self.response(message='판매완료')
@@ -210,12 +202,11 @@ class OrderView(BaseView):
 class OrderByProduct(BaseView):
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kargs):
-        x_request_id = request.headers.get('x-request-id')
-        if x_request_id:
-            self.x_request_id =x_request_id
-        else:
-            self.x_request_id = None
-
+        headers = {}
+        for key, value in request.headers.items():
+            if key.startswith('X-'):
+                headers[key] = value
+        self.headers=headers
         return super(OrderByProduct, self).dispatch(request, *args, **kargs)
     
 
