@@ -43,10 +43,9 @@ function CategoryBanner(){
     const {kind} = useSelector(state => ({
         kind: state.category.payload
     }))
-    console.log(kind)
     const display_category = kind.map((k, index) => {
         
-        let  path = '/category/' + (index + 1)
+        let  path = '/category/' + (k.pk)
         return (
             <Col lg='1' sm='2' xs='3'>
             <Nav.Item>
