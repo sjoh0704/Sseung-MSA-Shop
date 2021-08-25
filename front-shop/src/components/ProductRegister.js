@@ -75,11 +75,11 @@ function ProductRegister({history}){
 
 
     const onClickHandler = (e)=>{
-        let category_number = kind.findIndex((k) => k.kind === category) + 1
+        let category_id = kind[kind.findIndex((k) => k.kind === category)].pk
         let image_list = images.map((img, index) => (img.data_url))
         e.preventDefault();
  
-        if(!(name && category_number && price && quantity && description && image_list.length)){
+        if(!(name && category_id && price && quantity && description && image_list.length)){
             setModalOpen(true);
             setModalContents('모든 항목을 입력해 주세요');
             return;
@@ -92,7 +92,7 @@ function ProductRegister({history}){
         const body = {
             seller_id: userData.user_id,
             name: name,
-            category_id: category_number,
+            category_id: category_id,
             price: price,
             quantity: quantity,
             area: area,

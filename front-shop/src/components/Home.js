@@ -11,7 +11,6 @@ export default function Home(props){
     const[products,Setproducts]= useState([])
 
     const dispatch = useDispatch()
-
     const fetchProducts= async ()=>{
         let res = await axios.get('/apis/v1/product');
         let product_list = res.data.payload.payload.filter(p => p.valid=== true);
@@ -26,16 +25,16 @@ export default function Home(props){
 
 
     const fetchCategory= async ()=>{
-        await axios.get('/apis/v1/category').then(res=> {
-            let category_list = res.data.payload.map(data=> {
-                return data.fields
-            })
-           
-            console.log(category_list);
-            dispatch(setCategory(category_list))
-        }).catch((e) => {
-            console.log(e)
-        } )
+        let res = await axios.get('/apis/v1/category');
+        console.log(res.data.payload);
+        let category_list = res.data.payload.map(data=> {
+                return{
+                    kind: data.fields.kind,
+                    pk: data.pk
+                }
+            });
+        dispatch(setCategory(category_list))
+       
     }
 
     useEffect(()=>{
