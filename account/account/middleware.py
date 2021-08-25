@@ -5,8 +5,10 @@ class MiddlewareForTransaction:
         # One-time configuration and initialization.
 
     def __call__(self, request):
-        x_request_id = request.headers.get('x-request-id')
         response = self.get_response(request)
-        if x_request_id:
-            response['x-request-id'] = x_request_id 
+        
+        for key, value in request.headers.items():
+            if key.startswith('X-'):
+                response[key] = value
+       
         return response
