@@ -14,7 +14,7 @@ import os
 
 PRODUCT_SERIVCE_URL = os.environ.get("PRODUCT_SERIVCE_URL", 'http://localhost:8100') 
 RATING_SERVICE_URL = os.environ.get("RATING_SERVICE_URL",'http://172.30.1.34:8081')
-
+CART_SERVICE_URL = os.environ.get("CART_SERVICE_URL",'http://172.30.1.34:8080')
 class BaseView(View):
     @staticmethod
     def response(data={}, message ="", status=200):
@@ -182,18 +182,20 @@ class UserAPIViewParam(BaseView):
         return super(UserAPIViewParam, self).dispatch(request, *args, **kargs)
 # 이 부분은 유의 
     def delete(self, request, pk):
-
         user = get_object_or_404(User, id=pk)
         res1 = requests.delete("{}/apis/v1/product/user/{}".format(PRODUCT_SERIVCE_URL, pk), headers=self.headers)  # product-service url
         if res1.status_code != 200:
             return self.response(message='deleting user fail', status=200)
-
         res2 = requests.delete('{}/apis/v1/ratings/{}'.format(RATING_SERVICE_URL, pk), headers=self.headers)
+     
         if res2.status_code != 200:
             return self.response(message='rating delete fail', status=400)
-
+     
+        res3 = requests.delete('{}/apis/v1/carts/user/{}'.format(CART_SERVICE_URL, pk), headers=self.headers)
+        if res3.status_code != 200:
+            return self.response(message='carts delete fail', status=400)
         user.delete() 
-        
+
         return self.response(message='deleting user success')
 
         

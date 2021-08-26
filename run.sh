@@ -1,7 +1,7 @@
 echo "-----------------------------------------------------------------------"
 echo "configure envrionment setting"
-export CART_SERVICE_URL=http://172.30.1.34:8080 # local ip
-export RATING_SERVICE_URL=http://172.30.1.34:8081 # local ip
+export CART_SERVICE_URL=http://172.30.1.35:8080 # local ip
+export RATING_SERVICE_URL=http://172.30.1.35:8081 # local ip
 # export CART_SERVICE_URL=http://192.168.219.171:8080 # local ip
 # export RATING_SERVICE_URL=http://192.168.219.171:8081 # local ip
 
