@@ -23,7 +23,7 @@ userPlayBook(){
     url=$1
 
     echo create $url/apis/v1/user/
-    user_id=$(curl -d '{"username":"^!#$@^!", "password":"value2", "email": "value1@value2.com", "phone_number": "01012341234"}' \
+    user_id=$(curl -d '{"username":"jafdsfash", "password":"value2", "email": "value1@value2.com", "phone_number": "01012341234"}' \
     -H "Content-Type: application/json" \
     -X POST $url/apis/v1/user/ | jq '.payload.payload.user_id')
     

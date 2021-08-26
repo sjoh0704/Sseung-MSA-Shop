@@ -84,7 +84,7 @@ router.delete('/ratings/:userId', async(req, res)=> {
     const {userId} = req.params;
     const rating = await Rating.findOne({userId}).exec();
     if(!rating){
-        res.status(400).send({message:'rating info 없음'})
+        res.send({message: 'rating 정보 없음'});
         return;
     }
     await rating.delete();
