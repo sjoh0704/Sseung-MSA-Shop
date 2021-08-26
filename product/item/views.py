@@ -31,7 +31,7 @@ class ProductNonParam(BaseView):
 
     # product 생성하기 
     def post(self, request):
-        return self.response(status=500)
+
         try:
             data = json.loads(request.body)     
         except:
@@ -103,7 +103,7 @@ class ProductNonParam(BaseView):
 
     # 상품 가져오기 
     def get(self, request):
-        return self.response(status=500)
+     
         try:
                 
             products = Product.objects.all()
@@ -148,7 +148,7 @@ class ProductStatusView(BaseView):
         return super(ProductStatusView, self).dispatch(request, *args, **kargs)
     # pk = 상품 Id 
     def get(self, request, pk):
-        return self.response(status=500)
+     
         try:
 
             product = get_object_or_404(Product, id=pk)
