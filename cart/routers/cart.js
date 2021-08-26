@@ -48,7 +48,10 @@ router.post('/carts', async(req, res)=> {
 router.get('/carts/users/:buyerId', async(req, res)=> {
     const {buyerId} = req.params;
     const cartsByUser = await Cart.find({buyerId}).exec();
-    console.log(cartsByUser);
+    if(!cartsByUser)
+        res.status(400).send({
+            message: 'get carts by user fail'});
+
 
     res.send({
         payload: cartsByUser,
@@ -90,6 +93,22 @@ router.delete('/carts/:cartId', async(req, res)=> {
         res.send({message: 'delete cart success'});
     }
     catch{
+        res.status(400).send({
+            message: "cart delete fails"
+        });
+    }
+
+})
+
+//cart by user delete 
+router.delete('/carts/user/:userId', async(req, res)=> {
+    const {userId} = req.params;
+    try{
+        await Cart.deleteMany({buyerId:userId}).exec();
+        res.send({message: 'delete cart success'});
+    }
+    catch{
+        
         res.status(400).send({
             message: "cart delete fails"
         });

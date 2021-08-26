@@ -1,7 +1,8 @@
 module.exports = (req, res, next) => {
-    const x_request_id = req.header('x-request-id');
     next();
-    if(x_request_id){
-        res.header['x-request-id'] = x_request_id;
+    for(let key of Object.keys(req.headers)){
+        if(key.startsWith('x-')){
+            res.header[key] = req.headers[key];
+        }
     }
 }
