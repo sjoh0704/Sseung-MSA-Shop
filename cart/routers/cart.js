@@ -48,7 +48,10 @@ router.post('/carts', async(req, res)=> {
 router.get('/carts/users/:buyerId', async(req, res)=> {
     const {buyerId} = req.params;
     const cartsByUser = await Cart.find({buyerId}).exec();
-    console.log(cartsByUser);
+    if(!cartsByUser)
+        res.status(400).send({
+            message: 'get carts by user fail'});
+
 
     res.send({
         payload: cartsByUser,
