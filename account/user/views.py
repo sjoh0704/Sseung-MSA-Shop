@@ -185,7 +185,7 @@ class UserAPIViewParam(BaseView):
         user = get_object_or_404(User, id=pk)
         res1 = requests.delete("{}/apis/v1/product/user/{}".format(PRODUCT_SERIVCE_URL, pk), headers=self.headers)  # product-service url
         if res1.status_code != 200:
-            return self.response(message='deleting user fail', status=200)
+            return self.response(message='deleting user fail', status=400)
         res2 = requests.delete('{}/apis/v1/ratings/{}'.format(RATING_SERVICE_URL, pk), headers=self.headers)
      
         if res2.status_code != 200:
