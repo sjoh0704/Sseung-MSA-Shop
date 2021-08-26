@@ -100,6 +100,22 @@ router.delete('/carts/:cartId', async(req, res)=> {
 
 })
 
+//cart by user delete 
+router.delete('/carts/user/:userId', async(req, res)=> {
+    const {userId} = req.params;
+    try{
+        await Cart.deleteMany({buyerId:userId}).exec();
+        res.send({message: 'delete cart success'});
+    }
+    catch{
+        
+        res.status(400).send({
+            message: "cart delete fails"
+        });
+    }
+
+})
+
 
 //cart by product
 router.delete('/product/:productId/carts', async(req, res)=> {
