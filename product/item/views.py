@@ -313,7 +313,7 @@ class ProductByUser(BaseView):
     
     def delete(self, request, pk):
         products = Product.objects.filter(seller_id=pk)
- 
+        
         products.delete()
         return self.response(message="deleting product created by user_id={} successes".format(pk), status=200)
     
