@@ -12,7 +12,7 @@ from django.contrib.auth import login, authenticate, logout
 import requests
 import os
 
-PRODUCT_SERIVCE_URL = os.environ.get("PRODUCT_SERIVCE_URL", 'http://localhost:8100') 
+PRODUCT_SERVICE_URL = os.environ.get("PRODUCT_SERVICE_URL", 'http://localhost:8100') 
 RATING_SERVICE_URL = os.environ.get("RATING_SERVICE_URL",'http://172.30.1.34:8081')
 CART_SERVICE_URL = os.environ.get("CART_SERVICE_URL",'http://172.30.1.34:8080')
 class BaseView(View):
@@ -183,7 +183,7 @@ class UserAPIViewParam(BaseView):
 # 이 부분은 유의 
     def delete(self, request, pk):
         user = get_object_or_404(User, id=pk)
-        res1 = requests.delete("{}/apis/v1/product/user/{}".format(PRODUCT_SERIVCE_URL, pk), headers=self.headers)  # product-service url
+        res1 = requests.delete("{}/apis/v1/product/user/{}".format(PRODUCT_SERVICE_URL, pk), headers=self.headers)  # product-service url
         if res1.status_code != 200:
             return self.response(message='deleting user fail', status=200)
         res2 = requests.delete('{}/apis/v1/ratings/{}'.format(RATING_SERVICE_URL, pk), headers=self.headers)
