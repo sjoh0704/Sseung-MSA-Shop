@@ -23,22 +23,25 @@ userPlayBook(){
     url=$1
 
     echo create $url/apis/v1/user/
-    response=$(curl -d '{"username":"!@#$!@#$", "password":"value2", "email": "value1@value2.com", "phone_number": "01012341234"}' \
+    user_id=$(curl -d '{"username":"^!#$@^!", "password":"value2", "email": "value1@value2.com", "phone_number": "01012341234"}' \
     -H "Content-Type: application/json" \
-    -X POST $url/apis/v1/user/)
-    response=${response#*user_id'"': }
-    user_id=${response%%,*}
-
+    -X POST $url/apis/v1/user/ | jq '.payload.payload.user_id')
+    
     echo delete $url/apis/v1/user/$user_id
     response=$(curl -H "Content-Type: application/json" \
     -X DELETE $url/apis/v1/user/$user_id)
     
+    
+
+
     echo ==========================================================
     
     sleep 0.5
 }
-echo "start loadgenerate!"
+echo "install jq"
 
+
+echo "start loadgenerate!"
 
 while [ 1 ]
 do
