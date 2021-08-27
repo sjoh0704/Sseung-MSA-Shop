@@ -7,7 +7,7 @@ generate(){
     echo "GET: $url"
     echo ---------------------------------------------------------
     i=0
-    while [ $i -lt 3 ]
+    while [ $i -lt 4 ]
     do
     response=$(curl -w " - status code: %{http_code}, sizes: %{size_request}/%{size_download}" $url)
     i=`expr $i + 1`
@@ -24,12 +24,13 @@ userPlayBook(){
 
     echo create $url/apis/v1/user/
     username=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 8 | sed 1q)
-    user_id=$(curl -d '{"username":"$username", "password":"abcd", "email": "abcd@abcd.com", "phone_number": "01011111111"}' \
+    user_id=$(curl -d '{"username":"'$username'", "password":"abcd", "email": "abcd@abcd.com", "phone_number": "01011111111"}' \
     -H "Content-Type: application/json" \
     -X POST $url/apis/v1/user/ | jq '.payload.payload.user_id')
 
-    if [ -z $user_id -o $user_id = "null" ]
-    then 
+    if [ $user_id = "null" ] || [ -z $user_id ]
+    then
+        echo "Error" 
         exit 1
     fi 
     
