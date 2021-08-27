@@ -28,7 +28,7 @@ userPlayBook(){
     -H "Content-Type: application/json" \
     -X POST $url/apis/v1/user/ | jq '.payload.payload.user_id')
 
-    if [ -z $user_id]
+    if [ -z $user_id -o $user_id = "null" ]
     then 
         exit 1
     fi 
