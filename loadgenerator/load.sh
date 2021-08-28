@@ -12,7 +12,7 @@ generate(){
     response=$(curl -w " - status code: %{http_code}, sizes: %{size_request}/%{size_download}" $url)
     i=`expr $i + 1`
     done
-    sleep 0.5
+
 }
 
 
@@ -43,7 +43,7 @@ userPlayBook(){
 
     echo ==========================================================
     
-    sleep 0.5
+
 }
 echo "start loadgenerate!"
 
@@ -55,5 +55,6 @@ generate $frontend /apis/v1/carts/users/2
 generate $frontend /apis/v1/order/2
 generate $frontend /apis/v1/order/sale/2
 userPlayBook $frontend
+sleep 1
 done
 echo "stop loadgenerate!"
