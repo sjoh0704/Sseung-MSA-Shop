@@ -14,11 +14,16 @@ router.get('/ratings', async(req, res)=> {
 // get specific user rating info
 router.get('/ratings/:userId', async(req, res)=> {
     const {userId} = req.params;
+
     const rating = await Rating.findOne({userId}).exec();
     if(!rating){
         res.status(400).send({message: 'user rating info 없음'});
         return;
     }
+    
+    rating.temperature = rating.temperature * 9 / 5 + 32
+    rating.celcius = false
+
     res.send({payload: rating,
         message: 'get ratings success'});
 })

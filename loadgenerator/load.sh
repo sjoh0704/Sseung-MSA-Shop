@@ -9,7 +9,7 @@ generate(){
     i=0
     while [ $i -lt 4 ]
     do
-    response=$(curl -w " - status code: %{http_code}, sizes: %{size_request}/%{size_download}" $url)
+    response=$(curl --max-time 5  -w " - status code: %{http_code}, sizes: %{size_request}/%{size_download}" $url)
     i=`expr $i + 1`
     done
 
@@ -24,7 +24,7 @@ userPlayBook(){
 
     echo create $url/apis/v1/user/
     username=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 8 | sed 1q)
-    user_id=$(curl -d '{"username":"'$username'", "password":"abcd", "email": "abcd@abcd.com", "phone_number": "01011111111"}' \
+    user_id=$(curl --max-time 5 -d '{"username":"'$username'", "password":"abcd", "email": "abcd@abcd.com", "phone_number": "01011111111"}' \
     -H "Content-Type: application/json" \
     -X POST $url/apis/v1/user/ | jq '.payload.payload.user_id')
 
@@ -33,9 +33,12 @@ userPlayBook(){
         echo "Error" 
         exit 1
     fi 
-    
-    echo delete $url/apis/v1/user/$user_id
-    response=$(curl -H "Content-Type: application/json" \
+    echo GET $url/apis/v1/ratings/$user_id/up
+    response=$(curl --max-time 5 -H "Content-Type: application/json" \
+    -X GET $url/apis/v1/ratings/$user_id/up)
+
+    echo DELETE $url/apis/v1/user/$user_id
+    response=$(curl --max-time 5 -H "Content-Type: application/json" \
     -X DELETE $url/apis/v1/user/$user_id)
     
     
