@@ -65,6 +65,7 @@ router.get('/post/:postId/hit', async (req, res) => {
         res.status(400).send({
             message: "not exist"
         });
+        return;
     }
     post.hit++;
     await post.save();
@@ -87,6 +88,9 @@ router.post('/post/:postId', async (req, res) => {
             }
         });
         // attriubute가 undefined여면 값을 업데이트하지 않음.
+        res.send({
+            message:"update success"
+        });
     }
     catch(error){
         console.log(error)
@@ -94,9 +98,7 @@ router.post('/post/:postId', async (req, res) => {
             message: "update fail"
         });
     }
-    res.send({
-        message:"update success"
-    });
+
 });
 
 router.delete('/post/:postId', async (req, res) => {
