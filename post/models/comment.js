@@ -11,6 +11,7 @@ module.exports = class Comment extends Sequelize.Model {
                 content: {
                     type: Sequelize.TEXT,
                     allowNull: false, // 필수 (NotNull)
+                    defaultValue: ""
                 },
             },
             {

@@ -1,8 +1,8 @@
 const express = require('express');
 const app = express();
 const port = 8082;
-const { Post, Comment } = require('./models');
-// 서버 실행시 table 생성
+const postRouter = require('./routers/post');
+const commentRouter = require('./routers/comment');
 var sequelize = require('./models/index').sequelize;
 sequelize
     .sync({ force: false })
@@ -19,6 +19,9 @@ app.use(express.json());
 app.get('/health', (req, res) => {
     res.send('ok');
 });
+
+app.use('/apis/v1', postRouter);
+app.use('/apis/v1', commentRouter);
 
 // Post.create({
 //     user_id: 10000,

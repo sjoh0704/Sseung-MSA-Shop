@@ -20,6 +20,7 @@ module.exports = class Post extends Sequelize.Model {
                 hit: {
                     type: Sequelize.INTEGER,
                     allowNull: false, // 필수 (NotNull)
+                    defaultValue: 0
                 },
 
                 area: {
@@ -27,7 +28,7 @@ module.exports = class Post extends Sequelize.Model {
                     allowNull: false,
                 },
             },
-             {
+            {
                 sequelize, //해당 부분에 db.sequelize 객체가 들어간다.
                 timestamps: true, //true로 하면 createdAt과 updatedAt을 생성한다.
                 underscored: false, //기본적으로 테이블명과 컬럼명을 CamelCase로 바꾸는데 snake case로 변경해준다
