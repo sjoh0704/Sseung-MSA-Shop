@@ -30,7 +30,7 @@ function PurchaseList({history}){
     const fetchUserInfo = async (userId, orderId) => {
         let res = await axios.get('/apis/v1/user/' + userId);
         setModalOpen(true);
-        let data = res.data.payload.payload
+        let data = res.data.payload
         setModalContents(<Container>
             <Rating user={data}></Rating>
             <Row style={{marginTop: 20}}>
@@ -84,7 +84,7 @@ function PurchaseList({history}){
 
     const fetchOrders= async()=>{
             let res = await axios.get('/apis/v1/order/' + userData.user_id)
-            let tmp_order = res.data.payload.payload.filter(order=> order.sales_stage == 'SO')
+            let tmp_order = res.data.payload.filter(order=> order.sales_stage == 'SO')
            
             let orderlist = tmp_order.map((order, index) => {
   

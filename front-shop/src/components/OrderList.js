@@ -27,8 +27,8 @@ function OrderList({history}){
 
     const fetchOrders= async()=>{
             await axios.get('/apis/v1/order/' + userData.user_id).then(res=> {
-                console.log(res.data.payload.payload)
-                let tmp_orders = res.data.payload.payload.filter(order=> order.sales_stage!='SO')
+                console.log(res.data.payload)
+                let tmp_orders = res.data.payload.filter(order=> order.sales_stage!='SO')
                 let orderlist = tmp_orders.map((order, index) => {
                     return (
                             
@@ -112,7 +112,7 @@ function OrderList({history}){
 
     const connectSeller = async(seller_id) => {
         let res = await axios.get(`/apis/v1/user/${seller_id}`)
-        let tmp = res.data.payload.payload.phone_number
+        let tmp = res.data.payload.phone_number
         let phone_number = tmp.slice(0,3) + '-'+tmp.slice(3,7) + '-'+tmp.slice(7,11)
         setModalOpen(true);
         setModalContents(`[${phone_number}]로 연락해주세요!`);

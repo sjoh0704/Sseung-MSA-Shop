@@ -39,7 +39,7 @@ function Login({history}){
         axios.post('/apis/v1/user/login', body)
         .then(response => {
             history.replace('/')
-            dispatch(loginAction(response.data.payload.payload))
+            dispatch(loginAction(response.data.payload))
       
         }).catch(e =>{
             setModalOpen(true);

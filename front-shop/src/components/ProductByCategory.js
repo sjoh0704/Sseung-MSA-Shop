@@ -15,7 +15,7 @@ function ProductByCategory({match}){
 
     const fetchProducts= async ()=>{
         let res = await axios.get('/apis/v1/category/' + match.params.number);
-        let filtered_product_list = res.data.payload.payload.filter(product=> product.valid==true);
+        let filtered_product_list = res.data.payload.filter(product=> product.valid==true);
         let product_list = filtered_product_list.map((data)=> {
             return {
                 ...data,

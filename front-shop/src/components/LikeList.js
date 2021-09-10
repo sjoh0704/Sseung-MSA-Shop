@@ -20,10 +20,10 @@ function Likes({history}){
 
         const fetchCarts= async()=>{
             let res = await axios.get('/apis/v1/carts/users/' + userData.user_id);
-            let cartList = res.data.payload.payload;
-            let res_product = await axios.get('/apis/v1/product/');
+            let cartList = res.data.payload;
+            let res_product = await axios.get('/apis/v1/product');
     
-            let productList = res_product.data.payload.payload;
+            let productList = res_product.data.payload;
             cartList = cartList.map((cart, index) => {
                 console.log(productList)
                 const tmp_product = productList.find((product) => product.pk == cart.productId);

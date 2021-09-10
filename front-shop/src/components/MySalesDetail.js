@@ -29,10 +29,10 @@ function MySalesDetail({history, match}){
         let res = await axios.get('/apis/v1/product/' + match.params.number)
            
             setProduct({
-            ...res.data.payload.payload,
+            ...res.data.payload,
             product_id: match.params.number
             });
-            let image_list = await res.data.payload.payload.image.map(img => (<div >
+            let image_list = await res.data.payload.image.map(img => (<div >
                 <br/>
                 <img style = {{  
                     maxWidth: "100%",
@@ -48,7 +48,7 @@ function MySalesDetail({history, match}){
     const fetchUserInfo = async (userId) => {
         let res = await axios.get('/apis/v1/user/' + userId);
         setModalOpen(true);
-        let data = res.data.payload.payload
+        let data = res.data.payload
         setModalContents(<Container>
             <Rating user={data}></Rating>
             <Row style={{marginTop: 20}}>
@@ -70,7 +70,7 @@ function MySalesDetail({history, match}){
 
     const fetchOrders= async()=>{
         let res = await axios.get('/apis/v1/order/sale/' + match.params.number);
-        let tmp_orders = res.data.payload.payload.filter(order=> order.sales_stage!='SO')
+        let tmp_orders = res.data.payload.filter(order=> order.sales_stage!='SO')
 
         console.log(tmp_orders);
         let orderlist = tmp_orders.map((order, index) => {

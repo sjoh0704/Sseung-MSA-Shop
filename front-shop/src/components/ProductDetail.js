@@ -29,27 +29,27 @@ function ProductDetail({match, history}){
     
     const fetchProduct= async ()=>{
             let res = await axios.get('/apis/v1/product/' + match.params.number);       
-            let tmp = res.data.payload.payload;
+            let tmp = res.data.payload;
             setProduct({
-            ...res.data.payload.payload,
+            ...res.data.payload,
             product_id: match.params.number
             });
             setImages(tmp.image);
 
             let res_seller = await axios.get('/apis/v1/user/' + tmp.seller_id);  
-            setSeller(res_seller.data.payload.payload);
+            setSeller(res_seller.data.payload);
             
             
             // check likes
             
             if(isLoggedIn){
                 let body = {
-                    seller_id: res.data.payload.payload.seller_id,
+                    seller_id: res.data.payload.seller_id,
                     buyer_id: userData.user_id,
                     product_id: parseInt(match.params.number)
                 };
             let res_likes = await axios.post('/apis/v1/carts/check', body);
-            setLike(res_likes.data.payload.payload);
+            setLike(res_likes.data.payload);
             }
             
     }
