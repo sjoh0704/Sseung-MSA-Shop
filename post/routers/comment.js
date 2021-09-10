@@ -3,7 +3,7 @@ const { Post, Comment } = require('../models');
 const router = express.Router();
 
 router.get('/post/:postId/comment', async (req, res) => {
-
+    res.send("ok");
 });
 
 router.post('/post/:postId/comment', async (req, res) => {
