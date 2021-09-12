@@ -43,7 +43,7 @@ pipeline {
             dir('order'){
             sh 'docker build -t ${DOCKER_ID}/${ORDER_IMAGE}:${TAG}${BUILD_NUMBER} .'
             }       
-            dir('apigateway'){
+            dir('apigateway2'){
             sh 'docker build -t ${DOCKER_ID}/${GATEWAY_IMAGE}:${TAG}${BUILD_NUMBER} .'
             }
             dir('cart'){
