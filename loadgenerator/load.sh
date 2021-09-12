@@ -26,7 +26,7 @@ userPlayBook(){
     username=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 8 | sed 1q)
     user_id=$(curl --max-time 5 -d '{"username":"'$username'", "password":"abcd", "email": "abcd@abcd.com", "phone_number": "01011111111"}' \
     -H "Content-Type: application/json" \
-    -X POST $url/apis/v1/user/ | jq '.payload.payload.user_id')
+    -X POST $url/apis/v1/user/ | jq '.payload.user_id')
 
     if [ $user_id = "null" ] || [ -z $user_id ]
     then
