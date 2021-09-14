@@ -52,7 +52,7 @@
 <br/>
 
 ### 4. CI/CD Techs
-- Helm
+- [Helm](https://github.com/sjoh0704/My-Helm-Chart/tree/master/MSA-Shop, "go to sjoh0704's helm chart!")
 - Jenkins
 - git
 
