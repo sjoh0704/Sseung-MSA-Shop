@@ -26,6 +26,7 @@
 
 ### 1. Cloud Techs
 - AWS VPC 
+- AWS NAT 
 - AWS EC2
 - AWS ELB
 - AWS EFS
