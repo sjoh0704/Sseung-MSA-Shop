@@ -35,6 +35,7 @@
 
 ### 2. Infrastructure Techs 
 - Kubernetes 
+- Docker 
 - Istio
 - Kilai
 - Prometheus
