@@ -59,6 +59,12 @@
 
 <br/>
 
+## Manifest
+- [go to Helm chart](https://github.com/sjoh0704/My-Helm-Chart/tree/master/MSA-Shop "go to sjoh0704's helm chart!")
+
+<br/>
+
+
 ## Architecture
 
 
