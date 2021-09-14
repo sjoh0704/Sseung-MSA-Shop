@@ -53,14 +53,14 @@
 <br/>
 
 ### 4. CI/CD Techs
-- [Helm](https://github.com/sjoh0704/My-Helm-Chart/tree/master/MSA-Shop "go to sjoh0704's helm chart!")
+- [Helm](https://github.com/sjoh0704/Sseung-Helm-Chart/tree/master/MSA-Shop "go to sjoh0704's helm chart!")
 - Jenkins
 - git
 
 <br/>
 
 ## Manifest
-- [go to Helm chart](https://github.com/sjoh0704/My-Helm-Chart/tree/master/MSA-Shop "go to sjoh0704's helm chart!")
+- [go to Helm chart](https://github.com/sjoh0704/Sseung-Helm-Chart/tree/master/MSA-Shop "go to sjoh0704's helm chart!")
 
 <br/>
 
