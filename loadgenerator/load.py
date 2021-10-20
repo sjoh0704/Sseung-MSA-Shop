@@ -50,8 +50,8 @@ while 1:
     gernerateLoad(FRONTEND + "/apis/v1/user/2")
     gernerateLoad(FRONTEND + "/apis/v1/product/1")
     gernerateLoad(FRONTEND + "/apis/v1/carts/users/1")
-    gernerateLoad(FRONTEND + "/apis/v1/order/0")
-    gernerateLoad(FRONTEND + "/apis/v1/order/sale/0")
+    gernerateLoad(FRONTEND + "/apis/v1/order/1")
+    gernerateLoad(FRONTEND + "/apis/v1/order/sale/1")
     userPlayBook(FRONTEND)
     print("\n")
 
