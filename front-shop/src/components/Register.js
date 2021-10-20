@@ -46,7 +46,7 @@ function Register({history}){
             return;
         }
 
-        axios.post('/apis/v1/user/', body)
+        axios.post('/apis/v1/user', body)
         .then(response => {
             history.replace('/login')
         }).catch(e =>{

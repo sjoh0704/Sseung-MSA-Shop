@@ -45,7 +45,7 @@ function PurchasePage({location, history}){
             email_address: email_address,
         };
         console.log(body)
-        await axios.post('/apis/v1/order/', body).then(res=> {
+        await axios.post('/apis/v1/order', body).then(res=> {
             history.replace('/orderlist')
         })
         .catch(e => {

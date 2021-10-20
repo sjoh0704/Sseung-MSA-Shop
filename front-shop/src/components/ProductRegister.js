@@ -101,7 +101,7 @@ function ProductRegister({history}){
         };
   
     
-        axios.post('/apis/v1/product/', body)
+        axios.post('/apis/v1/product', body)
         .then(response => {
             history.replace('/')
         }).catch(e =>{
