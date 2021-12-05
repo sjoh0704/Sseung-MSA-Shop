@@ -43,6 +43,7 @@ AWS, K8S, Istio 기반 환경에서 쇼핑몰을 MSA로 개발하고 분산 서�
 
 
 
+<br/>
 
 ## 적용 기술
 
@@ -51,7 +52,6 @@ AWS, K8S, Istio 기반 환경에서 쇼핑몰을 MSA로 개발하고 분산 서�
 - AWS NAT 
 - AWS EC2
 - AWS ELB
-- AWS EFS
 
 <br/>
 
