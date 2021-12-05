@@ -4,7 +4,8 @@
 
 ## 개요
 
-클라우드 네이티브 환경에서 MSA 애플리케이션 개발 및 분산 서비스 추적 시스템, 모니터링 관리 시스템 구축 
+AWS 클라우드 환경에서 K8S 클러스터를 구축합니다.
+쇼핑몰을 MSA로 개발하고 개발 및 분산 서비스 추적 시스템, 모니터링 관리 시스템 구축 
 
 <br/>
 
@@ -20,6 +21,30 @@
 - Kiali를 이용한 서비스 관리 
 
 <br/>
+
+## Architecture
+
+
+### 1. Infrastructure Diagram 
+![image](https://user-images.githubusercontent.com/66519046/144748860-f323b4e4-3ed6-4d76-b879-09cb2e581162.png)
+
+
+<br/>
+
+### 2. Service Diagram
+![image](https://user-images.githubusercontent.com/66519046/144748884-0c461176-4451-4432-82bc-f1e84e44b8f8.png)
+
+<br/>
+
+### 3. S/W Diagram
+![image](https://user-images.githubusercontent.com/66519046/144748926-d165ebf3-7759-4a27-936c-c539c03ac1f1.png)
+
+<br/>
+
+### 4. CI/CD Diagram
+![image](https://user-images.githubusercontent.com/66519046/144748948-cb92e1ff-cdcb-4f5f-a49f-4ac293f62ba5.png)
+
+
 
 
 ## 적용 기술
@@ -67,23 +92,3 @@
 <br/>
 
 
-## Architecture
-
-
-### 1. Infrastructure Diagram 
-![image](https://user-images.githubusercontent.com/66519046/133252790-b19b0e60-5452-40b9-a0a1-7a1fed6ab104.png)
-
-<br/>
-
-### 2. Service Diagram
-![image](https://user-images.githubusercontent.com/66519046/133252317-20e43bf0-1ee7-4c13-86a2-dcdd5c7400ec.png)
-
-<br/>
-
-### 3. S/W Diagram
-![image](https://user-images.githubusercontent.com/66519046/133252515-1cf9e35a-e2ea-419b-8c93-4ffdbc4e2a3e.png)
-
-<br/>
-
-### 4. CI/CD Diagram
-![image](https://user-images.githubusercontent.com/66519046/133252709-4c2519e5-7b08-4140-8824-47816504dd5a.png)
