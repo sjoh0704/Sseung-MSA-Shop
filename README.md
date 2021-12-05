@@ -1,24 +1,21 @@
-# K8S 환경에서 Istio 서비스 매쉬를 이용한 MSA Shopping Mall 개발 
+# K8S 환경에서 Istio 서비스 매쉬를 이용한 MSA Shop 개발 및 모니터링 시스템 구축
 
 <br/>
 
 ## 개요
-
-AWS 클라우드 환경에서 K8S 클러스터를 구축합니다.
-쇼핑몰을 MSA로 개발하고 개발 및 분산 서비스 추적 시스템, 모니터링 관리 시스템 구축 
+AWS, K8S, Istio 기반 환경에서 쇼핑몰을 MSA로 개발하고 분산 서비스 추적 시스템, 모니터링 관리 시스템을 구축합니다.    
 
 <br/>
 
 ## 주요 기능 
-- 컨테이너 배포, 관리 ,확장, 네트워킹 자동화
-- 서비스의 지속적인 상태확인과 셀프힐링
+- Container Orchestration
 - User service의 Sticky session
 - Product service의 Circuit Breaking 
-- Rating service의 카나리 배포  
-- Envoy Metric을 이용한 Pod Autoscaling 
-- Header propagation과 Jaeger를 이용한 분산 서비스 추적 시스템 
-- Prometheus와 Grafana를 이용한 서비스 모니터링
-- Kiali를 이용한 서비스 관리 
+- Rating service의 Canary Release  
+- Istio Envoy Metric을 이용한 Horizontal Pod Autoscaling 
+- Jaeger를 이용한 microservice Transaction Tracing 
+- Grafana를 이용한 모니터링
+- Kiali를 이용한 서비스 모니터링
 
 <br/>
 
@@ -75,7 +72,7 @@ AWS 클라우드 환경에서 K8S 클러스터를 구축합니다.
 - Django
 - Nginx
 - Mysql
-- Mongodb
+- MongoDB
 
 <br/>
 
@@ -91,4 +88,5 @@ AWS 클라우드 환경에서 K8S 클러스터를 구축합니다.
 
 <br/>
 
-
+## Youtube
+[![Youtube](http://img.youtube.com/vi/TDG2syZHrpI/0.jpg)](https://www.youtube.com/watch?v=TDG2syZHrpI)
