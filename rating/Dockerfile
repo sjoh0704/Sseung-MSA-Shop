@@ -8,9 +8,6 @@ COPY . .
 
 RUN npm install --production
 
-
-CMD ["sleep", "20"]
-
 CMD ["node", "app.js"]
 
 EXPOSE 8081

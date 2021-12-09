@@ -1,42 +1,37 @@
-import React, { useEffect } from 'react'
-import {useState, useReducer} from 'react'
-import asyncReducer from '../components/asyncRuducer'
+import React, { useEffect } from "react";
+import { useState, useReducer } from "react";
+import asyncReducer from "../components/asyncRuducer";
 
-function useAsync(callback, deps = []){
+function useAsync(callback, deps = []) {
     const [state, dispatch] = useReducer(asyncReducer, {
         loading: false,
         data: null,
         error: null,
-    })
-    const fetchData = async () =>{
+    });
+    const fetchData = async () => {
         dispatch({
-            type: 'LOADING'
-        })
-        try{
+            type: "LOADING",
+        });
+        try {
             const data = await callback();
             dispatch({
                 type: "SUCCESS",
-                data: data
+                data: data,
             });
-        }
-        catch(e){
-          
+        } catch (e) {
             dispatch({
-                type: 'ERROR',
-                error: e
-            })
+                type: "ERROR",
+                error: e,
+            });
             console.log(e);
         }
-        
-    }
-    
+    };
+
     useEffect(() => {
         fetchData();
-    }, deps)
+    }, deps);
 
     return [state, fetchData];
-
-
-} 
+}
 
 export default useAsync;

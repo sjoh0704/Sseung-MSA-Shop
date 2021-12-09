@@ -1,28 +1,26 @@
 export function asyncReducer(state, action) {
-
     switch (action.type) {
-        case 'LOADING':
+        case "LOADING":
             return {
                 loading: true,
                 data: null,
                 error: null,
             };
-        case 'SUCCESS':
+        case "SUCCESS":
             return {
                 loading: false,
                 data: action.data,
                 error: null,
             };
-        case 'ERROR':
+        case "ERROR":
             return {
                 loading: false,
                 data: null,
-                error: action.error
+                error: action.error,
             };
         default:
-            throw new Error('unhandled error');
+            throw new Error("unhandled error");
     }
-
 }
 
 export default asyncReducer;
