@@ -34,7 +34,8 @@ AWS, K8S, Istio 기반 환경에서 쇼핑몰을 MSA로 개발하고 분산 서�
 <br/>
 
 ### 3. S/W Diagram
-![image](https://user-images.githubusercontent.com/66519046/144853558-ad2f17f7-8434-4b96-b45d-1f7001c8fadc.png)
+![image](https://user-images.githubusercontent.com/66519046/145411879-da5dadae-cef7-4ee4-b7c5-96358e174b39.png)
+
 
 
 <br/>
