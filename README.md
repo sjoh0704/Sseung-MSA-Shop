@@ -3,7 +3,23 @@
 <br/>
 
 ## 개요
-AWS, K8S, Istio 기반 환경에서 쇼핑몰을 MSA로 개발하고 분산 서비스 추적 시스템, 모니터링 관리 시스템을 구축합니다.    
+AWS환경에서 K8S와 Istio를 이용하여 인프라를 구성하고, 쇼핑몰을 MSA로 개발합니다.
+인프라를 관리하는 분산 서비스 추적 시스템, 모니터링 관리 시스템을 구축합니다.  
+
+<br/>
+
+## 구성 요소 및 버전
+- cri-o: v1.19
+- kubeadm: v1.19
+- kubectl: v1.19
+- kubelet: v1.19
+- istio: v1.12
+- calico-CrossSubnet: v3.17 
+- cloud-controller-manager: v1.19
+- helm: v3.8
+- number of master: 3 
+- number of worker: 2
+
 
 <br/>
 
@@ -47,19 +63,19 @@ AWS, K8S, Istio 기반 환경에서 쇼핑몰을 MSA로 개발하고 분산 서�
 
 <br/>
 
-## 적용 기술
+## Components
 
 ### 1. Cloud Techs
 - AWS VPC 
 - AWS NAT 
 - AWS EC2
 - AWS ELB
+- AWS EFS
 
 <br/>
 
 ### 2. Infrastructure Techs 
-- Kubernetes 
-- Docker 
+- Kubernetes
 - Istio
 - Kilai
 - Prometheus
