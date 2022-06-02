@@ -14,7 +14,7 @@ AWS환경에서 K8S와 Istio를 이용하여 인프라를 구성하고, 쇼핑�
 - kubectl: v1.19
 - kubelet: v1.19
 - istio: v1.12
-- calico-CrossSubnet: v3.17 
+- calico-IPIP: v3.17 
 - cloud-controller-manager: v1.19
 - helm: v3.8
 - number of master: 3 
