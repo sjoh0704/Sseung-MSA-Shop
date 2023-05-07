@@ -70,7 +70,6 @@ AWS환경에서 K8S와 Istio를 이용하여 인프라를 구성하고, 쇼핑�
 - AWS NAT 
 - AWS EC2
 - AWS ELB
-- AWS EFS
 
 <br/>
 
